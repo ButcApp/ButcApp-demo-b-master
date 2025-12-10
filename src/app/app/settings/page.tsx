@@ -264,7 +264,7 @@ function SettingsContent() {
 
     setResetLoading(true)
     try {
-      const response = await fetch('/api/data/reset', {
+      const response = await fetch('/api/data/reset-data', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

@@ -339,8 +339,10 @@ export default function ButcapApp() {
 
   // Tekrarlayan işlemleri kontrol et
   useEffect(() => {
-    checkAndApplyRecurringTransactions()
-  }, [recurringTransactions.length, user, checkAndApplyRecurringTransactions])
+    if (user && recurringTransactions.length > 0) {
+      checkAndApplyRecurringTransactions()
+    }
+  }, [recurringTransactions.length, user])
 
   const getRecurringDates = (recurring: RecurringTransaction, startDate: Date, endDate: Date): Date[] => {
     const dates: Date[] = []

@@ -66,7 +66,7 @@ async function logCriticalOperation(userId: string, operation: string, details: 
         metadata: JSON.stringify(details),
         ipAddress: details.ip || 'API_REQUEST',
         userAgent: 'DATA_RESET_API',
-        endpoint: '/api/data/reset',
+        endpoint: '/api/data/reset-data',
         method: 'DELETE',
         createdAt: new Date().toISOString()
       })
@@ -75,18 +75,8 @@ async function logCriticalOperation(userId: string, operation: string, details: 
   }
 }
 
-// POST /api/data/reset - Reset all user data
-export async function POST(request: NextRequest) {
-  return await handleResetData(request)
-}
-
-// DELETE /api/data/reset - Reset all user data (for frontend compatibility)
+// DELETE /api/data/reset-data - Reset all user data
 export async function DELETE(request: NextRequest) {
-  return await handleResetData(request)
-}
-
-// Main reset data handler
-async function handleResetData(request: NextRequest) {
   try {
     const auth = await authenticate(request)
     if (auth.error) {
@@ -193,6 +183,23 @@ async function handleResetData(request: NextRequest) {
       resetResults.push({ type: 'investments', success: false, error: error.message })
     }
 
+    // 5. Regular transactions'ları da sil
+    try {
+      const { data: transactionsResult, error: transactionsError } = await supabase
+        .from('user_data')
+        .delete()
+        .eq('userId', userId)
+        .in('type', ['income', 'expense'])
+        .select()
+
+      if (transactionsError) {
+        throw new Error(`Transactions reset failed: ${transactionsError.message}`)
+      }
+      resetResults.push({ type: 'transactions', success: true, count: transactionsResult?.length || 0 })
+    } catch (error) {
+      resetResults.push({ type: 'transactions', success: false, error: error.message })
+    }
+
     // Sonuçları değerlendir
     const successCount = resetResults.filter(r => r.success).length
     const failureCount = resetResults.filter(r => !r.success).length
@@ -239,59 +246,6 @@ async function handleResetData(request: NextRequest) {
       success: false,
       error: 'Sunucu hatası',
       details: error.message
-    }, { status: 500 })
-  }
-}
-
-// GET /api/data/reset - Get reset status (admin only)
-export async function GET(request: NextRequest) {
-  try {
-    const auth = await authenticate(request)
-    if (auth.error) {
-      return NextResponse.json({ error: auth.error }, { status: auth.status })
-    }
-
-    const userId = auth.user.id
-
-    // Kullanıcının mevcut veri durumunu kontrol et
-    const [balancesData, notesData, recurringData, investmentsData] = await Promise.all([
-      supabase.from('user_profiles').select('*').eq('userId', userId).limit(1),
-      supabase.from('user_data').select('*').eq('userId', userId).eq('type', 'note').limit(1),
-      supabase.from('user_data').select('*').eq('userId', userId).eq('type', 'recurring').limit(1),
-      supabase.from('user_data').select('*').eq('userId', userId).eq('type', 'investment').limit(1)
-    ])
-
-    const status = {
-      balances: {
-        exists: balancesData.data && balancesData.data.length > 0,
-        data: balancesData.data?.[0] || null
-      },
-      notes: {
-        exists: notesData.data && notesData.data.length > 0,
-        count: notesData.data?.length || 0
-      },
-      recurring: {
-        exists: recurringData.data && recurringData.data.length > 0,
-        count: recurringData.data?.length || 0
-      },
-      investments: {
-        exists: investmentsData.data && investmentsData.data.length > 0,
-        count: investmentsData.data?.length || 0
-      }
-    }
-
-    return NextResponse.json({
-      success: true,
-      userId,
-      status,
-      hasData: Object.values(status).some(s => s.exists)
-    }, { status: 200 })
-
-  } catch (error) {
-    console.error('Reset Status Error:', error)
-    return NextResponse.json({
-      success: false,
-      error: 'Sunucu hatası'
     }, { status: 500 })
   }
 }
