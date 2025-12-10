@@ -3822,3 +3822,65 @@ Not an admin route or login page, proceeding
 Pathname: /_next/static/css/app/layout.css
 Method: GET
 Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /app/settings
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app/settings?tab=security&action=reset 200 in 52ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/app/settings/page.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/admin-access
+Method: POST
+API route, skipping middleware
+ ○ Compiling /api/admin-access ...
+ ✓ Compiled /api/admin-access in 1198ms (1843 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/admin-access
+Method: POST
+API route, skipping middleware
+=== ADMIN ACCESS API START ===
+❌ No token provided for admin access check
+ POST /api/admin-access 401 in 1465ms
+=== ADMIN ACCESS API START ===
+❌ No token provided for admin access check
+ POST /api/admin-access 401 in 249ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/reset
+Method: DELETE
+API route, skipping middleware
+ ○ Compiling /api/data/reset ...
+ ✓ Compiled /api/data/reset in 1388ms (3347 modules)
+ DELETE /api/data/reset 405 in 1460ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/66441248f9156332.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.66441248f9156332.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+ ✓ Compiled in 852ms (3218 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/4c3d26b42b54e326.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /app/settings
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.4c3d26b42b54e326.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.4c3d26b42b54e326.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app/settings?tab=security&action=reset 200 in 151ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
