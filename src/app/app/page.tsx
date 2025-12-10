@@ -575,15 +575,9 @@ export default function ButcapApp() {
     .filter(t => t.type === 'income')
     .reduce((sum, t) => sum + t.amount, 0)
 
-  const expense = transactions
+  const totalExpense = transactions
     .filter(t => t.type === 'expense')
     .reduce((sum, t) => sum + t.amount, 0)
-
-  const chartData = [
-    { name: 'Nakit', value: balances.cash, color: '#10b981' },
-    { name: 'Banka', value: balances.bank, color: '#3b82f6' },
-    { name: 'Birikim', value: balances.savings, color: '#8b5cf6' }
-  ]
 
   const monthlyData = transactions
     .filter(t => t.type !== 'transfer')
@@ -606,6 +600,14 @@ export default function ButcapApp() {
       return acc
     }, [] as { month: string; income: number; expense: number }[])
     .slice(-6)
+
+  // Mevcut ayın toplam giderini hesapla
+  const currentMonth = new Date().toLocaleDateString('tr-TR', { month: 'short' })
+  const currentMonthData = monthlyData.find(m => m.month === currentMonth)
+  const currentMonthExpense = currentMonthData ? currentMonthData.expense : 0
+
+  // Mevcut ayın toplam gelirini hesapla
+  const currentMonthIncome = currentMonthData ? currentMonthData.income : 0
 
   // Kategori ikonları
   const getCategoryIcon = (category: string) => {
@@ -1110,6 +1112,9 @@ export default function ButcapApp() {
                   <p className="text-3xl font-bold text-green-700">
                     {income.toLocaleString('tr-TR')} TL
                   </p>
+                  <p className="text-xs text-green-500 mt-1">
+                    Bu ay: {currentMonthIncome.toLocaleString('tr-TR')} TL
+                  </p>
                 </div>
                 <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center shadow-lg">
                   <TrendingUp className="h-8 w-8 text-white" />
@@ -1124,7 +1129,10 @@ export default function ButcapApp() {
                 <div>
                   <p className="text-red-600 text-sm font-medium mb-1">Toplam Gider</p>
                   <p className="text-3xl font-bold text-red-700">
-                    {expense.toLocaleString('tr-TR')} TL
+                    {totalExpense.toLocaleString('tr-TR')} TL
+                  </p>
+                  <p className="text-xs text-red-500 mt-1">
+                    Bu ay: {currentMonthExpense.toLocaleString('tr-TR')} TL
                   </p>
                 </div>
                 <div className="w-16 h-16 bg-gradient-to-r from-red-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-lg">
