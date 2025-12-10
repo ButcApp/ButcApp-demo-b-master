@@ -97,7 +97,83 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// PUT /api/data/balances - Update user balances
+// DELETE /api/data/balances - Reset user balances
+export async function DELETE(request: NextRequest) {
+  try {
+    const auth = await authenticate(request)
+    if (auth.error) {
+      return NextResponse.json({ error: auth.error }, { status: auth.status })
+    }
+
+    // Use authenticated user's ID instead of requiring userId parameter
+    const userId = auth.user.id
+
+    const { data, error } = await supabase
+      .from('user_profiles')
+      .update({ cash: 0, bank: 0, savings: 0 })
+      .eq('userid', userId)
+      .select()
+
+    if (error) {
+      console.error('Balances reset error:', error)
+      return NextResponse.json({
+        success: false,
+        error: 'Balances reset failed'
+      }, { status: 500 })
+    }
+
+    return NextResponse.json({
+      success: true,
+      message: 'Balances successfully reset to 0'
+    })
+
+  } catch (error) {
+    console.error('Balances DELETE error:', error)
+    return NextResponse.json({
+      success: false,
+      error: 'Internal server error'
+    }, { status: 500 })
+  }
+}
+
+// POST /api/data/balances/reset - Alternative reset endpoint
+export async function POST(request: NextRequest) {
+  try {
+    const auth = await authenticate(request)
+    if (auth.error) {
+      return NextResponse.json({ error: auth.error }, { status: auth.status })
+    }
+
+    // Use authenticated user's ID instead of requiring userId parameter
+    const userId = auth.user.id
+
+    const { data, error } = await supabase
+      .from('user_profiles')
+      .update({ cash: 0, bank: 0, savings: 0 })
+      .eq('userid', userId)
+      .select()
+
+    if (error) {
+      console.error('Balances reset error:', error)
+      return NextResponse.json({
+        success: false,
+        error: 'Balances reset failed'
+      }, { status: 500 })
+    }
+
+    return NextResponse.json({
+      success: true,
+      message: 'Balances successfully reset to 0'
+    })
+
+  } catch (error) {
+    console.error('Balances reset error:', error)
+    return NextResponse.json({
+      success: false,
+      error: 'Internal server error'
+    }, { status: 500 })
+  }
+}
 export async function PUT(request: NextRequest) {
   try {
     const auth = await authenticate(request)

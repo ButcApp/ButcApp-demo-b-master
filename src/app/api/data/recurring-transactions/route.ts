@@ -255,7 +255,46 @@ export async function PUT(request: NextRequest) {
   }
 }
 
-// DELETE /api/data/recurring-transactions - Delete recurring transaction
+// DELETE /api/data/recurring-transactions - Reset all user recurring transactions
+export async function DELETE(request: NextRequest) {
+  try {
+    const auth = await authenticate(request)
+    if (auth.error) {
+      return NextResponse.json({ error: auth.error }, { status: auth.status })
+    }
+
+    // Use authenticated user's ID instead of requiring userId parameter
+    const userId = auth.user.id
+
+    const { data, error } = await supabase
+      .from('user_data')
+      .delete()
+      .eq('userid', userId)
+      .eq('type', 'recurring')
+
+    if (error) {
+      console.error('Recurring transactions reset error:', error)
+      return NextResponse.json({
+        success: false,
+        error: 'Recurring transactions reset failed'
+      }, { status: 500 })
+    }
+
+    return NextResponse.json({
+      success: true,
+      message: 'All recurring transactions successfully deleted'
+    })
+
+  } catch (error) {
+    console.error('Recurring transactions DELETE error:', error)
+    return NextResponse.json({
+      success: false,
+      error: 'Internal server error'
+    }, { status: 500 })
+  }
+}
+
+// DELETE /api/data/recurring-transactions - Reset all user recurring transactions
 export async function DELETE(request: NextRequest) {
   try {
     const auth = await authenticate(request)

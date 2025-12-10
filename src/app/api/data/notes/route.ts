@@ -222,7 +222,46 @@ export async function PUT(request: NextRequest) {
   }
 }
 
-// DELETE /api/data/notes/[noteId] - Delete note
+// DELETE /api/data/notes - Reset all user notes
+export async function DELETE(request: NextRequest) {
+  try {
+    const auth = await authenticate(request)
+    if (auth.error) {
+      return NextResponse.json({ error: auth.error }, { status: auth.status })
+    }
+
+    // Use authenticated user's ID instead of requiring userId parameter
+    const userId = auth.user.id
+
+    const { data, error } = await supabase
+      .from('user_data')
+      .delete()
+      .eq('userid', userId)
+      .eq('type', 'note')
+
+    if (error) {
+      console.error('Notes reset error:', error)
+      return NextResponse.json({
+        success: false,
+        error: 'Notes reset failed'
+      }, { status: 500 })
+    }
+
+    return NextResponse.json({
+      success: true,
+      message: 'All notes successfully deleted'
+    })
+
+  } catch (error) {
+    console.error('Notes DELETE error:', error)
+    return NextResponse.json({
+      success: false,
+      error: 'Internal server error'
+    }, { status: 500 })
+  }
+}
+
+// DELETE /api/data/notes - Reset all user notes
 export async function DELETE(
   request: NextRequest,
   { params }: { params: Promise<{ noteId: string }> }
