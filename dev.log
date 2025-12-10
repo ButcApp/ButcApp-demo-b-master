@@ -3884,3 +3884,382 @@ Not an admin route or login page, proceeding
 Pathname: /_next/static/css/app/layout.css
 Method: GET
 Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/reset
+Method: DELETE
+API route, skipping middleware
+ DELETE /api/data/reset 405 in 44ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /
+Method: GET
+Not an admin route or login page, proceeding
+ GET / 200 in 443ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/webpack.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/main-app.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/layout.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app-pages-internals.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/page.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+ ○ Compiling /api/auth/me ...
+ ✓ Compiled /api/auth/me in 1977ms (1845 modules)
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 2328ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /app
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app 200 in 108ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/app/page.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 207ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/balances
+Method: GET
+API route, skipping middleware
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+ ○ Compiling /api/data/balances ...
+ ✓ Compiled /api/data/balances in 1150ms (1847 modules)
+AuthService: Verifying token
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/data/balances 200 in 2061ms
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 2008ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/balances
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 238ms
+ GET /api/data/balances 200 in 376ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/transactions
+Method: GET
+API route, skipping middleware
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+ ⨯ ./src/app/api/data/transactions/route.ts
+Error:   [31mx[0m Expected '}', got '<eof>'
+     ,-[[36;1;4m/home/z/my-project/src/app/api/data/transactions/route.ts[0m:324:1]
+ [2m321[0m | }
+ [2m322[0m | 
+ [2m323[0m | // DELETE /api/data/transactions - Reset all user transactions
+ [2m324[0m | export async function DELETE(request: NextRequest) {
+     : [35;1m                                                    ^[0m
+     `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/app/api/data/transactions/route.ts
+ ○ Compiling /api/data/transactions ...
+ ⨯ ./src/app/api/data/transactions/route.ts
+Error:   [31mx[0m Expected '}', got '<eof>'
+     ,-[[36;1;4m/home/z/my-project/src/app/api/data/transactions/route.ts[0m:324:1]
+ [2m321[0m | }
+ [2m322[0m | 
+ [2m323[0m | // DELETE /api/data/transactions - Reset all user transactions
+ [2m324[0m | export async function DELETE(request: NextRequest) {
+     : [35;1m                                                    ^[0m
+     `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/app/api/data/transactions/route.ts
+ GET /api/auth/me 500 in 830ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+ ⨯ ./src/app/api/data/transactions/route.ts
+Error:   [31mx[0m Expected '}', got '<eof>'
+     ,-[[36;1;4m/home/z/my-project/src/app/api/data/transactions/route.ts[0m:324:1]
+ [2m321[0m | }
+ [2m322[0m | 
+ [2m323[0m | // DELETE /api/data/transactions - Reset all user transactions
+ [2m324[0m | export async function DELETE(request: NextRequest) {
+     : [35;1m                                                    ^[0m
+     `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/app/api/data/transactions/route.ts
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/1faf9a4aee3e223f.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+ ⨯ ./src/app/api/data/transactions/route.ts
+Error:   [31mx[0m Expected '}', got '<eof>'
+     ,-[[36;1;4m/home/z/my-project/src/app/api/data/transactions/route.ts[0m:324:1]
+ [2m321[0m | }
+ [2m322[0m | 
+ [2m323[0m | // DELETE /api/data/transactions - Reset all user transactions
+ [2m324[0m | export async function DELETE(request: NextRequest) {
+     : [35;1m                                                    ^[0m
+     `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/app/api/data/transactions/route.ts
+ GET /api/data/transactions 500 in 3473ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.1faf9a4aee3e223f.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+ GET /api/auth/me 500 in 1616ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+ GET /api/auth/me 500 in 21ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/8ee590a3a70cd2dd.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+=== MIDDLEWARE DEBUG ===
+Pathname: /app
+Method: GET
+Not an admin route or login page, proceeding
+ GET /api/auth/me 500 in 27ms
+ GET /app 500 in 23ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+ GET /api/auth/me 500 in 31ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/admin-access
+Method: POST
+API route, skipping middleware
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/fallback/webpack.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/fallback/main.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/fallback/react-refresh.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/fallback/pages/_app.js
+Method: GET
+Not an admin route or login page, proceeding
+ ⨯ ./src/app/api/data/transactions/route.ts
+Error:   [31mx[0m Expected '}', got '<eof>'
+     ,-[[36;1;4m/home/z/my-project/src/app/api/data/transactions/route.ts[0m:324:1]
+ [2m321[0m | }
+ [2m322[0m | 
+ [2m323[0m | // DELETE /api/data/transactions - Reset all user transactions
+ [2m324[0m | export async function DELETE(request: NextRequest) {
+     : [35;1m                                                    ^[0m
+     `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/app/api/data/transactions/route.ts
+ POST /api/admin-access 500 in 580ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/fallback/pages/_error.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/development/_devMiddlewareManifest.json
+Method: GET
+Not an admin route or login page, proceeding
+ ✓ Compiled /api/admin-access in 3.3s (3299 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /app
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/development/_devPagesManifest.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/09a1cab4658c34be.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ GET /app 200 in 749ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /app
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /app
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app 200 in 157ms
+ GET /app 200 in 159ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/webpack.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/main-app.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app-pages-internals.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/layout.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/app/page.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+ ✓ Compiled /api/auth/me in 423ms (1843 modules)
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 1115ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 210ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/balances
+Method: GET
+API route, skipping middleware
+ ✓ Compiled /api/data/balances in 402ms (1845 modules)
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/data/balances 200 in 875ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 184ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/transactions
+Method: GET
+API route, skipping middleware
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 636ms (3352 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/1f987a42ddb45773.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+ GET /api/data/transactions 404 in 1005ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.1f987a42ddb45773.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 218ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/recurring-transactions
+Method: GET
+API route, skipping middleware
+ ○ Compiling /api/data/recurring-transactions ...
+ ⨯ ./src/app/api/data/recurring-transactions/route.ts
+Module parse failed: Identifier 'DELETE' has already been declared (296:22)
+| }
+| // DELETE /api/data/recurring-transactions - Reset all user recurring transactions
+> export async function DELETE(request) {
+|     try {
+|         const auth = await authenticate(request);
+
+Import trace for requested module:
+./src/app/api/data/recurring-transactions/route.ts
+ GET /api/data/recurring-transactions 500 in 2098ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+ GET /api/auth/me 500 in 21ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/admin-access
+Method: POST
+API route, skipping middleware
+ ⨯ ./src/app/api/data/recurring-transactions/route.ts
+Module parse failed: Identifier 'DELETE' has already been declared (296:22)
+| }
+| // DELETE /api/data/recurring-transactions - Reset all user recurring transactions
+> export async function DELETE(request) {
+|     try {
+|         const auth = await authenticate(request);
+
+Import trace for requested module:
+./src/app/api/data/recurring-transactions/route.ts
+ POST /api/admin-access 500 in 1776ms
