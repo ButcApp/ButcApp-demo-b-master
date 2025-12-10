@@ -609,6 +609,12 @@ export default function ButcapApp() {
   // Mevcut ayın toplam gelirini hesapla
   const currentMonthIncome = currentMonthData ? currentMonthData.income : 0
 
+  const chartData = [
+    { name: 'Nakit', value: balances.cash, color: '#10b981' },
+    { name: 'Banka', value: balances.bank, color: '#3b82f6' },
+    { name: 'Birikim', value: balances.savings, color: '#8b5cf6' }
+  ]
+
   // Kategori ikonları
   const getCategoryIcon = (category: string) => {
     const lowerCategory = category.toLowerCase()
