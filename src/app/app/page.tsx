@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -10,14 +10,61 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Badge } from '@/components/ui/badge'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Calendar, DollarSign, TrendingUp, TrendingDown, Plus, Wallet, PiggyBank, Building, Filter, Repeat, Settings, BarChart3, Target, AlertCircle, ArrowRightLeft, Clock, Timer, Shield, Smartphone, FileText, Download, Upload, Menu, X, ChevronRight, CheckCircle, LineChart as LineChartIcon, Mail, Send, CheckCircle2, Share, BookOpen, ChevronDown, ChevronUp, Eye, EyeOff } from 'lucide-react'
+import { 
+  Wallet, 
+  TrendingUp, 
+  TrendingDown, 
+  Plus, 
+  ArrowRightLeft, 
+  Eye, 
+  EyeOff,
+  Calendar,
+  DollarSign,
+  PiggyBank,
+  Building,
+  Settings,
+  BarChart3,
+  Target,
+  AlertCircle,
+  Clock,
+  Timer,
+  Shield,
+  Smartphone,
+  FileText,
+  Download,
+  Upload,
+  Menu,
+  X,
+  ChevronRight,
+  CheckCircle,
+  LineChart as LineChartIcon,
+  Mail,
+  Send,
+  CheckCircle2,
+  Share,
+  BookOpen,
+  ChevronDown,
+  ChevronUp,
+  Filter,
+  Repeat,
+  CreditCard,
+  ShoppingCart,
+  Home,
+  Car,
+  Heart,
+  Zap,
+  Sparkles,
+  ArrowUp,
+  ArrowDown,
+  MoreHorizontal
+} from 'lucide-react'
 import { ThemeToggle } from '@/components/theme-toggle'
 import { LanguageToggle } from '@/components/language-toggle'
 import { UserAuthButton } from '@/components/auth/UserAuthButton'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { useAuth } from '@/contexts/AuthContext'
 import { dataSync } from '@/lib/data-sync'
-import { PieChart, Pie, Cell, ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, BarChart, Bar } from 'recharts'
+import { PieChart, Pie, Cell, ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, BarChart, Bar, AreaChart, Area } from 'recharts'
 import Link from 'next/link'
 import EditRecurringDialog from '@/components/EditRecurringDialog'
 import { MiniChart } from '@/components/ui/mini-chart'
@@ -51,9 +98,9 @@ interface RecurringTransaction {
   account: 'cash' | 'bank' | 'savings'
   frequency: 'daily' | 'weekly' | 'monthly' | 'yearly' | 'custom'
   customFrequency?: string
-  dayOfWeek?: number  // Haftalık için (1-7, 1=Pazartesi)
-  dayOfMonth?: number // Aylık için (1-31)
-  monthOfYear?: number // Yıllık için (1-12)
+  dayOfWeek?: number
+  dayOfMonth?: number
+  monthOfYear?: number
   startDate: string
   endDate?: string
   isActive: boolean
@@ -76,7 +123,7 @@ interface Note {
 export default function ButcapApp() {
   const { t } = useLanguage()
   const { user, signOut } = useAuth()
-const router = useRouter()
+  const router = useRouter()
   const [balances, setBalances] = useState<AccountBalances>({ cash: 0, bank: 0, savings: 0 })
   const [transactions, setTransactions] = useState<Transaction[]>([])
   const [recurringTransactions, setRecurringTransactions] = useState<RecurringTransaction[]>([])
@@ -84,9 +131,7 @@ const router = useRouter()
   const [loading, setLoading] = useState(true)
   const [showAddTransaction, setShowAddTransaction] = useState(false)
   const [showRecurringDialog, setShowRecurringDialog] = useState(false)
-  const [showContactDialog, setShowContactDialog] = useState(false)
   const [showTransferDialog, setShowTransferDialog] = useState(false)
-  const [showStatsDialog, setShowStatsDialog] = useState(false)
   const [showEditRecurringDialog, setShowEditRecurringDialog] = useState(false)
   const [editingRecurring, setEditingRecurring] = useState<RecurringTransaction | null>(null)
   const [selectedDate, setSelectedDate] = useState<string>('all')
@@ -94,91 +139,169 @@ const router = useRouter()
   const [showNoteDialog, setShowNoteDialog] = useState(false)
   const [showAllNotesDialog, setShowAllNotesDialog] = useState(false)
   const [noteFilter, setNoteFilter] = useState<'all' | 'today' | 'week' | 'month'>('all')
-const [showNavigationConfirmDialog, setShowNavigationConfirmDialog] = useState(false)
-const [showBalanceDetails, setShowBalanceDetails] = useState(false)
-const [balanceDetailsTimeout, setBalanceDetailsTimeout] = useState<NodeJS.Timeout | null>(null)
-const [balanceHidden, setBalanceHidden] = useState(false)
+  const [showNavigationConfirmDialog, setShowNavigationConfirmDialog] = useState(false)
+  const [balanceHidden, setBalanceHidden] = useState(false)
   
   // Notlar state
   const [notes, setNotes] = useState<Note[]>([])
   const [noteContent, setNoteContent] = useState('')
   const [noteTags, setNoteTags] = useState('')
   
-  // İletişim form state
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: '',
-    type: t('contact.suggestion')
+  // Yeni işlem form state
+  const [newTransaction, setNewTransaction] = useState({
+    type: 'expense' as 'income' | 'expense' | 'transfer',
+    amount: '',
+    category: '',
+    description: '',
+    account: 'cash' as 'cash' | 'bank' | 'savings',
+    transferFrom: 'cash' as 'cash' | 'bank' | 'savings',
+    transferTo: 'bank' as 'cash' | 'bank' | 'savings',
+    transferAmount: '',
+    transferDescription: ''
   })
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
-  
-  // Handle header navigation - show confirmation dialog
-  const handleHeaderClick = () => {
-    setShowNavigationConfirmDialog(true)
-  }
-  
-  // Handle navigation confirmation - logout user and navigate to home
-  const handleNavigationConfirm = async () => {
-    setShowNavigationConfirmDialog(false)
+
+  // Yeni tekrarlayan işlem form state
+  const [newRecurring, setNewRecurring] = useState({
+    type: 'expense' as 'income' | 'expense',
+    amount: '',
+    category: '',
+    description: '',
+    account: 'cash' as 'cash' | 'bank' | 'savings',
+    frequency: 'monthly' as 'daily' | 'weekly' | 'monthly' | 'yearly' | 'custom',
+    dayOfWeek: 1,
+    dayOfMonth: 1,
+    monthOfYear: 1,
+    startDate: new Date().toISOString().split('T')[0],
+    endDate: ''
+  })
+
+  const isMobile = useMobile()
+
+  const checkAndApplyRecurringTransactions = useCallback(() => {
+    if (!user) return
+
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
+    const todayStr = today.toISOString().split('T')[0]
+
+    recurringTransactions.forEach(recurring => {
+      if (!recurring.isActive) return
+
+      const startDate = new Date(recurring.startDate)
+      startDate.setHours(0, 0, 0, 0)
+      
+      if (startDate > today) return
+
+      const datesToApply = getRecurringDates(recurring, startDate, today)
+      
+      datesToApply.forEach(date => {
+        const dateStr = date.toISOString().split('T')[0]
+        
+        const alreadyApplied = transactions.some(t => 
+          t.recurringId === recurring.id && 
+          t.date.startsWith(dateStr)
+        )
+
+        if (!alreadyApplied) {
+          addTransaction({
+            type: recurring.type,
+            amount: recurring.amount,
+            category: recurring.category,
+            description: `${recurring.description} (Otomatik)`,
+            account: recurring.account,
+            date: date.toISOString(),
+            isRecurring: true,
+            recurringId: recurring.id
+          })
+        }
+      })
+    })
+  }, [user, recurringTransactions, transactions])
+
+  const addTransaction = useCallback(async (transaction: Omit<Transaction, 'id'>) => {
+    if (!user) {
+      alert('İşlem eklemek için lütfen giriş yapın.')
+      return
+    }
+
+    const newTransaction: Transaction = {
+      ...transaction,
+      id: `trans_${user?.id || 'unknown'}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+    }
     
-    // Sign out user first to prevent redirect loop
+    setTransactions(prev => [newTransaction, ...prev])
+    
     try {
-      await signOut()
+      const transactionAdded = await dataSync.addTransaction(newTransaction)
+      
+      if (!transactionAdded) {
+        setTransactions(prev => prev.filter(t => t.id !== newTransaction.id))
+        alert('İşlem kaydedilemedi. Lütfen tekrar deneyin.')
+        return
+      }
     } catch (error) {
-      console.error('Error signing out:', error)
+      console.error('❌ Transaction kaydedilirken hata:', error)
+      setTransactions(prev => prev.filter(t => t.id !== newTransaction.id))
+      alert('İşlem kaydedilemedi. Lütfen tekrar deneyin.')
+      return
     }
     
-    // Navigate to home page
-    window.location.href = '/'
-  }
-
-  // Bakiye detayları toggle fonksiyonu
-  const toggleBalanceDetails = () => {
-    // Mevcut timeout'u temizle
-    if (balanceDetailsTimeout) {
-      clearTimeout(balanceDetailsTimeout)
-      setBalanceDetailsTimeout(null)
+    // Bakiyeleri güncelle
+    if (transaction.type === 'transfer' && transaction.transferFrom && transaction.transferTo) {
+      const newBalances = { ...balances }
+      newBalances[transaction.transferFrom!] -= transaction.amount
+      newBalances[transaction.transferTo!] += transaction.amount
+      setBalances(newBalances)
+      
+      try {
+        const balanceUpdated = await dataSync.updateBalances(newBalances)
+        if (!balanceUpdated) {
+          setBalances(balances)
+          alert('Bakiyeler güncellenemedi. Lütfen tekrar deneyin.')
+        }
+      } catch (error) {
+        console.error('❌ Bakiyeler güncellenirken hata:', error)
+        setBalances(balances)
+        alert('Bakiyeler güncellenemedi. Lütfen tekrar deneyin.')
+      }
+    } else {
+      const newBalances = { ...balances }
+      if (transaction.type === 'income') {
+        newBalances[transaction.account] += transaction.amount
+      } else if (transaction.type === 'expense') {
+        newBalances[transaction.account] -= transaction.amount
+      }
+      setBalances(newBalances)
+      
+      try {
+        const balanceUpdated = await dataSync.updateBalances(newBalances)
+        if (!balanceUpdated) {
+          setBalances(balances)
+          alert('Bakiyeler güncellenemedi. Lütfen tekrar deneyin.')
+        }
+      } catch (error) {
+        console.error('❌ Bakiyeler güncellenirken hata:', error)
+        setBalances(balances)
+        alert('Bakiyeler güncellenemedi. Lütfen tekrar deneyin.')
+      }
     }
-
-    // Toggle state - artık otomatik kapanma yok
-    setShowBalanceDetails(!showBalanceDetails)
-  }
-
-  // Bakiye gizleme fonksiyonu
-  const toggleBalanceHidden = () => {
-    const newHiddenState = !balanceHidden
-    setBalanceHidden(newHiddenState)
-    localStorage.setItem('balanceHidden', newHiddenState.toString())
-    
-    // Eğer gizleniyorsa, detayları da kapat
-    if (newHiddenState) {
-      setShowBalanceDetails(false)
-    }
-  }  
+  }, [user, balances])
 
   // Verileri Supabase'den yükle
   useEffect(() => {
     const loadData = async () => {
       if (!user) {
-        console.log('❌ Kullanıcı giriş yapmamış, loading false yapılıyor')
         setLoading(false)
         return
       }
 
       try {
-        console.log('✅ Kullanıcı giriş yapmış, veriler yükleniyor...')
         setLoading(true)
         
-        // Sequential olarak verileri yükle (daha stabil)
         const balancesData = await dataSync.getBalances()
         const transactionsData = await dataSync.getTransactions()
         const recurringData = await dataSync.getRecurringTransactions()
         const notesData = await dataSync.getNotes()
-
-        console.log('📊 Veriler yüklendi:', { balancesData, transactionsData, recurringData, notesData })
 
         if (balancesData) {
           setBalances(balancesData)
@@ -199,22 +322,12 @@ const [balanceHidden, setBalanceHidden] = useState(false)
       } catch (error) {
         console.error('❌ Veriler yüklenirken hata:', error)
       } finally {
-        console.log('✅ Loading tamamlandı, false yapılıyor')
         setLoading(false)
       }
     }
 
     loadData()
   }, [user])
-
-  // Cleanup timeout on component unmount
-  useEffect(() => {
-    return () => {
-      if (balanceDetailsTimeout) {
-        clearTimeout(balanceDetailsTimeout)
-      }
-    }
-  }, [balanceDetailsTimeout])
 
   // Gizleme ayarını localStorage'dan yükle
   useEffect(() => {
@@ -224,66 +337,17 @@ const [balanceHidden, setBalanceHidden] = useState(false)
     }
   }, [])
 
-  // {t('app.monthlyAutoTransactions')}
+  // Tekrarlayan işlemleri kontrol et
   useEffect(() => {
     checkAndApplyRecurringTransactions()
-  }, [recurringTransactions, user])
+  }, [recurringTransactions.length, user, checkAndApplyRecurringTransactions])
 
-  const checkAndApplyRecurringTransactions = () => {
-    // Kullanıcı giriş yapmamışsa tekrarlayan işlemleri kontrol etme
-    if (!user) {
-      return
-    }
-
-    const today = new Date()
-    today.setHours(0, 0, 0, 0) // Bugünün başlangıcı
-    const todayStr = today.toISOString().split('T')[0]
-
-    recurringTransactions.forEach(recurring => {
-      if (!recurring.isActive) return
-
-      const startDate = new Date(recurring.startDate)
-      startDate.setHours(0, 0, 0, 0) // Başlangıç tarihinin başlangıcı
-      
-      // Eğer başlangıç tarihi gelecekteyse, henüz uygula
-      if (startDate > today) return
-
-      // Geçmiş tarihler için tüm uygulanması gereken tarihleri hesapla
-      const datesToApply = getRecurringDates(recurring, startDate, today)
-      
-      datesToApply.forEach(date => {
-        const dateStr = date.toISOString().split('T')[0]
-        
-        // Bu tarih için zaten işlem uygulanmış mı kontrol et
-        const alreadyApplied = transactions.some(t => 
-          t.recurringId === recurring.id && 
-          t.date.startsWith(dateStr)
-        )
-
-        if (!alreadyApplied) {
-          addTransaction({
-            type: recurring.type,
-            amount: recurring.amount,
-            category: recurring.category,
-            description: `${recurring.description} (Otomatik)`,
-            account: recurring.account,
-            date: date.toISOString(),
-            isRecurring: true,
-            recurringId: recurring.id
-          })
-        }
-      })
-    })
-  }
-
-  // Tekrarlayan işlem için uygulanması gereken tarihleri hesapla
   const getRecurringDates = (recurring: RecurringTransaction, startDate: Date, endDate: Date): Date[] => {
     const dates: Date[] = []
     let currentDate = new Date(startDate)
 
     switch (recurring.frequency) {
       case 'daily':
-        // Günlük: Başlangıç tarihinden bitiş tarihine kadar her gün
         while (currentDate <= endDate) {
           dates.push(new Date(currentDate))
           currentDate.setDate(currentDate.getDate() + 1)
@@ -291,16 +355,13 @@ const [balanceHidden, setBalanceHidden] = useState(false)
         break
         
       case 'weekly':
-        // Haftalık: Başlangıç tarihinden bitiş tarihine kadar seçilen günler
         if (recurring.dayOfWeek) {
           const jsDayOfWeek = recurring.dayOfWeek === 7 ? 0 : recurring.dayOfWeek
           
-          // İlk uygun tarihi bul
           while (currentDate.getDay() !== jsDayOfWeek && currentDate <= endDate) {
             currentDate.setDate(currentDate.getDate() + 1)
           }
           
-          // Sonraki haftaları ekle
           while (currentDate <= endDate) {
             dates.push(new Date(currentDate))
             currentDate.setDate(currentDate.getDate() + 7)
@@ -309,12 +370,10 @@ const [balanceHidden, setBalanceHidden] = useState(false)
         break
         
       case 'monthly':
-        // Aylık: Başlangıç tarihinden bitiş tarihine kadar her ayın aynı günü
         const startDay = startDate.getDate()
         currentDate = new Date(startDate)
         
         while (currentDate <= endDate) {
-          // Ayın son gününü kontrol et (örn: 31 Şubat'ta yok)
           const lastDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate()
           const dayToUse = Math.min(startDay, lastDayOfMonth)
           
@@ -323,14 +382,12 @@ const [balanceHidden, setBalanceHidden] = useState(false)
             dates.push(new Date(currentDate))
           }
           
-          // Sonraki aya geç
           currentDate.setMonth(currentDate.getMonth() + 1)
-          currentDate.setDate(1) // Ayın başına döndür
+          currentDate.setDate(1)
         }
         break
         
       case 'yearly':
-        // Yıllık: Başlangıç tarihinden bitiş tarihine kadar her yılın aynı günü
         currentDate = new Date(startDate)
         
         while (currentDate <= endDate) {
@@ -342,7 +399,6 @@ const [balanceHidden, setBalanceHidden] = useState(false)
         break
         
       case 'custom':
-        // Özel periyot: 30 günlük aralıklarla
         currentDate = new Date(startDate)
         
         while (currentDate <= endDate) {
@@ -361,7 +417,6 @@ const [balanceHidden, setBalanceHidden] = useState(false)
     setBalances(newBalances)
     setIsFirstTime(false)
     
-    // Bakiyeleri Supabase'e kaydet (await ekle)
     try {
       const balanceUpdated = await dataSync.updateBalances(newBalances)
       if (!balanceUpdated) {
@@ -378,2540 +433,847 @@ const [balanceHidden, setBalanceHidden] = useState(false)
     }
   }
 
-  const addTransaction = async (transaction: Omit<Transaction, 'id'>) => {
-    // Kullanıcı giriş yapmış mı kontrol et
-    if (!user) {
-      alert('İşlem eklemek için lütfen giriş yapın.')
-      return
-    }
-
-    const newTransaction: Transaction = {
-      ...transaction,
-      id: `trans_${user?.id || 'unknown'}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
-    }
-    
-    console.log('🔄 addTransaction başlatılıyor:', newTransaction)
-    console.log('📊 Mevcut bakiyeler:', balances)
-    
-    // Önce state'i güncelle
-    setTransactions(prev => [newTransaction, ...prev])
-    
-    // Supabase'e kaydet
-    try {
-      console.log('💾 Supabase\'e transaction kaydediliyor...')
-      const transactionAdded = await dataSync.addTransaction(newTransaction)
-      console.log('✅ Transaction Supabase\'e kaydedildi:', transactionAdded)
-      
-      if (!transactionAdded) {
-        console.error('❌ Transaction kaydedilemedi, state geri alınıyor')
-        setTransactions(prev => prev.filter(t => t.id !== newTransaction.id))
-        alert('İşlem kaydedilemedi. Lütfen tekrar deneyin.')
-        return
-      }
-    } catch (error) {
-      console.error('❌ Transaction kaydedilirken hata:', error)
-      // Hata durumunda state'i geri al
-      setTransactions(prev => prev.filter(t => t.id !== newTransaction.id))
-      alert('İşlem kaydedilemedi. Lütfen tekrar deneyin.')
-      return
-    }
-    
-    // Bakiyeleri güncelleme kısmı
-    console.log('💰 Bakiyeler güncelleniyor...')
-    
-    // Transfer işlemi ise bakiyeleri farklı güncelle
-    if (transaction.type === 'transfer' && transaction.transferFrom && transaction.transferTo) {
-      console.log('📤 Transfer işlemi tespit edildi')
-      const newBalances = { ...balances }
-      newBalances[transaction.transferFrom!] -= transaction.amount
-      newBalances[transaction.transferTo!] += transaction.amount
-      console.log('💰 Transfer sonrası bakiyeler:', newBalances)
-      setBalances(newBalances)
-      
-      // Bakiyeleri Supabase'e kaydet (await ekle)
-      console.log('💾 Transfer bakiyeleri Supabase\'e kaydediliyor...')
-      const balanceUpdated = await dataSync.updateBalances(newBalances)
-      console.log('✅ Transfer bakiyeleri Supabase\'e güncellendi:', balanceUpdated)
-      if (!balanceUpdated) {
-        console.error('❌ Bakiyeler güncellenemedi, state geri alınıyor')
-        setBalances(balances) // Orijinal bakiyeleri geri al
-        alert('Bakiyeler güncellenemedi. Lütfen tekrar deneyin.')
-      }
-    } else {
-      console.log('📤 Normal gelir/gider işlemi tespit edildi')
-      // Normal gelir/gider işlemi
-      const newBalances = { ...balances }
-      if (transaction.type === 'income') {
-        newBalances[transaction.account] += transaction.amount
-        console.log(`💰 Gelir eklendi: +${transaction.amount} -> ${transaction.account}`)
-      } else if (transaction.type === 'expense') {
-        newBalances[transaction.account] -= transaction.amount
-        console.log(`💰 Gider eklendi: -${transaction.amount} -> ${transaction.account}`)
-      }
-      console.log('💰 İşlem sonrası bakiyeler:', newBalances)
-      setBalances(newBalances)
-      
-      // Bakiyeleri Supabase'e kaydet (await ekle)
-      console.log('💾 Normal bakiyeleri Supabase\'e kaydediliyor...')
-      const balanceUpdated = await dataSync.updateBalances(newBalances)
-      console.log('✅ Normal bakiyeler Supabase\'e güncellendi:', balanceUpdated)
-      if (!balanceUpdated) {
-        console.error('❌ Bakiyeler güncellenemedi, state geri alınıyor')
-        setBalances(balances) // Orijinal bakiyeleri geri al
-        alert('Bakiyeler güncellenemedi. Lütfen tekrar deneyin.')
-      }
-    }
-    
-    console.log('✅ addTransaction tamamlandı')
-  }
-
-  const addTransfer = (transfer: { from: 'cash' | 'bank' | 'savings', to: 'cash' | 'bank' | 'savings', amount: number, description: string }) => {
-    addTransaction({
-      type: 'transfer',
-      amount: transfer.amount,
-      category: 'Transfer',
-      description: transfer.description,
-      account: transfer.from,
-      date: new Date().toISOString(),
-      transferFrom: transfer.from,
-      transferTo: transfer.to
-    })
-  }
-
-  const getNextRecurringTransactions = () => {
-    const today = new Date()
-    today.setHours(0, 0, 0, 0) // Bugünün başlangıcı
-    const currentMonth = today.getMonth()
-    const currentYear = today.getFullYear()
-    const currentDay = today.getDate()
-    const currentWeekDay = today.getDay() // 0 = Pazar, 1 = Pazartesi
-
-    return recurringTransactions
-      .filter(r => r.isActive)
-      .map(r => {
-        const startDate = new Date(r.startDate)
-        startDate.setHours(0, 0, 0, 0) // Başlangıç tarihinin başlangıcı
-        
-        // Eğer başlangıç tarihi gelecekteyse, o tarihi kullan
-        if (startDate > today) {
-          return {
-            ...r,
-            nextDate: startDate,
-            daysUntil: Math.ceil((startDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24))
-          }
-        }
-        
-        let nextDate = new Date(startDate) // Başlangıç tarihinden başla
-        
-        switch (r.frequency) {
-          case 'daily':
-            // Günlük: Bugünden sonraki ilk gün
-            nextDate = new Date(today)
-            nextDate.setDate(today.getDate() + 1)
-            break
-            
-          case 'weekly':
-            if (r.dayOfWeek) {
-              // JavaScript'te: 0=Pazar, 1=Pazartesi
-              // Bizim sistemimizde: 1=Pazartesi, 7=Pazar
-              const jsDayOfWeek = r.dayOfWeek === 7 ? 0 : r.dayOfWeek
-              let daysUntilNext = (jsDayOfWeek - currentWeekDay + 7) % 7
-              
-              // Eğer bugün gün ise, bir sonraki haftaya ata
-              if (daysUntilNext === 0) {
-                daysUntilNext = 7
-              }
-              
-              nextDate = new Date(today)
-              nextDate.setDate(today.getDate() + daysUntilNext)
-            }
-            break
-            
-          case 'monthly':
-            // Aylık: Başlangıç gününe göre hesapla
-            const startDay = startDate.getDate()
-            nextDate = new Date(currentYear, currentMonth, startDay)
-            
-            // Eğer bu ayki tarih geçmişse, sonraki aya ata
-            if (nextDate < today) {
-              nextDate = new Date(currentYear, currentMonth + 1, startDay)
-            }
-            break
-            
-          case 'yearly':
-            // Yıllık: Başlangıç tarihine göre hesapla
-            nextDate = new Date(currentYear, startDate.getMonth(), startDate.getDate())
-            
-            // Eğer bu yıldaki tarih geçmişse, sonraki yıla ata
-            if (nextDate < today) {
-              nextDate = new Date(currentYear + 1, startDate.getMonth(), startDate.getDate())
-            }
-            break
-            
-          case 'custom':
-            // Özel periyot: Başlangıç tarihinden itibaren 30 gün ekle
-            nextDate = new Date(startDate)
-            nextDate.setDate(startDate.getDate() + 30)
-            
-            // Eğer bu tarih geçmişse, bugünden sonraki 30 gün
-            if (nextDate <= today) {
-              nextDate = new Date(today)
-              nextDate.setDate(today.getDate() + 30)
-            }
-            break
-            
-          default:
-            nextDate = new Date(today)
-            nextDate.setDate(today.getDate() + 30)
-        }
-
-        const daysUntil = Math.ceil((nextDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24))
-
-        return {
-          ...r,
-          nextDate,
-          daysUntil
-        }
-      })
-      .filter(r => r.daysUntil >= 0) // Sadece gelecekteki işlemleri göster
-      .sort((a, b) => a.daysUntil - b.daysUntil)
-  }
-
-  const addRecurringTransaction = async (recurring: Omit<RecurringTransaction, 'id'>) => {
-    // Kullanıcı giriş yapmış mı kontrol et
+  const addRecurringTransaction = async () => {
     if (!user) {
       alert('Tekrarlayan işlem eklemek için lütfen giriş yapın.')
       return
     }
 
-    const newRecurring: RecurringTransaction = {
-      ...recurring,
-      id: `recurring_${user?.id || 'unknown'}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+    const newRecurringTransaction: RecurringTransaction = {
+      id: `recurring_${user?.id || 'unknown'}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+      type: newRecurring.type,
+      amount: parseFloat(newRecurring.amount),
+      category: newRecurring.category,
+      description: newRecurring.description,
+      account: newRecurring.account,
+      frequency: newRecurring.frequency,
+      dayOfWeek: newRecurring.frequency === 'weekly' ? newRecurring.dayOfWeek : undefined,
+      dayOfMonth: newRecurring.frequency === 'monthly' ? newRecurring.dayOfMonth : undefined,
+      monthOfYear: newRecurring.frequency === 'yearly' ? newRecurring.monthOfYear : undefined,
+      startDate: newRecurring.startDate,
+      endDate: newRecurring.endDate || undefined,
+      isActive: true
     }
-    
-    // Önce state'i güncelle
-    setRecurringTransactions(prev => [...prev, newRecurring])
-    
-    // Supabase'e kaydet (await ekle)
+
     try {
-      const recurringUpdated = await dataSync.addRecurringTransaction(newRecurring)
-      if (!recurringUpdated) {
-        console.error('Recurring transaction kaydedilemedi, state geri alınıyor')
-        setRecurringTransactions(prev => prev.filter(r => r.id !== newRecurring.id))
+      const added = await dataSync.addRecurringTransaction(newRecurringTransaction)
+      if (added) {
+        setRecurringTransactions(prev => [...prev, newRecurringTransaction])
+        setShowRecurringDialog(false)
+        setNewRecurring({
+          type: 'expense',
+          amount: '',
+          category: '',
+          description: '',
+          account: 'cash',
+          frequency: 'monthly',
+          dayOfWeek: 1,
+          dayOfMonth: 1,
+          monthOfYear: 1,
+          startDate: new Date().toISOString().split('T')[0],
+          endDate: ''
+        })
+      } else {
         alert('Tekrarlayan işlem kaydedilemedi. Lütfen tekrar deneyin.')
       }
     } catch (error) {
-      console.error('Recurring transaction kaydedilirken hata:', error)
-      // Hata durumunda state'i geri al
-      setRecurringTransactions(prev => prev.filter(r => r.id !== newRecurring.id))
+      console.error('❌ Tekrarlayan işlem kaydedilirken hata:', error)
       alert('Tekrarlayan işlem kaydedilemedi. Lütfen tekrar deneyin.')
     }
   }
 
-  const handleEditRecurring = (recurring: RecurringTransaction) => {
-    setEditingRecurring(recurring)
-    setShowEditRecurringDialog(true)
-  }
-
-  const updateRecurringTransaction = async (updatedRecurring: RecurringTransaction) => {
-    // Önce state'i güncelle
-    setRecurringTransactions(prev => 
-      prev.map(r => 
-        r.id === updatedRecurring.id ? updatedRecurring : r
-      )
-    )
-    
-    // Supabase'e güncelle (await ekle)
-    try {
-      const recurringUpdated = await dataSync.updateRecurringTransaction(updatedRecurring)
-      if (!recurringUpdated) {
-        console.error('Recurring transaction güncellenemedi, state geri alınıyor')
-        // Orijinal veriyi geri almak zorundayız ama bu karmaşık
-        alert('Tekrarlayan işlem güncellenemedi. Lütfen tekrar deneyin.')
-        return
-      }
-      
-      setShowEditRecurringDialog(false)
-      setEditingRecurring(null)
-    } catch (error) {
-      console.error('Recurring transaction güncellenirken hata:', error)
-      alert('Tekrarlayan işlem güncellenemedi. Lütfen tekrar deneyin.')
-    }
-  }
-
-  const totalBalance = balances.cash + balances.bank + balances.savings
-  const totalIncome = (transactions || []).filter(t => t.type === 'income').reduce((sum, t) => sum + (t.amount || 0), 0)
-  const totalExpense = (transactions || []).filter(t => t.type === 'expense').reduce((sum, t) => sum + (t.amount || 0), 0)
-  
-  const monthlyIncome = (recurringTransactions || [])
-    .filter(r => r.type === 'income' && r.isActive)
-    .reduce((sum, r) => sum + (r.amount || 0), 0)
-  
-  const monthlyExpense = (recurringTransactions || [])
-    .filter(r => r.type === 'expense' && r.isActive)
-    .reduce((sum, r) => sum + (r.amount || 0), 0)
-
-  const upcomingTransactions = getNextRecurringTransactions()
-
-  // Bakiye analizi için yardımcı fonksiyonlar
-  const getBalanceChange = () => {
-    // Son 30 günün işlemlerini filtrele
-    const thirtyDaysAgo = new Date()
-    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
-    
-    const recentTransactions = (transactions || []).filter(t => 
-      new Date(t.date) >= thirtyDaysAgo && 
-      t.type !== 'transfer'
-    )
-    
-    // Her hesap için değişimi hesapla
-    const balanceChanges = {
-      cash: 0,
-      bank: 0,
-      savings: 0
-    }
-    
-    recentTransactions.forEach(t => {
-      if (t.type === 'income') {
-        balanceChanges[t.account] += t.amount
-      } else if (t.type === 'expense') {
-        balanceChanges[t.account] -= t.amount
-      }
-    })
-    
-    return balanceChanges
-  }
-
-  const getAccountTrend = (account: 'cash' | 'bank' | 'savings') => {
-    const change = getBalanceChange()[account]
-    if (change > 0) return 'up'
-    if (change < 0) return 'down'
-    return 'neutral'
-  }
-
-  const getAccountTrendAmount = (account: 'cash' | 'bank' | 'savings') => {
-    return getBalanceChange()[account]
-  }
-
-  // Kategori bazında harcamaları hesapla
-  const getExpenseByCategory = () => {
-    const expenses = transactions.filter(t => t.type === 'expense')
-    const categoryTotals: Record<string, number> = {}
-    
-    expenses.forEach(t => {
-      if (!categoryTotals[t.category]) {
-        categoryTotals[t.category] = 0
-      }
-      categoryTotals[t.category] += t.amount
-    })
-    
-    return categoryTotals
-  }
-
-  const getTopCategories = (limit: number = 5) => {
-    const expenses = getExpenseByCategory()
-    const sorted = Object.entries(expenses)
-      .sort(([, a], [, b]) => b - a)
-      .slice(0, limit)
-    
-    const totalExpenses = Object.values(expenses).reduce((sum, amount) => sum + amount, 0)
-    
-    return sorted.map(([category, amount]) => ({
-      category,
-      amount,
-      percentage: totalExpenses > 0 ? (amount / totalExpenses) * 100 : 0
-    }))
-  }
-
-  // Form verilerini güncelle
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }))
-  }
-
-  // Formu Formspree ile gönder
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-    
-    try {
-      const form = e.target as HTMLFormElement
-      const formData = new FormData(form)
-      
-      // Formspree'ye gönder
-      const response = await fetch('https://formspree.io/f/mzzwpgar', {
-        method: 'POST',
-        body: formData,
-        headers: {
-          'Accept': 'application/json'
-        }
-      })
-      
-      if (response.ok) {
-        setSubmitStatus('success')
-        setTimeout(() => {
-          setShowContactDialog(false)
-          setSubmitStatus('idle')
-          // Formu sıfırla
-          setFormData({
-            name: '',
-            email: '',
-            subject: '',
-            message: '',
-            type: 'Öneri'
-          })
-          form.reset()
-        }, 2000)
-      } else {
-        throw new Error(t('contact.errorMessage'))
-      }
-      
-    } catch (error) {
-      console.error('Form gönderim hatası:', error)
-      setSubmitStatus('error')
-      setTimeout(() => setSubmitStatus('idle'), 3000)
-    } finally {
-      setIsSubmitting(false)
-    }
-  }
-
-  // Not fonksiyonları
-  const addNote = async () => {
-    if (!noteContent.trim()) {
-      alert('Lütfen bir not içeriği girin!')
+  const handleAddTransaction = () => {
+    if (!newTransaction.amount || !newTransaction.category) {
+      alert('Lütfen tüm zorunlu alanları doldurun.')
       return
     }
 
-    const newNote: Note = {
-      id: `note_${user?.id || 'unknown'}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-      content: noteContent.trim(),
-      date: new Date().toISOString().split('T')[0],
-      createdAt: new Date().toISOString(),
-      tags: noteTags.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0)
-    }
-
-    // Önce state'i güncelle
-    setNotes(prev => [newNote, ...prev])
-    
-    // Supabase'e kaydet (await ekle)
-    try {
-      const noteAdded = await dataSync.addNote(newNote)
-      if (!noteAdded) {
-        console.error('Not kaydedilemedi, state geri alınıyor')
-        setNotes(prev => prev.filter(note => note.id !== newNote.id))
-        alert('Not kaydedilemedi. Lütfen tekrar deneyin.')
-        return
-      }
-      
-      setNoteContent('')
-      setNoteTags('')
-      setShowNoteDialog(false)
-    } catch (error) {
-      console.error('Not kaydedilirken hata:', error)
-      // Hata durumunda state'i geri al
-      setNotes(prev => prev.filter(note => note.id !== newNote.id))
-      alert('Not kaydedilemedi. Lütfen tekrar deneyin.')
-    }
-  }
-
-  const deleteNote = async (noteId: string) => {
-    if (confirm('Bu notu silmek istediğinizden emin misiniz?')) {
-      // Supabase'den sil (await ekle)
-      try {
-        const noteDeleted = await dataSync.deleteNote(noteId)
-        if (!noteDeleted) {
-          console.error('Not silinemedi')
-          alert('Not silinemedi. Lütfen tekrar deneyin.')
-          return
-        }
-        
-        // State'i güncelle (backend'den silindiği için)
-        setNotes(prev => prev.filter(note => note.id !== noteId))
-        console.log('Note successfully deleted from Supabase and state updated')
-      } catch (error) {
-        console.error('Not silinirken hata:', error)
-        alert('Not silinemedi. Lütfen tekrar deneyin.')
-      }
-    }
-  }
-
-  const getFilteredNotes = () => {
-    const today = new Date()
-    today.setHours(0, 0, 0, 0)
-
-    return notes.filter(note => {
-      const noteDate = new Date(note.date)
-      noteDate.setHours(0, 0, 0, 0)
-
-      switch (noteFilter) {
-        case 'today':
-          return noteDate.getTime() === today.getTime()
-        case 'week':
-          const weekFromNow = new Date(today)
-          weekFromNow.setDate(weekFromNow.getDate() + 7)
-          return noteDate >= today && noteDate <= weekFromNow
-        case 'month':
-          const monthFromNow = new Date(today)
-          monthFromNow.setMonth(monthFromNow.getMonth() + 1)
-          return noteDate >= today && noteDate <= monthFromNow
-        default:
-          return true
-      }
+    addTransaction({
+      type: newTransaction.type,
+      amount: parseFloat(newTransaction.amount),
+      category: newTransaction.category,
+      description: newTransaction.description,
+      account: newTransaction.account,
+      date: new Date().toISOString()
     })
+
+    setNewTransaction({
+      type: 'expense',
+      amount: '',
+      category: '',
+      description: '',
+      account: 'cash',
+      transferFrom: 'cash',
+      transferTo: 'bank',
+      transferAmount: '',
+      transferDescription: ''
+    })
+    setShowAddTransaction(false)
   }
 
-  // {t('app.monthlyDataPreparation')}
-  const getMonthlyData = () => {
-    const monthlyData: { ay: string; gelir: number; gider: number; net: number }[] = []
-    const currentYear = new Date().getFullYear()
+  const handleAddTransfer = () => {
+    if (!newTransaction.transferAmount || !newTransaction.transferDescription) {
+      alert('Lütfen tüm zorunlu alanları doldurun.')
+      return
+    }
+
+    addTransaction({
+      type: 'transfer',
+      amount: parseFloat(newTransaction.transferAmount),
+      category: 'Transfer',
+      description: newTransaction.transferDescription,
+      account: newTransaction.transferFrom,
+      date: new Date().toISOString(),
+      transferFrom: newTransaction.transferFrom,
+      transferTo: newTransaction.transferTo
+    })
+
+    setNewTransaction({
+      type: 'expense',
+      amount: '',
+      category: '',
+      description: '',
+      account: 'cash',
+      transferFrom: 'cash',
+      transferTo: 'bank',
+      transferAmount: '',
+      transferDescription: ''
+    })
+    setShowTransferDialog(false)
+  }
+
+  const handleHeaderClick = () => {
+    setShowNavigationConfirmDialog(true)
+  }
+  
+  const handleNavigationConfirm = async () => {
+    setShowNavigationConfirmDialog(false)
     
-    // Son 6 ayın verilerini oluştur
-    for (let i = 5; i >= 0; i--) {
-      const date = new Date(currentYear, new Date().getMonth() - i, 1)
-      const monthName = date.toLocaleDateString('tr-TR', { month: 'long', year: 'numeric' })
-      
-      const monthTransactions = transactions.filter(t => {
-        const transactionDate = new Date(t.date)
-        return transactionDate.getMonth() === date.getMonth() && 
-               transactionDate.getFullYear() === date.getFullYear()
-      })
-      
-      const gelir = monthTransactions
-        .filter(t => t.type === 'income')
-        .reduce((sum, t) => sum + t.amount, 0)
-      
-      const gider = monthTransactions
-        .filter(t => t.type === 'expense')
-        .reduce((sum, t) => sum + t.amount, 0)
-      
-      monthlyData.push({
-        ay: monthName,
-        gelir,
-        gider,
-        net: gelir - gider
-      })
+    try {
+      await signOut()
+    } catch (error) {
+      console.error('Error signing out:', error)
     }
     
-    return monthlyData
+    window.location.href = '/'
   }
 
-  // Kullanıcı giriş yapmamışsa yükleme göster
+  const toggleBalanceHidden = () => {
+    const newHiddenState = !balanceHidden
+    setBalanceHidden(newHiddenState)
+    localStorage.setItem('balanceHidden', newHiddenState.toString())
+  }
+
+  const totalBalance = balances.cash + balances.bank + balances.savings
+  const filteredTransactions = selectedDate === 'all' 
+    ? transactions 
+    : transactions.filter(t => t.date.startsWith(selectedDate))
+
+  const recentTransactions = filteredTransactions.slice(0, 5)
+
+  const income = transactions
+    .filter(t => t.type === 'income')
+    .reduce((sum, t) => sum + t.amount, 0)
+
+  const expense = transactions
+    .filter(t => t.type === 'expense')
+    .reduce((sum, t) => sum + t.amount, 0)
+
+  const chartData = [
+    { name: 'Nakit', value: balances.cash, color: '#10b981' },
+    { name: 'Banka', value: balances.bank, color: '#3b82f6' },
+    { name: 'Birikim', value: balances.savings, color: '#8b5cf6' }
+  ]
+
+  const monthlyData = transactions
+    .filter(t => t.type !== 'transfer')
+    .reduce((acc, t) => {
+      const month = new Date(t.date).toLocaleDateString('tr-TR', { month: 'short' })
+      const existing = acc.find(item => item.month === month)
+      if (existing) {
+        if (t.type === 'income') {
+          existing.income += t.amount
+        } else {
+          existing.expense += t.amount
+        }
+      } else {
+        acc.push({
+          month,
+          income: t.type === 'income' ? t.amount : 0,
+          expense: t.type === 'expense' ? t.amount : 0
+        })
+      }
+      return acc
+    }, [] as { month: string; income: number; expense: number }[])
+    .slice(-6)
+
+  // Kategori ikonları
+  const getCategoryIcon = (category: string) => {
+    const lowerCategory = category.toLowerCase()
+    if (lowerCategory.includes('market') || lowerCategory.includes('gıda')) return <ShoppingCart className="h-4 w-4" />
+    if (lowerCategory.includes('ev') || lowerCategory.includes('kira')) return <Home className="h-4 w-4" />
+    if (lowerCategory.includes('araba') || lowerCategory.includes('yakıt')) return <Car className="h-4 w-4" />
+    if (lowerCategory.includes('sağlık') || lowerCategory.includes('hastane')) return <Heart className="h-4 w-4" />
+    if (lowerCategory.includes('fatura') || lowerCategory.includes('elektrik') || lowerCategory.includes('su')) return <Zap className="h-4 w-4" />
+    return <CreditCard className="h-4 w-4" />
+  }
+
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-emerald-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
-            <div className="w-8 h-8 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
-          </div>
-          <p className="text-gray-600 dark:text-gray-400 text-lg">Yükleniyor...</p>
-        </div>
-      </div>
-    )
-  }
-
-  // Kullanıcı giriş yapmamışsa giriş sayfasına yönlendir
-  if (!user) {
-    return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center mx-auto mb-4">
-            <AlertCircle className="w-8 h-8 text-white" />
-          </div>
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-            Giriş Gerekli
-          </h2>
-          <p className="text-gray-600 dark:text-gray-400 mb-6">
-            Bu sayfaya erişmek için giriş yapmanız gerekmektedir.
-          </p>
-          <Button 
-            onClick={() => window.location.href = '/'}
-            className="bg-green-600 hover:bg-green-700 text-white px-6 py-3"
-          >
-            Ana Sayfaya Dön
-          </Button>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"></div>
+          <p className="text-gray-600 font-medium">Yükleniyor...</p>
         </div>
       </div>
     )
   }
 
   if (isFirstTime) {
-    return <InitialSetup onComplete={handleInitialSetup} />
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-emerald-50 flex items-center justify-center p-4">
+        <Card className="w-full max-w-md shadow-2xl border-0 bg-white/80 backdrop-blur-sm">
+          <CardHeader className="text-center pb-6">
+            <div className="mx-auto w-16 h-16 bg-gradient-to-r from-green-600 to-emerald-600 rounded-2xl flex items-center justify-center mb-4">
+              <Wallet className="h-8 w-8 text-white" />
+            </div>
+            <CardTitle className="text-2xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
+              ButcApp'e Hoş Geldiniz
+            </CardTitle>
+            <CardDescription className="text-gray-600">
+              Başlamak için hesap bakiyelerinizi girin
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="cash" className="text-sm font-medium text-gray-700">Nakit</Label>
+              <Input
+                id="cash"
+                type="number"
+                placeholder="0"
+                value={balances.cash || ''}
+                onChange={(e) => setBalances(prev => ({ ...prev, cash: parseFloat(e.target.value) || 0 }))}
+                className="h-12 border-gray-200 focus:border-green-500 focus:ring-green-500"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="bank" className="text-sm font-medium text-gray-700">Banka</Label>
+              <Input
+                id="bank"
+                type="number"
+                placeholder="0"
+                value={balances.bank || ''}
+                onChange={(e) => setBalances(prev => ({ ...prev, bank: parseFloat(e.target.value) || 0 }))}
+                className="h-12 border-gray-200 focus:border-green-500 focus:ring-green-500"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="savings" className="text-sm font-medium text-gray-700">Birikim</Label>
+              <Input
+                id="savings"
+                type="number"
+                placeholder="0"
+                value={balances.savings || ''}
+                onChange={(e) => setBalances(prev => ({ ...prev, savings: parseFloat(e.target.value) || 0 }))}
+                className="h-12 border-gray-200 focus:border-green-500 focus:ring-green-500"
+              />
+            </div>
+            <Button 
+              onClick={() => handleInitialSetup(balances)}
+              className="w-full h-12 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-medium shadow-lg"
+            >
+              Başla
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    )
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
-      <div className="max-w-7xl mx-auto p-4 md:p-6 pb-32">
-        {/* Header */}
-        <header className="mb-8 flex justify-between items-start">
-          <div className="flex items-center gap-4">
-            <button 
-              onClick={handleHeaderClick}
-              className="hover:opacity-80 transition-opacity duration-200"
-              title="Ana Sayfaya Git"
-            >
-              <img 
-                src="/favicon.png" 
-                alt={t('app.title')} 
-                className="w-12 h-12 rounded-xl shadow-sm"
-              />
-            </button>
-            <div>
-              <button 
-                onClick={handleHeaderClick}
-                className="hover:opacity-80 transition-opacity duration-200 text-left"
-                title="Ana Sayfaya Git"
-              >
-                <h1 className="text-5xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent mb-2">
-                  {t('app.title')}
-                </h1>
-              </button>
-              <p className="text-gray-600 dark:text-gray-400 text-lg">{t('app.modernPersonalFinance')}</p>
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-emerald-50">
+      {/* Header */}
+      <header className="sticky top-0 z-50 w-full border-b border-gray-200/50 bg-white/80 backdrop-blur-md supports-[backdrop-filter]:bg-white/60">
+        <div className="container mx-auto px-4 flex h-16 items-center">
+          <button 
+            onClick={handleHeaderClick}
+            className="mr-4 flex items-center space-x-3 group"
+          >
+            <div className="w-10 h-10 bg-gradient-to-r from-green-600 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow">
+              <Wallet className="h-5 w-5 text-white" />
             </div>
+            <span className="font-bold text-xl bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">ButcApp</span>
+          </button>
+          
+          <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
+            <div className="w-full flex-1 md:w-auto md:flex-none">
+              <Button variant="ghost" size="sm" className="w-full justify-start text-gray-600 hover:text-gray-900">
+                <Settings className="h-4 w-4 mr-2" />
+                <span className="hidden sm:inline">Ayarlar</span>
+              </Button>
+            </div>
+            <nav className="flex items-center space-x-2">
+              <ThemeToggle />
+              <LanguageToggle />
+              <UserAuthButton />
+            </nav>
           </div>
-          <div className="flex items-center gap-2">
-            <UserAuthButton />
-            <LanguageToggle />
-            <ThemeToggle />
-          </div>
-        </header>
-
-        {/* Hotbar - Finans / Yatırımlar Geçişi */}
-        <div className="mb-8">
-          <Card className="bg-white dark:bg-gray-800 shadow-sm border">
-            <CardContent className="p-4">
-              <div className="flex items-center justify-center space-x-4">
-                <Link href="/app" className="flex items-center space-x-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium">
-                  <DollarSign className="w-5 h-5" />
-                  <span>Finans</span>
-                </Link>
-                <Link href="/app/investments" className="flex items-center space-x-2 px-6 py-3 bg-muted hover:bg-muted/80 rounded-lg font-medium transition-colors">
-                  <TrendingUp className="w-5 h-5" />
-                  <span>Yatırımlar</span>
-                </Link>
-              </div>
-            </CardContent>
-          </Card>
         </div>
+      </header>
 
-        {/* İstatistik Kartları */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          <Card className="bg-green-500/10 border-green-500/20 dark:bg-green-900/20 dark:border-green-800/30">
-            <CardHeader 
-              className="pb-2 cursor-pointer hover:bg-green-500/5 transition-all duration-300 ease-in-out"
-              onClick={toggleBalanceDetails}
-            >
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-sm font-medium text-green-700 dark:text-green-300">{t('app.totalBalance')}</CardTitle>
-                <div className="flex items-center gap-2">
-                  {balanceHidden ? (
-                    <EyeOff className="h-4 w-4 text-green-600" />
-                  ) : (
-                    <DollarSign className="h-4 w-4 text-green-600" />
-                  )}
-                  {showBalanceDetails ? (
-                    <ChevronUp className="h-4 w-4 text-green-600 transition-transform duration-300 ease-in-out" />
-                  ) : (
-                    <ChevronDown className="h-4 w-4 text-green-600 transition-transform duration-300 ease-in-out" />
-                  )}
-                </div>
+      {/* Main Content */}
+      <main className="container mx-auto px-4 py-6 space-y-6">
+        {/* Hero Section - Total Balance */}
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 p-8 text-white shadow-2xl">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -mr-32 -mt-32"></div>
+          <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/10 rounded-full -ml-24 -mb-24"></div>
+          
+          <div className="relative z-10">
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h1 className="text-3xl font-bold mb-2">Toplam Bakiye</h1>
+                <p className="text-white/80">Finansal durumunuz</p>
               </div>
-            </CardHeader>
-            <CardContent>
-              <div className="relative">
-                {!balanceHidden ? (
-                  <>
-                    <div className="text-3xl font-bold text-green-800 dark:text-green-200">₺{totalBalance.toFixed(2)}</div>
-                    <div className="flex items-center gap-2 mt-2 text-green-600 dark:text-green-400">
-                      <span className="text-sm">{t('app.allAccounts')}</span>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div className="text-3xl font-bold text-green-800 dark:text-green-200">•••••••</div>
-                    <div className="flex items-center gap-2 mt-2 text-green-600 dark:text-green-400">
-                      <span className="text-sm">{t('app.hidden')}</span>
-                    </div>
-                  </>
-                )}
-                
-                {/* Gizleme Butonu */}
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    toggleBalanceHidden()
-                  }}
-                  className="absolute top-0 right-0 p-1.5 rounded-full bg-green-100 dark:bg-green-800 hover:bg-green-200 dark:hover:bg-green-700 transition-colors duration-200"
-                  title={balanceHidden ? "Bakiyeyi göster" : "Bakiyeyi gizle"}
-                >
-                  {balanceHidden ? (
-                    <Eye className="h-3.5 w-3.5 text-green-600 dark:text-green-400" />
-                  ) : (
-                    <EyeOff className="h-3.5 w-3.5 text-green-600 dark:text-green-400" />
-                  )}
-                </button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={toggleBalanceHidden}
+                className="text-white hover:bg-white/20"
+              >
+                {balanceHidden ? <Eye className="h-5 w-5" /> : <EyeOff className="h-5 w-5" />}
+              </Button>
+            </div>
+            
+            <div className="text-4xl font-bold mb-8">
+              {balanceHidden ? '***.*** TL' : `${totalBalance.toLocaleString('tr-TR')} TL`}
+            </div>
+            
+            <div className="grid grid-cols-3 gap-4">
+              <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-4">
+                <div className="flex items-center space-x-2 mb-2">
+                  <div className="w-8 h-8 bg-green-400 rounded-lg flex items-center justify-center">
+                    <DollarSign className="h-4 w-4 text-white" />
+                  </div>
+                  <span className="text-sm font-medium">Nakit</span>
+                </div>
+                <p className="text-xl font-bold">
+                  {balanceHidden ? '***' : `${balances.cash.toLocaleString('tr-TR')} TL`}
+                </p>
               </div>
               
-              {/* Bakiye Detayları */}
-              {showBalanceDetails && !balanceHidden && (
-                <div 
-                  className="mt-4 pt-4 border-t border-green-200 dark:border-green-700 space-y-4"
-                  style={{
-                    animation: 'slideDown 0.5s ease-out'
-                  }}
-                  onMouseEnter={() => {
-                    // Hover olduğunda mevcut timeout'u temizle
-                    if (balanceDetailsTimeout) {
-                      clearTimeout(balanceDetailsTimeout)
-                      setBalanceDetailsTimeout(null)
-                    }
-                  }}
-                  onMouseLeave={() => {
-                    // Hover'dan çıkınca yeni timeout başlat
-                    const timeout = setTimeout(() => {
-                      setShowBalanceDetails(false)
-                      setBalanceDetailsTimeout(null)
-                    }, 2000) // 2 saniye
-
-                    setBalanceDetailsTimeout(timeout)
-                  }}
-                >
-                  {/* Nakit Hesabı */}
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="flex items-center gap-2">
-                        <Wallet className="h-4 w-4 text-green-600" />
-                        <span className="text-sm font-medium text-green-800 dark:text-green-200">{t('app.cash')}</span>
-                      </div>
-                      <span className="text-sm font-bold text-green-800 dark:text-green-200">₺{balances.cash.toFixed(2)}</span>
-                    </div>
-                    
-                    {/* Mini Grafikler */}
-                    <div className="grid grid-cols-2 gap-3">
-                      <MiniChart 
-                        type="bar"
-                        value={balances.cash}
-                        maxValue={totalBalance}
-                        color="green"
-                        size="sm"
-                        label="Toplamda %"
-                      />
-                      <MiniChart 
-                        type="trend"
-                        value={getAccountTrendAmount('cash')}
-                        trend={getAccountTrend('cash')}
-                        color="green"
-                        size="sm"
-                        label="30 günlük"
-                      />
-                    </div>
+              <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-4">
+                <div className="flex items-center space-x-2 mb-2">
+                  <div className="w-8 h-8 bg-blue-400 rounded-lg flex items-center justify-center">
+                    <Building className="h-4 w-4 text-white" />
                   </div>
-
-                  {/* Banka Hesabı */}
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="flex items-center gap-2">
-                        <Building className="h-4 w-4 text-blue-600" />
-                        <span className="text-sm font-medium text-blue-800 dark:text-blue-200">{t('app.bank')}</span>
-                      </div>
-                      <span className="text-sm font-bold text-blue-800 dark:text-blue-200">₺{balances.bank.toFixed(2)}</span>
-                    </div>
-                    
-                    {/* Mini Grafikler */}
-                    <div className="grid grid-cols-2 gap-3">
-                      <MiniChart 
-                        type="bar"
-                        value={balances.bank}
-                        maxValue={totalBalance}
-                        color="blue"
-                        size="sm"
-                        label="Toplamda %"
-                      />
-                      <MiniChart 
-                        type="trend"
-                        value={getAccountTrendAmount('bank')}
-                        trend={getAccountTrend('bank')}
-                        color="blue"
-                        size="sm"
-                        label="30 günlük"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Birikim Hesabı */}
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="flex items-center gap-2">
-                        <PiggyBank className="h-4 w-4 text-purple-600" />
-                        <span className="text-sm font-medium text-purple-800 dark:text-purple-200">{t('app.savings')}</span>
-                      </div>
-                      <span className="text-sm font-bold text-purple-800 dark:text-purple-200">₺{balances.savings.toFixed(2)}</span>
-                    </div>
-                    
-                    {/* Mini Grafikler */}
-                    <div className="grid grid-cols-2 gap-3">
-                      <MiniChart 
-                        type="bar"
-                        value={balances.savings}
-                        maxValue={totalBalance}
-                        color="purple"
-                        size="sm"
-                        label="Toplamda %"
-                      />
-                      <MiniChart 
-                        type="trend"
-                        value={getAccountTrendAmount('savings')}
-                        trend={getAccountTrend('savings')}
-                        color="purple"
-                        size="sm"
-                        label="30 günlük"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Kategori Özeti */}
-                  <div className="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
-                    <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-4">Son 30 Gün - Harcama Kategorileri</h4>
-                    <div className="space-y-2">
-                      {getTopCategories(3).map(({ category, amount, percentage }, index) => (
-                        <CategorySummary
-                          key={index}
-                          category={category}
-                          amount={amount}
-                          percentage={percentage}
-                          color="bg-blue-100 dark:bg-blue-900/20"
-                          size="sm"
-                        />
-                      ))}
-                    </div>
-                  </div>
+                  <span className="text-sm font-medium">Banka</span>
                 </div>
-              )}
-            </CardContent>
-          </Card>
-
-          <Card className="bg-blue-500/10 border-blue-500/20 dark:bg-blue-900/20 dark:border-blue-800/30">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium text-blue-700 dark:text-blue-300">{t('app.monthlyRecurringIncome')}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-blue-800 dark:text-blue-200">₺{monthlyIncome.toFixed(2)}</div>
-              <div className="flex items-center gap-2 mt-2 text-blue-600 dark:text-blue-400">
-                <TrendingUp className="h-4 w-4" />
-                <span className="text-sm">{recurringTransactions.filter(r => r.type === 'income' && r.isActive).length} gelir</span>
+                <p className="text-xl font-bold">
+                  {balanceHidden ? '***' : `${balances.bank.toLocaleString('tr-TR')} TL`}
+                </p>
               </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-red-500/10 border-red-500/20 dark:bg-red-900/20 dark:border-red-800/30">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium text-red-700 dark:text-red-300">{t('app.monthlyRecurringExpense')}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-red-800 dark:text-red-200">₺{monthlyExpense.toFixed(2)}</div>
-              <div className="flex items-center gap-2 mt-2 text-red-600 dark:text-red-400">
-                <TrendingDown className="h-4 w-4" />
-                <span className="text-sm">{recurringTransactions.filter(r => r.type === 'expense' && r.isActive).length} gider</span>
+              
+              <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-4">
+                <div className="flex items-center space-x-2 mb-2">
+                  <div className="w-8 h-8 bg-purple-400 rounded-lg flex items-center justify-center">
+                    <PiggyBank className="h-4 w-4 text-white" />
+                  </div>
+                  <span className="text-sm font-medium">Birikim</span>
+                </div>
+                <p className="text-xl font-bold">
+                  {balanceHidden ? '***' : `${balances.savings.toLocaleString('tr-TR')} TL`}
+                </p>
               </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-purple-500/10 border-purple-500/20 dark:bg-purple-900/20 dark:border-purple-800/30">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium text-purple-700 dark:text-purple-300">{t('app.monthlyNet')}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-purple-800 dark:text-purple-200">₺{(monthlyIncome - monthlyExpense).toFixed(2)}</div>
-              <div className="flex items-center gap-2 mt-2 text-purple-600 dark:text-purple-400">
-                <Target className="h-4 w-4" />
-                <span className="text-sm">{t('app.estimatedSavings')}</span>
-              </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
 
-        {/* {t('app.quickTransactions')} */}
-        <div className="flex flex-wrap gap-4 mb-8">
+        {/* Quick Actions */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <Dialog open={showAddTransaction} onOpenChange={setShowAddTransaction}>
             <DialogTrigger asChild>
-              <Button 
-                className="bg-green-600 hover:bg-green-700 shadow-sm"
-                disabled={!user}
-                onClick={(e) => {
-                  if (!user) {
-                    e.preventDefault()
-                    alert('İşlem eklemek için lütfen giriş yapın.')
-                  }
-                }}
-              >
-                <Plus className="h-4 w-4 mr-2" />
-                {t('app.addNewTransaction')}
+              <Button className="h-20 bg-white hover:bg-gray-50 border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-200 group">
+                <div className="flex flex-col items-center space-y-2">
+                  <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <Plus className="h-6 w-6 text-white" />
+                  </div>
+                  <span className="text-sm font-medium text-gray-700">İşlem Ekle</span>
+                </div>
               </Button>
             </DialogTrigger>
-            <DialogContent className="bg-white dark:bg-gray-800">
+            <DialogContent className="sm:max-w-md">
               <DialogHeader>
-                <DialogTitle>{t('app.addTransaction')}</DialogTitle>
+                <DialogTitle>Yeni İşlem</DialogTitle>
                 <DialogDescription>
-                  {t('app.addTransactionDesc')}
+                  Gelir veya gider işlemi ekleyin
                 </DialogDescription>
               </DialogHeader>
-              <AddTransactionForm onSubmit={addTransaction} onClose={() => setShowAddTransaction(false)} />
+              <div className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label>İşlem Tipi</Label>
+                    <Select
+                      value={newTransaction.type}
+                      onValueChange={(value: 'income' | 'expense') => 
+                        setNewTransaction(prev => ({ ...prev, type: value }))
+                      }
+                    >
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="income">Gelir</SelectItem>
+                        <SelectItem value="expense">Gider</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Hesap</Label>
+                    <Select
+                      value={newTransaction.account}
+                      onValueChange={(value: 'cash' | 'bank' | 'savings') => 
+                        setNewTransaction(prev => ({ ...prev, account: value }))
+                      }
+                    >
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="cash">Nakit</SelectItem>
+                        <SelectItem value="bank">Banka</SelectItem>
+                        <SelectItem value="savings">Birikim</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label>Tutar</Label>
+                  <Input
+                    type="number"
+                    placeholder="0.00"
+                    value={newTransaction.amount}
+                    onChange={(e) => setNewTransaction(prev => ({ ...prev, amount: e.target.value }))}
+                    className="h-12"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>Kategori</Label>
+                  <Input
+                    placeholder="Örn: Market, Yakıt, Maaş"
+                    value={newTransaction.category}
+                    onChange={(e) => setNewTransaction(prev => ({ ...prev, category: e.target.value }))}
+                    className="h-12"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>Açıklama</Label>
+                  <Input
+                    placeholder="İsteğe bağlı"
+                    value={newTransaction.description}
+                    onChange={(e) => setNewTransaction(prev => ({ ...prev, description: e.target.value }))}
+                    className="h-12"
+                  />
+                </div>
+                <Button onClick={handleAddTransaction} className="w-full h-12 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700">
+                  Ekle
+                </Button>
+              </div>
             </DialogContent>
           </Dialog>
 
-
           <Dialog open={showTransferDialog} onOpenChange={setShowTransferDialog}>
             <DialogTrigger asChild>
-              <Button variant="outline" className="bg-white dark:bg-gray-800 border">
-                <ArrowRightLeft className="h-4 w-4 mr-2" />
-                {t('app.transferTitle')}
+              <Button className="h-20 bg-white hover:bg-gray-50 border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-200 group">
+                <div className="flex flex-col items-center space-y-2">
+                  <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-teal-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <ArrowRightLeft className="h-6 w-6 text-white" />
+                  </div>
+                  <span className="text-sm font-medium text-gray-700">Transfer</span>
+                </div>
               </Button>
             </DialogTrigger>
-            <DialogContent className="bg-white dark:bg-gray-800">
+            <DialogContent className="sm:max-w-md">
               <DialogHeader>
-                <DialogTitle>{t('app.transferBetweenAccounts')}</DialogTitle>
+                <DialogTitle>Hesap Transferi</DialogTitle>
                 <DialogDescription>
-                  {t('app.transferDesc')}
+                  Hesaplar arasında para transferi yapın
                 </DialogDescription>
               </DialogHeader>
-              <TransferForm onSubmit={addTransfer} onClose={() => setShowTransferDialog(false)} balances={balances} />
+              <div className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label>Kaynak Hesap</Label>
+                    <Select
+                      value={newTransaction.transferFrom}
+                      onValueChange={(value: 'cash' | 'bank' | 'savings') => 
+                        setNewTransaction(prev => ({ ...prev, transferFrom: value }))
+                      }
+                    >
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="cash">Nakit</SelectItem>
+                        <SelectItem value="bank">Banka</SelectItem>
+                        <SelectItem value="savings">Birikim</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Hedef Hesap</Label>
+                    <Select
+                      value={newTransaction.transferTo}
+                      onValueChange={(value: 'cash' | 'bank' | 'savings') => 
+                        setNewTransaction(prev => ({ ...prev, transferTo: value }))
+                      }
+                    >
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="cash">Nakit</SelectItem>
+                        <SelectItem value="bank">Banka</SelectItem>
+                        <SelectItem value="savings">Birikim</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label>Tutar</Label>
+                  <Input
+                    type="number"
+                    placeholder="0.00"
+                    value={newTransaction.transferAmount}
+                    onChange={(e) => setNewTransaction(prev => ({ ...prev, transferAmount: e.target.value }))}
+                    className="h-12"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>Açıklama</Label>
+                  <Input
+                    placeholder="Transfer açıklaması"
+                    value={newTransaction.transferDescription}
+                    onChange={(e) => setNewTransaction(prev => ({ ...prev, transferDescription: e.target.value }))}
+                    className="h-12"
+                  />
+                </div>
+                <Button onClick={handleAddTransfer} className="w-full h-12 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700">
+                  Transfer Et
+                </Button>
+              </div>
             </DialogContent>
           </Dialog>
 
           <Dialog open={showRecurringDialog} onOpenChange={setShowRecurringDialog}>
             <DialogTrigger asChild>
-              <Button 
-                variant="outline" 
-                className="bg-white dark:bg-gray-800 border"
-                disabled={!user}
-                onClick={(e) => {
-                  if (!user) {
-                    e.preventDefault()
-                    alert('Tekrarlayan işlem eklemek için lütfen giriş yapın.')
-                  }
-                }}
-              >
-                <Repeat className="h-4 w-4 mr-2" />
-                {t('app.addRecurring')}
+              <Button className="h-20 bg-white hover:bg-gray-50 border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-200 group">
+                <div className="flex flex-col items-center space-y-2">
+                  <div className="w-12 h-12 bg-gradient-to-r from-emerald-500 to-green-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <Repeat className="h-6 w-6 text-white" />
+                  </div>
+                  <span className="text-sm font-medium text-gray-700">Tekrarlayan</span>
+                </div>
               </Button>
             </DialogTrigger>
-            <DialogContent className="bg-white dark:bg-gray-800 max-w-2xl">
+            <DialogContent className="sm:max-w-md">
               <DialogHeader>
-                <DialogTitle>{t('app.addRecurring')}</DialogTitle>
+                <DialogTitle>Tekrarlayan İşlem</DialogTitle>
                 <DialogDescription>
-                  {t('app.addRecurringDesc')}
+                  Otomatik tekrar eden işlem ekleyin
                 </DialogDescription>
               </DialogHeader>
-              <RecurringTransactionForm onSubmit={addRecurringTransaction} onClose={() => setShowRecurringDialog(false)} />
+              <div className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label>İşlem Tipi</Label>
+                    <Select
+                      value={newRecurring.type}
+                      onValueChange={(value: 'income' | 'expense') => 
+                        setNewRecurring(prev => ({ ...prev, type: value }))
+                      }
+                    >
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="income">Gelir</SelectItem>
+                        <SelectItem value="expense">Gider</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Hesap</Label>
+                    <Select
+                      value={newRecurring.account}
+                      onValueChange={(value: 'cash' | 'bank' | 'savings') => 
+                        setNewRecurring(prev => ({ ...prev, account: value }))
+                      }
+                    >
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="cash">Nakit</SelectItem>
+                        <SelectItem value="bank">Banka</SelectItem>
+                        <SelectItem value="savings">Birikim</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label>Tutar</Label>
+                  <Input
+                    type="number"
+                    placeholder="0.00"
+                    value={newRecurring.amount}
+                    onChange={(e) => setNewRecurring(prev => ({ ...prev, amount: e.target.value }))}
+                    className="h-12"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>Kategori</Label>
+                  <Input
+                    placeholder="Örn: Kira, Fatura, Maaş"
+                    value={newRecurring.category}
+                    onChange={(e) => setNewRecurring(prev => ({ ...prev, category: e.target.value }))}
+                    className="h-12"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>Açıklama</Label>
+                  <Input
+                    placeholder="İşlem açıklaması"
+                    value={newRecurring.description}
+                    onChange={(e) => setNewRecurring(prev => ({ ...prev, description: e.target.value }))}
+                    className="h-12"
+                  />
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label>Periyot</Label>
+                    <Select
+                      value={newRecurring.frequency}
+                      onValueChange={(value: 'daily' | 'weekly' | 'monthly' | 'yearly' | 'custom') => 
+                        setNewRecurring(prev => ({ ...prev, frequency: value }))
+                      }
+                    >
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="daily">Günlük</SelectItem>
+                        <SelectItem value="weekly">Haftalık</SelectItem>
+                        <SelectItem value="monthly">Aylık</SelectItem>
+                        <SelectItem value="yearly">Yıllık</SelectItem>
+                        <SelectItem value="custom">Özel</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Başlangıç Tarihi</Label>
+                    <Input
+                      type="date"
+                      value={newRecurring.startDate}
+                      onChange={(e) => setNewRecurring(prev => ({ ...prev, startDate: e.target.value }))}
+                      className="h-12"
+                    />
+                  </div>
+                </div>
+                <Button onClick={addRecurringTransaction} className="w-full h-12 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700">
+                  Ekle
+                </Button>
+              </div>
             </DialogContent>
           </Dialog>
+
+          <Button 
+            variant="outline" 
+            className="h-20 bg-white hover:bg-gray-50 border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-200 group"
+            onClick={() => router.push('/app/investments')}
+          >
+            <div className="flex flex-col items-center space-y-2">
+              <div className="w-12 h-12 bg-gradient-to-r from-lime-500 to-green-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                <BarChart3 className="h-6 w-6 text-white" />
+              </div>
+              <span className="text-sm font-medium text-gray-700">Yatırımlar</span>
+            </div>
+          </Button>
         </div>
 
-        {/* {t('app.upcomingTransactionsArea')} */}
-        {upcomingTransactions.length > 0 && (
-          <Card className="mb-8 bg-orange-500/10 border-orange-500/20 dark:bg-orange-900/20 dark:border-orange-800/30">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-orange-700 dark:text-orange-300">
-                <Timer className="h-5 w-5" />
-                {t('app.upcomingTransactions')}
-              </CardTitle>
+        {/* Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <Card className="border-0 shadow-xl bg-gradient-to-br from-green-50 to-emerald-50">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-green-600 text-sm font-medium mb-1">Toplam Gelir</p>
+                  <p className="text-3xl font-bold text-green-700">
+                    {income.toLocaleString('tr-TR')} TL
+                  </p>
+                </div>
+                <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center shadow-lg">
+                  <TrendingUp className="h-8 w-8 text-white" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-0 shadow-xl bg-gradient-to-br from-red-50 to-pink-50">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-red-600 text-sm font-medium mb-1">Toplam Gider</p>
+                  <p className="text-3xl font-bold text-red-700">
+                    {expense.toLocaleString('tr-TR')} TL
+                  </p>
+                </div>
+                <div className="w-16 h-16 bg-gradient-to-r from-red-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-lg">
+                  <TrendingDown className="h-8 w-8 text-white" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Charts Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <Card className="border-0 shadow-xl">
+            <CardHeader className="pb-4">
+              <CardTitle className="text-lg font-semibold text-gray-800">Bakiye Dağılımı</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {upcomingTransactions.slice(0, 6).map((transaction, index) => (
-                  <div key={transaction.id} className="bg-white dark:bg-gray-800 rounded-lg p-3 border">
-                    <div className="flex items-center justify-between mb-2">
-                      <Badge variant={transaction.type === 'income' ? 'default' : 'destructive'} className="text-xs">
-                        {transaction.type === 'income' ? t('app.income') : t('app.expense')}
-                      </Badge>
-                      <div className="flex items-center gap-1">
-                        <Clock className="h-3 w-3 text-orange-600 dark:text-orange-400" />
-                        <span className="text-xs font-bold text-orange-700 dark:text-orange-300">
-                          {transaction.daysUntil === 0 ? 'Bugün' : 
-                           transaction.daysUntil === 1 ? 'Yarın' : 
-                           `${transaction.daysUntil} gün`}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="text-sm font-medium">{transaction.category}</div>
-                    {transaction.description && (
-                      <div className="text-xs text-gray-600 dark:text-gray-400 mt-1">{transaction.description}</div>
-                    )}
-                    <div className="text-sm font-bold mt-2 text-gray-900 dark:text-white">
-                      {transaction.type === 'income' ? '+' : '-'}₺{transaction.amount.toFixed(2)}
-                    </div>
-                    <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                      {transaction.nextDate.toLocaleDateString('tr-TR')}
-                    </div>
+              <ResponsiveContainer width="100%" height={250}>
+                <PieChart>
+                  <Pie
+                    data={chartData}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={60}
+                    outerRadius={90}
+                    paddingAngle={5}
+                    dataKey="value"
+                  >
+                    {chartData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip formatter={(value: number) => `${value.toLocaleString('tr-TR')} TL`} />
+                </PieChart>
+              </ResponsiveContainer>
+              <div className="flex justify-center space-x-6 mt-4">
+                {chartData.map((item) => (
+                  <div key={item.name} className="flex items-center space-x-2">
+                    <div className="w-4 h-4 rounded-full" style={{ backgroundColor: item.color }} />
+                    <span className="text-sm font-medium text-gray-700">{item.name}</span>
                   </div>
                 ))}
               </div>
             </CardContent>
           </Card>
-        )}
 
-        {/* Ana İçerik */}
-        <Tabs defaultValue="transactions" className="w-full">
-          <TabsList className="grid w-full grid-cols-3 bg-white dark:bg-gray-800 border">
-            <TabsTrigger value="transactions">{t('app.transactions')}</TabsTrigger>
-            <TabsTrigger value="recurring">{t('app.recurring')}</TabsTrigger>
-            <TabsTrigger value="reports">{t('app.reports')}</TabsTrigger>
-          </TabsList>
-          
-          <TabsContent value="transactions">
-            <TransactionList transactions={transactions} selectedDate={selectedDate} onDateChange={setSelectedDate} />
-          </TabsContent>
-          
-          <TabsContent value="recurring">
-            <RecurringTransactionsList recurringTransactions={recurringTransactions} setRecurringTransactions={setRecurringTransactions} onEditRecurring={handleEditRecurring} />
-          </TabsContent>
-          
-          <TabsContent value="reports">
-            <DailyReports transactions={transactions} />
-          </TabsContent>
-        </Tabs>
-
-        {/* İstatistikler Butonu */}
-        <div className="mt-8 flex justify-center">
-          <Button 
-            onClick={() => setShowStatsDialog(true)}
-            className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white px-8 py-3 text-lg font-medium shadow-lg transition-all duration-300 hover:scale-105"
-          >
-            <BarChart3 className="mr-2 w-5 h-5" />
-            {t('app.viewStatistics')}
-          </Button>
+          <Card className="border-0 shadow-xl">
+            <CardHeader className="pb-4">
+              <CardTitle className="text-lg font-semibold text-gray-800">Aylık Gelir/Gider</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ResponsiveContainer width="100%" height={250}>
+                <AreaChart data={monthlyData}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                  <XAxis dataKey="month" tick={{ fontSize: 12 }} />
+                  <YAxis tick={{ fontSize: 12 }} />
+                  <Tooltip formatter={(value: number) => `${value.toLocaleString('tr-TR')} TL`} />
+                  <Area type="monotone" dataKey="income" stackId="1" stroke="#10b981" fill="#10b981" fillOpacity={0.6} name="Gelir" />
+                  <Area type="monotone" dataKey="expense" stackId="2" stroke="#ef4444" fill="#ef4444" fillOpacity={0.6} name="Gider" />
+                </AreaChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
         </div>
 
-        {/* İstatistikler Dialog */}
-        <Dialog open={showStatsDialog} onOpenChange={setShowStatsDialog}>
-          <DialogContent className="bg-white dark:bg-gray-800 max-w-6xl w-full max-h-[90vh] overflow-y-auto">
-            <DialogHeader>
-              <DialogTitle className="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
-                <BarChart3 className="w-6 h-6 text-green-600" />
-                {t('app.financialStatistics')}
-              </DialogTitle>
-              <DialogDescription>
-                {t('app.incomeExpenseAnalysis')}
-              </DialogDescription>
-            </DialogHeader>
-            
-            <div className="space-y-8 p-6">
-              {/* {t('app.accountDistributionChart')} */}
-              <div className="bg-gray-50 dark:bg-gray-700 rounded-xl p-6">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                  <PieChart className="w-5 h-5 text-green-600" />
-                  {t('app.accountDistributionChart')}
-                </h3>
-                <div className="h-80">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <PieChart>
-                      <Pie
-                        data={[
-                          { name: 'Nakit', value: balances.cash, color: '#10b981' },
-                          { name: 'Banka', value: balances.bank, color: '#3b82f6' },
-                          { name: 'Birikim', value: balances.savings, color: '#8b5cf6' }
-                        ]}
-                        cx="50%"
-                        cy="50%"
-                        labelLine={false}
-                        label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-                        outerRadius={80}
-                        fill="#8884d8"
-                        dataKey="value"
-                      >
-                        {[
-                          { name: 'Nakit', value: balances.cash, color: '#10b981' },
-                          { name: 'Banka', value: balances.bank, color: '#3b82f6' },
-                          { name: 'Birikim', value: balances.savings, color: '#8b5cf6' }
-                        ].map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={entry.color} />
-                        ))}
-                      </Pie>
-                      <Tooltip formatter={(value: number) => `₺${value.toFixed(2)}`} />
-                      <Legend />
-                    </PieChart>
-                  </ResponsiveContainer>
-                </div>
-                <div className="grid grid-cols-3 gap-4 mt-4">
-                  <div className="text-center p-3 bg-green-100 dark:bg-green-900/20 rounded-lg">
-                    <div className="text-green-800 dark:text-green-200 font-semibold">{t('app.cash')}</div>
-                    <div className="text-green-600 dark:text-green-400 text-xl font-bold">₺{balances.cash.toFixed(2)}</div>
-                  </div>
-                  <div className="text-center p-3 bg-blue-100 dark:bg-blue-900/20 rounded-lg">
-                    <div className="text-blue-800 dark:text-blue-200 font-semibold">{t('app.bank')}</div>
-                    <div className="text-blue-600 dark:text-blue-400 text-xl font-bold">₺{balances.bank.toFixed(2)}</div>
-                  </div>
-                  <div className="text-center p-3 bg-purple-100 dark:bg-purple-900/20 rounded-lg">
-                    <div className="text-purple-800 dark:text-purple-200 font-semibold">{t('app.savings')}</div>
-                    <div className="text-purple-600 dark:text-purple-400 text-xl font-bold">₺{balances.savings.toFixed(2)}</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* {t('app.incomeExpenseChart')} */}
-              <div className="bg-gray-50 dark:bg-gray-700 rounded-xl p-6">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                  <LineChartIcon className="w-5 h-5 text-green-600" />
-                  {t('app.incomeExpenseChart')}
-                </h3>
-                <div className="h-80">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={[
-                      {name: t('app.totalIncomeReport'), gelir: totalIncome, gider: 0},
-                      {name: t('app.totalExpenseReport'), gelir: 0, gider: totalExpense}
-                    ]}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="name" />
-                      <YAxis />
-                      <Tooltip formatter={(value: number) => `₺${value.toFixed(2)}`} />
-                      <Legend />
-                      <Bar dataKey="gelir" fill="#10b981" />
-                      <Bar dataKey="gider" fill="#ef4444" />
-                    </BarChart>
-                  </ResponsiveContainer>
-                </div>
-                <div className="grid grid-cols-2 gap-4 mt-4">
-                  <div className="text-center p-3 bg-green-100 dark:bg-green-900/20 rounded-lg">
-                    <div className="text-green-800 dark:text-green-200 font-semibold">{t('app.totalIncomeReport')}</div>
-                    <div className="text-green-600 dark:text-green-400 text-xl font-bold">₺{totalIncome.toFixed(2)}</div>
-                  </div>
-                  <div className="text-center p-3 bg-red-100 dark:bg-red-900/20 rounded-lg">
-                    <div className="text-red-800 dark:text-red-200 font-semibold">{t('app.totalExpenseReport')}</div>
-                    <div className="text-red-600 dark:text-red-400 text-xl font-bold">₺{totalExpense.toFixed(2)}</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* {t('app.monthlySpendingTrendReport')} */}
-              <div className="bg-gray-50 dark:bg-gray-700 rounded-xl p-6">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                  <TrendingUp className="w-5 h-5 text-green-600" />
-                  {t('app.monthlySpendingTrendReport')}
-                </h3>
-                <div className="h-80">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={getMonthlyData()}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="ay" />
-                      <YAxis />
-                      <Tooltip formatter={(value: number) => `₺${value.toFixed(2)}`} />
-                      <Legend />
-                      <Line type="monotone" dataKey="gelir" stroke="#10b981" strokeWidth={2} />
-                      <Line type="monotone" dataKey="gider" stroke="#ef4444" strokeWidth={2} />
-                      <Line type="monotone" dataKey="net" stroke="#3b82f6" strokeWidth={2} />
-                    </LineChart>
-                  </ResponsiveContainer>
-                </div>
-              </div>
-            </div>
-          </DialogContent>
-        </Dialog>
-        {/* İletişim Bölümü */}
-        <div className="mt-8 flex justify-center gap-4">
-          <Button 
-            onClick={() => setShowContactDialog(true)}
-            variant="outline"
-            className="border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-300 hover:scale-105"
-          >
-            <Mail className="mr-2 w-4 h-4" />
-            İletişim
-          </Button>
-          
-          <Button 
-            onClick={() => window.open('https://www.instagram.com/butcapp?igsh=dTdtZTR0cHhyb295', '_blank')}
-            variant="outline"
-            className="border-pink-300 dark:border-pink-600 hover:bg-pink-50 dark:hover:bg-pink-800 transition-all duration-300 hover:scale-105"
-          >
-            <Share className="mr-2 w-4 h-4 text-pink-600" />
-            Instagram
-          </Button>
-          
-          <Button 
-            onClick={() => router.push('/blog')}
-            variant="outline"
-            className="border-green-300 dark:border-green-600 hover:bg-green-50 dark:hover:bg-green-800 transition-all duration-300 hover:scale-105"
-          >
-            <BookOpen className="mr-2 w-4 h-4 text-green-600" />
-            Blog
-          </Button>
-        </div>
-      </div>
-
-      {/* Notlar Bölümü */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 shadow-lg z-40">
-        <div className="max-w-6xl mx-auto">
-          <div 
-            className="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-            onClick={() => setShowNotesSection(!showNotesSection)}
-          >
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                <FileText className="w-4 h-4 text-white" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-gray-900 dark:text-white">{t('app.notes')}</h3>
-                <p className="text-xs text-gray-600 dark:text-gray-400">
-                  {notes.length} not • {getFilteredNotes().length} gösteriliyor
-                </p>
-              </div>
-            </div>
-            <ChevronRight 
-              className={`w-4 h-4 text-gray-600 dark:text-gray-400 transition-transform duration-200 ${
-                showNotesSection ? 'rotate-90' : ''
-              }`}
-            />
-          </div>
-          
-          {showNotesSection && (
-            <div className="border-t border-gray-200 dark:border-gray-700 p-4 bg-gray-50 dark:bg-gray-900">
-              <div className="flex gap-3 mb-4">
-                <Button
-                  onClick={() => setShowNoteDialog(true)}
-                  className="bg-blue-600 hover:bg-blue-700 text-white flex items-center gap-2"
-                >
-                  <Plus className="w-4 h-4" />
-                  {t('app.writeNote')}
-                </Button>
-                <Button
-                  onClick={() => setShowAllNotesDialog(true)}
-                  variant="outline"
-                  className="border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 flex items-center gap-2"
-                >
-                  <FileText className="w-4 h-4" />
-                  {t('app.allNotes')}
-                </Button>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Footer için boşluk - Notlar bölümü ile çakışmayı önlemek için */}
-      <div className="h-20"></div>
-
-      {/* Not Ekleme Dialog */}
-      {showNoteDialog && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-gray-800 rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl">
-            <div className="p-6">
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-                  {t('app.newNote')}
-                </h2>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => setShowNoteDialog(false)}
-                  className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-                >
-                  <X className="w-6 h-6" />
-                </Button>
-              </div>
-              
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Not İçeriği *
-                  </label>
-                  <textarea
-                    value={noteContent}
-                    onChange={(e) => setNoteContent(e.target.value)}
-                    placeholder="Bugün ne düşündünüz? Ne yapmayı planlıyorsunuz?"
-                    rows={4}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white resize-none"
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Etiketler (Opsiyonel)
-                  </label>
-                  <input
-                    type="text"
-                    value={noteTags}
-                    onChange={(e) => setNoteTags(e.target.value)}
-                    placeholder="iş, kişisel, önemli, virgülle ayırın..."
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-                  />
-                </div>
-              </div>
-              
-              <div className="flex gap-3 justify-end mt-6">
-                  <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => setShowNoteDialog(false)}
-                  className="border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800"
-                >
-                  {t('app.cancel')}
-                </Button>
-                <Button
-                  onClick={() => addNote()}
-                  className="bg-blue-600 hover:bg-blue-700 text-white"
-                >
-                  <CheckCircle className="w-4 h-4 mr-2" />
-                  {t('app.saveNoteButton')}
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Tüm Notlar Dialog */}
-      {showAllNotesDialog && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-gray-800 rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
-            <div className="p-6">
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-                  {t('app.allNotesWithCount')} ({getFilteredNotes().length})
-                </h2>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => setShowAllNotesDialog(false)}
-                  className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-                >
-                  <X className="w-6 h-6" />
-                </Button>
-              </div>
-              
-              {/* Filtreleme Butonları */}
-              <div className="flex gap-2 mb-6">
-                <Button
-                  variant={noteFilter === 'all' ? 'default' : 'outline'}
-                  onClick={() => setNoteFilter('all')}
-                  size="sm"
-                  className="text-xs"
-                >
-                  {t('app.allFilter')}
-                </Button>
-                <Button
-                  variant={noteFilter === 'today' ? 'default' : 'outline'}
-                  onClick={() => setNoteFilter('today')}
-                  size="sm"
-                  className="text-xs"
-                >
-                  Bugün
-                </Button>
-                <Button
-                  variant={noteFilter === 'week' ? 'default' : 'outline'}
-                  onClick={() => setNoteFilter('week')}
-                  size="sm"
-                  className="text-xs"
-                >
-                  Bu Hafta
-                </Button>
-                <Button
-                  variant={noteFilter === 'month' ? 'default' : 'outline'}
-                  onClick={() => setNoteFilter('month')}
-                  size="sm"
-                  className="text-xs"
-                >
-                  Bu Ay
-                </Button>
-              </div>
-              
-              {/* Notlar Listesi */}
-              <div className="space-y-3 max-h-96 overflow-y-auto">
-                {getFilteredNotes().length === 0 ? (
-                  <div className="text-center py-8 text-gray-500 dark:text-gray-400">
-                    <FileText className="w-12 h-12 mx-auto mb-4 text-gray-300 dark:text-gray-600" />
-                    <p>Seçilen filtreye uygun not bulunamadı.</p>
-                  </div>
-                ) : (
-                  getFilteredNotes().map((note) => (
-                    <div key={note.id} className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 border border-gray-200 dark:border-gray-600 hover:shadow-md transition-all">
-                      <div className="flex justify-between items-start mb-2">
-                        <div className="flex-1">
-                          <p className="text-gray-900 dark:text-white whitespace-pre-wrap">{note.content}</p>
-                          {note.tags && note.tags.length > 0 && (
-                            <div className="flex gap-1 mt-2">
-                              {note.tags.map((tag, index) => (
-                                <span key={index} className="text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded-full">
-                                  {tag}
-                                </span>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          onClick={() => deleteNote(note.id)}
-                          className="text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 ml-2"
-                        >
-                          <X className="w-4 h-4" />
-                        </Button>
-                      </div>
-                      <div className="text-xs text-gray-500 dark:text-gray-400">
-                        {new Date(note.date).toLocaleDateString('tr-TR', { 
-                          year: 'numeric', 
-                          month: 'long', 
-                          day: 'numeric' 
-                        })}
-                      </div>
-                    </div>
-                  ))
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Navigation Confirmation Dialog */}
-      {showNavigationConfirmDialog && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-gray-800 rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto shadow-2xl">
-            <div className="p-6">
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-                  Uygulamadan Çıkmak İstediğinizden Emin misiniz?
-                </h2>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => setShowNavigationConfirmDialog(false)}
-                  className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-                >
-                  <X className="w-6 h-6" />
-                </Button>
-              </div>
-              
-              <div className="space-y-4">
-                <p className="text-gray-600 dark:text-gray-400">
-                  Ana sayfaya dönmek istediğinizden emin misiniz? Bu işlem uygulamadan çıkaracak ve ana sayfaya yönlendirecek.
-                </p>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
-                  Not: Çıkış yapılıp ana sayfaya yönlendirileceksiniz.
-                </p>
-                
-                <div className="flex gap-3 justify-end">
-                  <Button
-                    variant="outline"
-                    onClick={() => setShowNavigationConfirmDialog(false)}
-                    className="border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800"
-                  >
-                    İptal
-                  </Button>
-                  <Button
-                    onClick={handleNavigationConfirm}
-                    className="bg-green-600 hover:bg-green-700 text-white"
-                  >
-                    Evet, Ana Sayfaya Git
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Footer */}
-      <footer className="py-12 px-6 border-t border-gray-200 dark:border-gray-800 mt-16">
-        <div className="max-w-6xl mx-auto text-center">
-          <div className="flex justify-center items-center gap-3 mb-4">
-            <div className="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center">
-              <PiggyBank className="w-5 h-5 text-white" />
-            </div>
-            <span className="text-2xl font-bold text-gray-900 dark:text-white">
-              Butcap
-            </span>
-          </div>
-          <p className="text-gray-600 dark:text-gray-400">
-            {t('app.footer')}
-          </p>
-        </div>
-      </footer>
-
-      {/* İletişim Dialog */}
-      {showContactDialog && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-gray-800 rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl">
-            <div className="p-6">
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-                  İletişim
-                </h2>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => setShowContactDialog(false)}
-                  className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-                >
-                  <X className="w-6 h-6" />
-                </Button>
-              </div>
-              
-              <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Durum Mesajı */}
-                {submitStatus === 'success' && (
-                  <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4 flex items-center gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-green-600" />
-                    <span className="text-green-800 dark:text-green-200 font-medium">
-                      Mesajınız başarıyla gönderildi! En kısa sürede yanıtlanacaktır.
-                    </span>
-                  </div>
-                )}
-                
-                {submitStatus === 'error' && (
-                  <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4 flex items-center gap-3">
-                    <AlertCircle className="w-5 h-5 text-red-600" />
-                    <span className="text-red-800 dark:text-red-200 font-medium">
-                      Form gönderilemedi. Lütfen internet bağlantınızı kontrol edin ve tekrar deneyin.
-                    </span>
-                  </div>
-                )}
-                
-                {/* Form Alanları */}
-                <div className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                        Ad Soyad *
-                      </label>
-                      <input
-                        type="text"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleInputChange}
-                        required
-                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-                        placeholder={t('contact.namePlaceholder')}
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                        E-posta *
-                      </label>
-                      <input
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        required
-                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-                        placeholder={t('contact.emailPlaceholder')}
-                      />
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Konu *
-                    </label>
-                    <input
-                      type="text"
-                      name="subject"
-                      value={formData.subject}
-                      onChange={handleInputChange}
-                      required
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-                      placeholder={t('contact.subjectPlaceholder')}
-                    />
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Mesaj Türü *
-                    </label>
-                    <select
-                      name="type"
-                      value={formData.type}
-                      onChange={handleInputChange}
-                      required
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-                    >
-                      <option value="Öneri">Öneri</option>
-                      <option value="Şikayet">Şikayet</option>
-                      <option value="Hata Bildirimi">Hata Bildirimi</option>
-                      <option value="Özellik Talebi">Özellik Talebi</option>
-                    </select>
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Mesajınız *
-                    </label>
-                    <textarea
-                      name="message"
-                      value={formData.message}
-                      onChange={handleInputChange}
-                      required
-                      rows={4}
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent dark:bg-gray-700 dark:text-white resize-none"
-                      placeholder={t('contact.messagePlaceholder')}
-                    />
-                  </div>
-                </div>
-                
-                {/* Bilgilendirme */}
-                <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-                  <div className="flex items-start gap-3">
-                    <Mail className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
-                    <div className="text-blue-800 dark:text-blue-200 text-sm">
-                      <p className="font-medium mb-1">Form Gönderim Süreci:</p>
-                      <ul className="space-y-1 text-xs">
-                        <li>• Formu gönderdiğinizde Formspree üzerinden mail olarak iletilir</li>
-                        <li>• Tüm bilgiler güvenli bir şekilde şifrelenir</li>
-                        <li>• Form gönderim başarısız olursa hata mesajı alırsınız</li>
-                        <li>• Mesajlarınız en kısa sürede yanıtlanacaktır</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Butonlar */}
-                <div className="flex gap-3 justify-end">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => setShowContactDialog(false)}
-                    disabled={isSubmitting}
-                    className="border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-300 hover:scale-105"
-                  >
-                    {t('contact.cancel')}
-                  </Button>
-                  
-                  <Button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 flex items-center gap-2 transition-all duration-300 hover:scale-105"
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                        {t('contact.sending')}
-                      </>
-                    ) : (
-                      <>
-                        <Send className="w-4 h-4" />
-                        {t('contact.send')}
-                      </>
-                    )}
-                  </Button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Düzenleme Dialog */}
-      {showEditRecurringDialog && editingRecurring && (
-        <EditRecurringDialog
-          recurring={editingRecurring}
-          onSave={updateRecurringTransaction}
-          onCancel={() => {
-            setShowEditRecurringDialog(false)
-            setEditingRecurring(null)
-          }}
-        />
-      )}
-    </div>
-  )
-}
-
-function InitialSetup({ onComplete }: { onComplete: (balances: AccountBalances) => void }) {
-  const { t } = useLanguage()
-  const [balances, setBalances] = useState<AccountBalances>({ cash: 0, bank: 0, savings: 0 })
-  const [isLoading, setIsLoading] = useState(false)
-  const [showSuccess, setShowSuccess] = useState(false)
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
-    
-    try {
-      await onComplete(balances)
-      setShowSuccess(true)
-      
-      // 2 saniye sonra başarı ekranını gizle ve yönlendir
-      setTimeout(() => {
-        setShowSuccess(false)
-        setIsLoading(false)
-      }, 2000)
-    } catch (error) {
-      console.error('Setup error:', error)
-      setIsLoading(false)
-      alert('Bakiyeler kaydedilemedi. Lütfen tekrar deneyin.')
-    }
-  }
-
-  return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex items-center justify-center p-4">
-      {showSuccess ? (
-        <Card className="w-full max-w-md bg-white dark:bg-gray-800 shadow-sm border">
-          <CardContent className="p-8 text-center">
-            <div className="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">
-              <CheckCircle className="h-8 w-8 text-green-600 dark:text-green-400" />
-            </div>
-            <CardTitle className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-              Başarılı!
-            </CardTitle>
-            <CardDescription className="text-gray-600 dark:text-gray-400">
-              Hesap bakiyeleriniz başarıyla kaydedildi. Yönlendiriliyorsunuz...
-            </CardDescription>
-          </CardContent>
-        </Card>
-      ) : (
-        <Card className="w-full max-w-md bg-white dark:bg-gray-800 shadow-sm border">
-          <CardHeader className="text-center">
-            <div className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
-              <DollarSign className="h-8 w-8 text-white" />
-            </div>
-            <CardTitle className="text-2xl font-bold text-gray-900 dark:text-white">
-              {t('app.initialSetup')}
-            </CardTitle>
-            <CardDescription className="text-gray-600 dark:text-gray-400">
-              {t('app.initialSetupDesc')}
-            </CardDescription>
+        {/* Recent Transactions */}
+        <Card className="border-0 shadow-xl">
+          <CardHeader className="flex flex-row items-center justify-between pb-4">
+            <CardTitle className="text-lg font-semibold text-gray-800">Son İşlemler</CardTitle>
+            <Button variant="ghost" size="sm" className="text-green-600 hover:text-green-700">
+              Tümünü Gör
+            </Button>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <Label htmlFor="cash" className="text-sm font-medium">Nakit Bakiye</Label>
-                <Input
-                  id="cash"
-                  type="number"
-                  step="0.01"
-                  value={balances.cash}
-                  onChange={(e) => setBalances(prev => ({ ...prev, cash: parseFloat(e.target.value) || 0 }))}
-                  placeholder="0.00"
-                  className="mt-1"
-                  disabled={isLoading}
-                />
-              </div>
-              <div>
-                <Label htmlFor="bank" className="text-sm font-medium">Banka Bakiye</Label>
-                <Input
-                  id="bank"
-                  type="number"
-                  step="0.01"
-                  value={balances.bank}
-                  onChange={(e) => setBalances(prev => ({ ...prev, bank: parseFloat(e.target.value) || 0 }))}
-                  placeholder="0.00"
-                  className="mt-1"
-                  disabled={isLoading}
-                />
-              </div>
-              <div>
-                <Label htmlFor="savings" className="text-sm font-medium">Birikim Bakiye</Label>
-                <Input
-                  id="savings"
-                  type="number"
-                  step="0.01"
-                  value={balances.savings}
-                  onChange={(e) => setBalances(prev => ({ ...prev, savings: parseFloat(e.target.value) || 0 }))}
-                  placeholder="0.00"
-                  className="mt-1"
-                  disabled={isLoading}
-                />
-              </div>
-              <Button 
-                type="submit" 
-                className="w-full bg-green-600 hover:bg-green-700 text-white"
-                disabled={isLoading}
-              >
-                {isLoading ? (
-                  <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                    Kaydediliyor...
+            <div className="space-y-3">
+              {recentTransactions.length === 0 ? (
+                <div className="text-center py-12">
+                  <div className="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <Wallet className="h-8 w-8 text-gray-400" />
                   </div>
-                ) : (
-                  'Başla'
-                )}
-              </Button>
-            </form>
+                  <p className="text-gray-500 font-medium">Henüz işlem bulunmuyor</p>
+                  <p className="text-gray-400 text-sm mt-1">İlk işleminizi eklemek için yukarıdaki butonları kullanın</p>
+                </div>
+              ) : (
+                recentTransactions.map((transaction) => (
+                  <div key={transaction.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-2xl hover:bg-gray-100 transition-colors">
+                    <div className="flex items-center space-x-4">
+                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
+                        transaction.type === 'income' ? 'bg-gradient-to-r from-green-500 to-emerald-500' : 
+                        transaction.type === 'expense' ? 'bg-gradient-to-r from-red-500 to-pink-500' : 'bg-gradient-to-r from-blue-500 to-cyan-500'
+                      }`}>
+                        {transaction.type === 'income' ? (
+                          <ArrowUp className="h-6 w-6 text-white" />
+                        ) : transaction.type === 'expense' ? (
+                          <ArrowDown className="h-6 w-6 text-white" />
+                        ) : (
+                          <ArrowRightLeft className="h-6 w-6 text-white" />
+                        )}
+                      </div>
+                      <div>
+                        <div className="flex items-center space-x-2">
+                          <p className="font-semibold text-gray-800">{transaction.category}</p>
+                          <div className="text-gray-400">
+                            {getCategoryIcon(transaction.category)}
+                          </div>
+                        </div>
+                        <p className="text-sm text-gray-500">{transaction.description}</p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <p className={`font-bold text-lg ${
+                        transaction.type === 'income' ? 'text-green-600' : 
+                        transaction.type === 'expense' ? 'text-red-600' : 'text-blue-600'
+                      }`}>
+                        {transaction.type === 'income' ? '+' : 
+                         transaction.type === 'expense' ? '-' : ''} 
+                        {transaction.amount.toLocaleString('tr-TR')} TL
+                      </p>
+                      <p className="text-xs text-gray-400">
+                        {new Date(transaction.date).toLocaleDateString('tr-TR')}
+                      </p>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
           </CardContent>
         </Card>
-      )}
+      </main>
+
+      {/* Navigation Confirmation Dialog */}
+      <Dialog open={showNavigationConfirmDialog} onOpenChange={setShowNavigationConfirmDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Ana Sayfaya Dön</DialogTitle>
+            <DialogDescription>
+              Ana sayfaya dönmek istediğinize emin misiniz?
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex space-x-2">
+            <Button variant="outline" onClick={() => setShowNavigationConfirmDialog(false)}>
+              İptal
+            </Button>
+            <Button onClick={handleNavigationConfirm}>
+              Ana Sayfaya Dön
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
-  )
-}
-
-function TransferForm({ 
-  onSubmit, 
-  onClose,
-  balances 
-}: { 
-  onSubmit: (transfer: { from: 'cash' | 'bank' | 'savings', to: 'cash' | 'bank' | 'savings', amount: number, description: string }) => void
-  onClose: () => void
-  balances: AccountBalances
-}) {
-  const { t } = useLanguage()
-  const [formData, setFormData] = useState({
-    from: 'cash' as 'cash' | 'bank' | 'savings',
-    to: 'bank' as 'cash' | 'bank' | 'savings',
-    amount: '',
-    description: ''
-  })
-
-  const accounts = [
-    { value: 'cash', label: t('app.cash'), icon: Wallet, balance: balances.cash },
-    { value: 'bank', label: t('app.bank'), icon: Building, balance: balances.bank },
-    { value: 'savings', label: t('app.savings'), icon: PiggyBank, balance: balances.savings }
-  ]
-
-  const availableToAccounts = accounts.filter(acc => acc.value !== formData.from)
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!formData.amount || parseFloat(formData.amount) <= 0) return
-
-    const amount = parseFloat(formData.amount)
-    if (amount > balances[formData.from]) {
-      alert(t('app.insufficientBalance'))
-      return
-    }
-
-    onSubmit({
-      from: formData.from,
-      to: formData.to,
-      amount,
-      description: formData.description || `${formData.from} → ${formData.to} ${t('app.moneyTransfer')}`
-    })
-
-    setFormData({
-      from: 'cash',
-      to: 'bank',
-      amount: '',
-      description: ''
-    })
-    onClose()
-  }
-
-  const fromAccount = accounts.find(acc => acc.value === formData.from)
-  const toAccount = accounts.find(acc => acc.value === formData.to)
-
-  return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div>
-        <Label>{t('app.transferFrom')}</Label>
-        <Select value={formData.from} onValueChange={(value: 'cash' | 'bank' | 'savings') => 
-          setFormData(prev => ({ ...prev, from: value, to: value === prev.to ? 'cash' : prev.to }))
-        }>
-          <SelectTrigger>
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            {accounts.map(account => (
-              <SelectItem key={account.value} value={account.value}>
-                <div className="flex items-center gap-2">
-                  <account.icon className="h-4 w-4" />
-                  <span>{account.label}</span>
-                  <span className="text-sm text-gray-500">(₺{account.balance.toFixed(2)})</span>
-                </div>
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-
-      <div>
-        <Label>{t('app.transferTo')}</Label>
-        <Select value={formData.to} onValueChange={(value: 'cash' | 'bank' | 'savings') => 
-          setFormData(prev => ({ ...prev, to: value }))
-        }>
-          <SelectTrigger>
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            {availableToAccounts.map(account => (
-              <SelectItem key={account.value} value={account.value}>
-                <div className="flex items-center gap-2">
-                  <account.icon className="h-4 w-4" />
-                  <span>{account.label}</span>
-                  <span className="text-sm text-gray-500">(₺{account.balance.toFixed(2)})</span>
-                </div>
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-
-      <div>
-        <Label>{t('app.amount')}</Label>
-        <Input
-          type="number"
-          step="0.01"
-          value={formData.amount}
-          onChange={(e) => setFormData(prev => ({ ...prev, amount: e.target.value }))}
-          placeholder="0.00"
-          max={balances[formData.from]}
-          required
-        />
-        {fromAccount && (
-          <p className="text-xs text-gray-500 mt-1">
-            {t('app.currentBalance')}: ₺{fromAccount.balance.toFixed(2)}
-          </p>
-        )}
-      </div>
-
-      <div>
-        <Label>{t('app.description')}</Label>
-        <Input
-          value={formData.description}
-          onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-          placeholder={t('app.optional')}
-        />
-      </div>
-
-      {fromAccount && toAccount && (
-        <div className="p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-          <div className="flex items-center justify-between text-sm">
-            <div className="flex items-center gap-2">
-              <fromAccount.icon className="h-4 w-4" />
-              <span>{fromAccount.label}</span>
-            </div>
-            <span className="font-medium">-₺{formData.amount || '0.00'}</span>
-          </div>
-          <div className="flex items-center justify-center my-2">
-            <ArrowRightLeft className="h-4 w-4 text-gray-400" />
-          </div>
-          <div className="flex items-center justify-between text-sm">
-            <div className="flex items-center gap-2">
-              <toAccount.icon className="h-4 w-4" />
-              <span>{toAccount.label}</span>
-            </div>
-            <span className="font-medium text-green-600">+₺{formData.amount || '0.00'}</span>
-          </div>
-        </div>
-      )}
-
-      <Button type="submit" className="w-full bg-green-600 hover:bg-green-700">
-        {t('app.doTransfer')}
-      </Button>
-    </form>
-  )
-}
-
-function AddTransactionForm({ 
-  onSubmit, 
-  onClose 
-}: { 
-  onSubmit: (transaction: Omit<Transaction, 'id'>) => void
-  onClose: () => void
-}) {
-  const { t } = useLanguage()
-  const [formData, setFormData] = useState({
-    type: 'expense' as 'income' | 'expense',
-    amount: '',
-    category: '',
-    description: '',
-    account: 'cash' as 'cash' | 'bank' | 'savings'
-  })
-
-  const categories = {
-    income: ['Maaş', 'Ek Gelir', 'Yatırım', 'Hediye', 'Kira Geliri', 'Diğer'],
-    expense: ['Gıda', 'Ulaşım', 'Eğlence', 'Faturalar', 'Alışveriş', 'Sağlık', 'Eğitim', 'Kira', 'Diğer']
-  }
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!formData.amount || !formData.category) return
-
-    onSubmit({
-      type: formData.type,
-      amount: parseFloat(formData.amount),
-      category: formData.category,
-      description: formData.description,
-      account: formData.account,
-      date: new Date().toISOString()
-    })
-
-    setFormData({
-      type: 'expense',
-      amount: '',
-      category: '',
-      description: '',
-      account: 'cash'
-    })
-    onClose()
-  }
-
-  return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div>
-        <Label>{t('app.transactionType')}</Label>
-        <Select value={formData.type} onValueChange={(value: 'income' | 'expense') => 
-          setFormData(prev => ({ ...prev, type: value, category: '' }))
-        }>
-          <SelectTrigger>
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="income">Gelir</SelectItem>
-            <SelectItem value="expense">Gider</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-
-      <div>
-        <Label>{t('app.amount')}</Label>
-        <Input
-          type="number"
-          step="0.01"
-          value={formData.amount}
-          onChange={(e) => setFormData(prev => ({ ...prev, amount: e.target.value }))}
-          placeholder="0.00"
-          required
-        />
-      </div>
-
-      <div>
-        <Label>{t('app.transactionCategory')}</Label>
-        <Select value={formData.category} onValueChange={(value) => 
-          setFormData(prev => ({ ...prev, category: value }))
-        }>
-          <SelectTrigger>
-            <SelectValue placeholder={t('app.selectCategory')} />
-          </SelectTrigger>
-          <SelectContent>
-            {categories[formData.type].map(category => (
-              <SelectItem key={category} value={category}>{category}</SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-
-      <div>
-        <Label>{t('app.account')}</Label>
-        <Select value={formData.account} onValueChange={(value: 'cash' | 'bank' | 'savings') => 
-          setFormData(prev => ({ ...prev, account: value }))
-        }>
-          <SelectTrigger>
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="cash">Nakit</SelectItem>
-            <SelectItem value="bank">Banka</SelectItem>
-            <SelectItem value="savings">Birikim</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-
-      <div>
-        <Label>{t('app.description')}</Label>
-        <Input
-          value={formData.description}
-          onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-          placeholder={t('app.optional')}
-        />
-      </div>
-
-      <Button type="submit" className="w-full bg-green-600 hover:bg-green-700">
-        İşlemi Ekle
-      </Button>
-    </form>
-  )
-}
-
-function RecurringTransactionForm({ 
-  onSubmit, 
-  onClose 
-}: { 
-  onSubmit: (recurring: Omit<RecurringTransaction, 'id'>) => void
-  onClose: () => void
-}) {
-  const { t } = useLanguage()
-  const [formData, setFormData] = useState({
-    type: 'expense' as 'income' | 'expense',
-    amount: '',
-    category: '',
-    description: '',
-    account: 'cash' as 'cash' | 'bank' | 'savings',
-    frequency: 'monthly' as 'daily' | 'weekly' | 'monthly' | 'yearly' | 'custom',
-    customFrequency: '',
-    dayOfWeek: 1, // Haftalık için (1-7, 1=Pazartesi)
-    startDate: new Date().toISOString().split('T')[0]
-  })
-
-  const categories = {
-    income: ['Maaş', 'Ek Gelir', 'Yatırım', 'Hediye', 'Kira Geliri', 'Diğer'],
-    expense: ['Kira', 'Faturalar', 'Sigorta', 'Eğitim', 'Diğer']
-  }
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    
-    // Validasyon
-    if (formData.frequency === 'custom' && !formData.customFrequency.trim()) {
-      alert('Özel periyot seçildiğinde periyot açıklaması zorunludur.')
-      return
-    }
-    
-    if (!formData.amount || !formData.category) return
-
-    onSubmit({
-      type: formData.type,
-      amount: parseFloat(formData.amount),
-      category: formData.category,
-      description: formData.description,
-      account: formData.account,
-      frequency: formData.frequency,
-      customFrequency: formData.frequency === 'custom' ? formData.customFrequency : undefined,
-      dayOfWeek: formData.frequency === 'weekly' ? formData.dayOfWeek : undefined,
-      startDate: formData.startDate,
-      isActive: true
-    })
-
-    setFormData({
-      type: 'expense',
-      amount: '',
-      category: '',
-      description: '',
-      account: 'cash',
-      frequency: 'monthly',
-      customFrequency: '',
-      dayOfWeek: 1,
-      startDate: new Date().toISOString().split('T')[0]
-    })
-    onClose()
-  }
-
-  return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-          <Label>{t('app.transactionType')}</Label>
-          <Select value={formData.type} onValueChange={(value: 'income' | 'expense') => 
-            setFormData(prev => ({ ...prev, type: value, category: '' }))
-          }>
-            <SelectTrigger>
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="income">{t('app.income')}</SelectItem>
-              <SelectItem value="expense">{t('app.expense')}</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-
-        <div>
-          <Label>{t('app.recurringFrequency')}</Label>
-          <Select value={formData.frequency} onValueChange={(value: 'daily' | 'weekly' | 'monthly' | 'yearly' | 'custom') => 
-            setFormData(prev => ({ ...prev, frequency: value }))
-          }>
-            <SelectTrigger>
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="daily">Günlük</SelectItem>
-              <SelectItem value="weekly">Haftalık</SelectItem>
-              <SelectItem value="monthly">{t('app.monthly')}</SelectItem>
-              <SelectItem value="yearly">{t('app.yearly')}</SelectItem>
-              <SelectItem value="custom">Diğer</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
-
-      <div>
-        <Label>{t('app.amount')}</Label>
-        <Input
-          type="number"
-          step="0.01"
-          value={formData.amount}
-          onChange={(e) => setFormData(prev => ({ ...prev, amount: e.target.value }))}
-          placeholder="0.00"
-          required
-        />
-      </div>
-
-      <div>
-        <Label>{t('app.transactionCategory')}</Label>
-        <Select value={formData.category} onValueChange={(value) => 
-          setFormData(prev => ({ ...prev, category: value }))
-        }>
-          <SelectTrigger>
-            <SelectValue placeholder={t('app.selectCategory')} />
-          </SelectTrigger>
-          <SelectContent>
-            {categories[formData.type].map(category => (
-              <SelectItem key={category} value={category}>{category}</SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-
-      <div className="grid grid-cols-2 gap-4">
-        {formData.frequency === 'weekly' && (
-          <div>
-            <Label>Haftanın Günü</Label>
-            <Select value={formData.dayOfWeek.toString()} onValueChange={(value) => 
-              setFormData(prev => ({ ...prev, dayOfWeek: parseInt(value) || 1 }))
-            }>
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="1">Pazartesi</SelectItem>
-                <SelectItem value="2">Salı</SelectItem>
-                <SelectItem value="3">Çarşamba</SelectItem>
-                <SelectItem value="4">Perşembe</SelectItem>
-                <SelectItem value="5">Cuma</SelectItem>
-                <SelectItem value="6">Cumartesi</SelectItem>
-                <SelectItem value="7">Pazar</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        )}
-
-        {formData.frequency === 'custom' && (
-          <div className="col-span-2">
-            <Label>Özel Periyot</Label>
-            <Input
-              type="text"
-              value={formData.customFrequency}
-              onChange={(e) => setFormData(prev => ({ ...prev, customFrequency: e.target.value }))}
-              placeholder="Örn: 15 günde bir, 2 ayda bir"
-              required
-            />
-          </div>
-        )}
-      </div>
-
-      <div>
-        <Label>{t('app.account')}</Label>
-        <Select value={formData.account} onValueChange={(value: 'cash' | 'bank' | 'savings') => 
-          setFormData(prev => ({ ...prev, account: value }))
-        }>
-          <SelectTrigger>
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="cash">Nakit</SelectItem>
-            <SelectItem value="bank">Banka</SelectItem>
-            <SelectItem value="savings">Birikim</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-
-      <div>
-        <Label>{t('app.description')}</Label>
-        <Input
-          value={formData.description}
-          onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-          placeholder="Örn: Ev kirası, Araba taksiti"
-        />
-      </div>
-
-      <div>
-        <Label>{t('app.startDate')}</Label>
-        <Input
-          type="date"
-          value={formData.startDate}
-          onChange={(e) => setFormData(prev => ({ ...prev, startDate: e.target.value }))}
-        />
-      </div>
-
-      <Button type="submit" className="w-full bg-green-600 hover:bg-green-700">
-        {t('app.addRecurringTransaction')}
-      </Button>
-    </form>
-  )
-}
-
-function TransactionList({ 
-  transactions, 
-  selectedDate, 
-  onDateChange 
-}: { 
-  transactions: Transaction[]
-  selectedDate: string
-  onDateChange: (date: string) => void
-}) {
-  const { t } = useLanguage()
-  const uniqueDates = Array.from(new Set(
-    (transactions || []).map(t => new Date(t.date).toLocaleDateString('tr-TR'))
-  )).sort((a, b) => new Date(b).getTime() - new Date(a).getTime())
-
-  const filteredTransactions = selectedDate === 'all' 
-    ? (transactions || [])
-    : (transactions || []).filter(t => new Date(t.date).toLocaleDateString('tr-TR') === selectedDate)
-
-  return (
-    <Card className="bg-white dark:bg-gray-800 shadow-sm border">
-      <CardHeader>
-        <div className="flex justify-between items-center">
-          <CardTitle>{t('app.transactions')}</CardTitle>
-          <div className="flex items-center gap-2">
-            <Filter className="h-4 w-4" />
-            <Select value={selectedDate} onValueChange={onDateChange}>
-              <SelectTrigger className="w-40">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">{t('app.all')}</SelectItem>
-                {uniqueDates.map(date => (
-                  <SelectItem key={date} value={date}>{date}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-4 max-h-96 overflow-y-auto">
-          {filteredTransactions.length === 0 ? (
-            <p className="text-gray-500 text-center py-8">
-              {selectedDate === 'all' ? t('app.noTransactions') : t('app.noTransactionsForDate')}
-            </p>
-          ) : (
-            filteredTransactions.map(transaction => (
-              <div key={transaction.id} className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                <div className="flex-1">
-                  <div className="flex items-center gap-2">
-                    <Badge variant={
-                      transaction.type === 'income' ? 'default' : 
-                      transaction.type === 'expense' ? 'destructive' : 
-                      'secondary'
-                    }>
-                      {transaction.type === 'income' ? t('app.income') : 
-                       transaction.type === 'expense' ? t('app.expense') : 'Transfer'}
-                    </Badge>
-                    {transaction.isRecurring && (
-                      <Badge variant="outline" className="text-xs">
-                        <Repeat className="h-3 w-3 mr-1" />
-                        Otomatik
-                      </Badge>
-                    )}
-                    <span className="font-medium">{transaction.category}</span>
-                  </div>
-                  {transaction.type === 'transfer' && transaction.transferFrom && transaction.transferTo && (
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                      {transaction.transferFrom === 'cash' ? 'Nakit' : 
-                       transaction.transferFrom === 'bank' ? 'Banka' : 'Birikim'} → 
-                      {transaction.transferTo === 'cash' ? ' Nakit' : 
-                       transaction.transferTo === 'bank' ? ' Banka' : ' Birikim'}
-                    </p>
-                  )}
-                  {transaction.description && (
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                      {transaction.description}
-                    </p>
-                  )}
-                  <p className="text-xs text-gray-500 mt-1">
-                    {new Date(transaction.date).toLocaleDateString('tr-TR')}
-                    {transaction.type !== 'transfer' && (
-                      <> • 
-                      {transaction.account === 'cash' ? ' Nakit' : 
-                       transaction.account === 'bank' ? ' Banka' : ' Birikim'}
-                      </>
-                    )}
-                  </p>
-                </div>
-                <div className={`text-lg font-bold ${
-                  transaction.type === 'income' ? 'text-green-600' : 
-                  transaction.type === 'expense' ? 'text-red-600' : 
-                  'text-blue-600'
-                }`}>
-                  {transaction.type === 'income' ? '+' : 
-                   transaction.type === 'expense' ? '-' : '→'}₺{transaction.amount.toFixed(2)}
-                </div>
-              </div>
-            ))
-          )}
-        </div>
-      </CardContent>
-    </Card>
-  )
-}
-
-function RecurringTransactionsList({ recurringTransactions, setRecurringTransactions, onEditRecurring }: { 
-  recurringTransactions: RecurringTransaction[]
-  setRecurringTransactions: React.Dispatch<React.SetStateAction<RecurringTransaction[]>>
-  onEditRecurring: (recurring: RecurringTransaction) => void
-}) {
-  const { t } = useLanguage()
-  
-  const toggleRecurring = async (id: string) => {
-    // State'i güncelle
-    setRecurringTransactions(prev => 
-      prev.map(r => 
-        r.id === id ? { ...r, isActive: !r.isActive } : r
-      )
-    )
-  }
-
-  const deleteRecurring = async (id: string) => {
-    if (confirm('Bu tekrarlayan işlemi silmek istediğinizden emin misiniz?')) {
-      // State'den kaldır
-      setRecurringTransactions(prev => prev.filter(r => r.id !== id))
-    }
-  }
-
-  const formatFrequency = (recurring: RecurringTransaction) => {
-    const labels = {
-      daily: 'Günlük',
-      weekly: 'Haftalık',
-      monthly: 'Aylık',
-      yearly: 'Yıllık',
-      custom: recurring.customFrequency || 'Diğer'
-    }
-    return labels[recurring.frequency] || recurring.frequency
-  }
-
-  return (
-    <Card className="bg-white dark:bg-gray-800 shadow-sm border">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Repeat className="h-5 w-5" />
-          {t('app.recurringTransactions')}
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-4 max-h-96 overflow-y-auto">
-          {recurringTransactions.length === 0 ? (
-            <p className="text-gray-500 text-center py-8">{t('app.noRecurringTransactions')}</p>
-          ) : (
-            recurringTransactions.map(recurring => (
-              <div key={recurring.id} className={`p-4 rounded-lg ${
-                recurring.isActive 
-                  ? 'bg-gray-50 dark:bg-gray-700' 
-                  : 'bg-gray-100 dark:bg-gray-600 opacity-60'
-              }`}>
-                <div className="flex items-center justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2">
-                      <Badge variant={recurring.type === 'income' ? 'default' : 'destructive'}>
-                        {recurring.type === 'income' ? t('app.income') : t('app.expense')}
-                      </Badge>
-                      <span className="font-medium">{recurring.category}</span>
-                      {!recurring.isActive && (
-                        <Badge variant="outline" className="text-xs">
-                          <AlertCircle className="h-3 w-3 mr-1" />
-                          Pasif
-                        </Badge>
-                      )}
-                    </div>
-                    {recurring.description && (
-                      <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                        {recurring.description}
-                      </p>
-                    )}
-                    <p className="text-xs text-gray-500 mt-1">
-                      {formatFrequency(recurring)} • 
-                      {recurring.account === 'cash' ? ' Nakit' : 
-                       recurring.account === 'bank' ? ' Banka' : ' Birikim'}
-                    </p>
-                    {recurring.startDate && (
-                      <p className="text-xs text-gray-500">
-                        Başlangıç: {new Date(recurring.startDate).toLocaleDateString('tr-TR')}
-                      </p>
-                    )}
-                  </div>
-                  <div className="flex flex-col items-end gap-2">
-                    <div className={`text-lg font-bold ${
-                      recurring.type === 'income' ? 'text-green-600' : 'text-red-600'
-                    }`}>
-                      {recurring.type === 'income' ? '+' : '-'}₺{recurring.amount.toFixed(2)}
-                    </div>
-                    <div className="flex gap-2">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => toggleRecurring(recurring.id)}
-                      >
-                        {recurring.isActive ? 'Pasif Et' : 'Aktif Et'}
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => onEditRecurring(recurring)}
-                      >
-                        Düzenle
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => deleteRecurring(recurring.id)}
-                      >
-                        Sil
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))
-          )}
-        </div>
-      </CardContent>
-    </Card>
-  )
-}
-
-function DailyReports({ transactions }: { transactions: Transaction[] }) {
-  const { t } = useLanguage()
-  const groupedTransactions = transactions.reduce((acc, transaction) => {
-    const date = new Date(transaction.date).toLocaleDateString('tr-TR')
-    if (!acc[date]) {
-      acc[date] = []
-    }
-    acc[date].push(transaction)
-    return acc
-  }, {} as Record<string, Transaction[]>)
-
-  const sortedDates = Object.keys(groupedTransactions).sort((a, b) => 
-    new Date(b).getTime() - new Date(a).getTime()
-  )
-
-  return (
-    <Card className="bg-white dark:bg-gray-800 shadow-sm border">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <BarChart3 className="h-5 w-5" />
-          {t('app.dailyReports')}
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-6 max-h-96 overflow-y-auto">
-          {sortedDates.length === 0 ? (
-            <p className="text-gray-500 text-center py-8">{t('app.noReports')}</p>
-          ) : (
-            sortedDates.map(date => {
-              const dayTransactions = groupedTransactions[date]
-              const dayIncome = dayTransactions.filter(t => t.type === 'income').reduce((sum, transaction) => sum + transaction.amount, 0)
-              const dayExpense = dayTransactions.filter(t => t.type === 'expense').reduce((sum, transaction) => sum + transaction.amount, 0)
-              const netAmount = dayIncome - dayExpense
-
-              return (
-                <div key={date} className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                  <div className="flex items-center justify-between mb-3">
-                    <h3 className="font-medium flex items-center gap-2">
-                      <Calendar className="h-4 w-4" />
-                      {date}
-                    </h3>
-                    <div className={`font-bold ${
-                      netAmount >= 0 ? 'text-green-600' : 'text-red-600'
-                    }`}>
-                      {netAmount >= 0 ? '+' : ''}₺{netAmount.toFixed(2)}
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-2 gap-4 text-sm">
-                    <div>
-                      <span className="text-gray-600">Gelir:</span>
-                      <span className="ml-2 text-green-600 font-medium">₺{dayIncome.toFixed(2)}</span>
-                    </div>
-                    <div>
-                      <span className="text-gray-600">Gider:</span>
-                      <span className="ml-2 text-red-600 font-medium">₺{dayExpense.toFixed(2)}</span>
-                    </div>
-                  </div>
-                  <div className="mt-2 text-xs text-gray-500">
-                    {dayTransactions.length} işlem
-                  </div>
-                </div>
-              )
-            })
-          )}
-        </div>
-      </CardContent>
-    </Card>
   )
 }

@@ -30,6 +30,8 @@ export function useMobile(): UseMobileReturn {
     }
   }, [])
 
+  const isDesktop = !isMobile && !isTablet
+
   return {
     isMobile,
     isTablet,
