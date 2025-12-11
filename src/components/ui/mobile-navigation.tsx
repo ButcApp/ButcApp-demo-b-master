@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useRef } from 'react'
-import { Menu, X, Home, Settings, CreditCard, TrendingUp, User, Bell, HelpCircle } from 'lucide-react'
+import { Menu, X, Home, Settings, CreditCard, TrendingUp, User, Bell, HelpCircle, FileText } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { useMobile } from '@/hooks/useMobile'
@@ -37,7 +37,7 @@ export function MobileNavigation({
     // Close navigation after item click
     onClose()
     // Navigate to the page
-    window.location.href = itemId === 'dashboard' ? '/app' : `/${itemId}`
+    window.location.href = itemId === 'dashboard' ? '/app' : itemId === 'investments' ? '/app/investments' : itemId === 'settings' ? '/app/settings' : `/${itemId}`
   }
 
   const handleBackdropClick = () => {

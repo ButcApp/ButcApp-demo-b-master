@@ -67,6 +67,7 @@ import { dataSync } from '@/lib/data-sync'
 import { PieChart, Pie, Cell, ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, BarChart, Bar, AreaChart, Area } from 'recharts'
 import Link from 'next/link'
 import EditRecurringDialog from '@/components/EditRecurringDialog'
+import { NotesModal } from '@/components/NotesModal'
 import { MiniChart } from '@/components/ui/mini-chart'
 import { CategorySummary } from '@/components/ui/category-summary'
 import { useMobile } from '@/hooks/useMobile'
@@ -141,6 +142,7 @@ export default function ButcapApp() {
   const [noteFilter, setNoteFilter] = useState<'all' | 'today' | 'week' | 'month'>('all')
   const [showNavigationConfirmDialog, setShowNavigationConfirmDialog] = useState(false)
   const [balanceHidden, setBalanceHidden] = useState(false)
+  const [showNotesModal, setShowNotesModal] = useState(false)
   
   // Notlar state
   const [notes, setNotes] = useState<Note[]>([])
@@ -1098,6 +1100,19 @@ export default function ButcapApp() {
               <span className="text-sm font-medium text-gray-700">Yatırımlar</span>
             </div>
           </Button>
+
+          <Button 
+            variant="outline" 
+            className="h-20 bg-white hover:bg-gray-50 border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-200 group"
+            onClick={() => setShowNotesModal(true)}
+          >
+            <div className="flex flex-col items-center space-y-2">
+              <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                <FileText className="h-6 w-6 text-white" />
+              </div>
+              <span className="text-sm font-medium text-gray-700">Notlar</span>
+            </div>
+          </Button>
         </div>
 
         {/* Stats Cards */}
@@ -1274,6 +1289,9 @@ export default function ButcapApp() {
           </div>
         </DialogContent>
       </Dialog>
+
+      {/* Notes Modal */}
+      <NotesModal isOpen={showNotesModal} onClose={() => setShowNotesModal(false)} />
     </div>
   )
 }

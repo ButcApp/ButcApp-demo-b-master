@@ -24,6 +24,7 @@ import {
   RefreshCw
 } from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'
+import Link from 'next/link'
 import { useAuth } from '@/contexts/AuthContext'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { ThemeToggle } from '@/components/theme-toggle'
@@ -357,21 +358,37 @@ function SettingsContent() {
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="border-b">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="flex items-center gap-4">
-            <Button 
-              variant="ghost" 
-              size="icon"
-              onClick={() => router.back()}
-            >
-              <ArrowLeft className="h-4 w-4" />
-            </Button>
-            <h1 className="text-xl font-semibold">Ayarlar</h1>
-          </div>
-          <div className="flex items-center gap-2">
-            <ThemeToggle />
-            <LanguageToggle />
-            <UserAuthButton />
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <Link href="/app" className="hover:opacity-80 transition-opacity duration-200">
+                <img 
+                  src="/favicon.png" 
+                  alt="ButcApp" 
+                  className="w-10 h-10 rounded-xl shadow-sm"
+                />
+              </Link>
+              <div>
+                <h1 className="text-2xl font-bold">Ayarlar</h1>
+                <p className="text-sm text-muted-foreground">Hesap ve uygulama ayarları</p>
+              </div>
+              <nav className="hidden md:flex items-center space-x-4 ml-8">
+                <Link href="/app" className="text-muted-foreground hover:text-foreground">
+                  Ana Sayfa
+                </Link>
+                <Link href="/app/investments" className="text-muted-foreground hover:text-foreground">
+                  Yatırımlar
+                </Link>
+                <Link href="/app/settings" className="text-foreground font-medium">
+                  Ayarlar
+                </Link>
+              </nav>
+            </div>
+            <div className="flex items-center space-x-2">
+              <ThemeToggle />
+              <LanguageToggle />
+              <UserAuthButton />
+            </div>
           </div>
         </div>
       </header>

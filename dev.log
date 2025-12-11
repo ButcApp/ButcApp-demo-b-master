@@ -4,1064 +4,26 @@
 
    ▲ Next.js 15.5.7
    - Local:        http://localhost:3000
-   - Network:      http://21.0.4.165:3000
+   - Network:      http://21.0.3.138:3000
    - Environments: .env.development
    - Experiments (use with caution):
      · optimizePackageImports
 
  ✓ Starting...
-Attention: Next.js now collects completely anonymous telemetry regarding usage.
-This information is used to shape Next.js' roadmap and prioritize features.
-You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
-https://nextjs.org/telemetry
-
- ✓ Ready in 1803ms
- ○ Compiling /middleware ...
- ✓ Compiled /middleware in 753ms (114 modules)
+ ✓ Ready in 1518ms
+ ✓ Compiled /middleware in 492ms (114 modules)
 === MIDDLEWARE DEBUG ===
 Pathname: /
 Method: GET
 Not an admin route or login page, proceeding
  ○ Compiling / ...
- ✓ Compiled / in 8.3s (1698 modules)
- GET / 200 in 9009ms
+ ✓ Compiled / in 5.9s (1698 modules)
+ GET / 200 in 6439ms
 === MIDDLEWARE DEBUG ===
 Pathname: /
 Method: GET
 Not an admin route or login page, proceeding
- GET / 200 in 78ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/css/app/layout.css
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/webpack.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/main-app.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app-pages-internals.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app/layout.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app/page.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /blog
-Method: GET
-Not an admin route or login page, proceeding
- ○ Compiling /blog ...
- ✓ Compiled /blog in 1505ms (1769 modules)
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/blog
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/blog/categories
-Method: GET
-API route, skipping middleware
- ○ Compiling /api/blog/categories ...
-=== MIDDLEWARE DEBUG ===
-Pathname: /favicon.png
-Method: GET
-Not an admin route or login page, proceeding
- ✓ Compiled /api/blog/categories in 1393ms (1849 modules)
- GET /api/blog/categories 200 in 2012ms
- GET /api/blog?limit=12 200 in 2443ms
- GET /blog 200 in 4553ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/blog
-Method: GET
-API route, skipping middleware
- GET /api/blog 200 in 168ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /blog
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/blog
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/blog/categories
-Method: GET
-API route, skipping middleware
- GET /api/blog/categories 200 in 226ms
- GET /api/blog?limit=12 200 in 238ms
- GET /blog 200 in 388ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app/blog/page.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /blog
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/blog
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/blog/categories
-Method: GET
-API route, skipping middleware
- GET /api/blog/categories 200 in 192ms
- GET /api/blog?limit=12 200 in 203ms
- GET /blog 200 in 274ms
- ✓ Compiled in 1077ms (1760 modules)
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/938933b8b862feb4.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /blog
-Method: GET
-Not an admin route or login page, proceeding
- GET /blog 200 in 221ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/app/layout.938933b8b862feb4.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.938933b8b862feb4.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/ffa58609e6a655ef.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.ffa58609e6a655ef.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/2b25f0942e8ea6f2.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.2b25f0942e8ea6f2.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/e1b0514206459357.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.e1b0514206459357.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/app/blog/page.e1b0514206459357.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/app/layout.e1b0514206459357.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/css/app/layout.css
-Method: GET
-Not an admin route or login page, proceeding
- ✓ Compiled in 432ms (817 modules)
-=== MIDDLEWARE DEBUG ===
-Pathname: /blog
-Method: GET
-Not an admin route or login page, proceeding
- GET /blog 200 in 59ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/792fb957959f16f5.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /blog
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/blog
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/blog/categories
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/app/layout.792fb957959f16f5.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
- ✓ Compiled /api/blog/categories in 388ms (1034 modules)
- ✓ Compiled (1036 modules)
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.792fb957959f16f5.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
- GET /api/blog?limit=12 200 in 1344ms
- GET /api/blog/categories 200 in 1384ms
- GET /blog 200 in 1829ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/css/app/layout.css
-Method: GET
-Not an admin route or login page, proceeding
- ✓ Compiled in 522ms (1853 modules)
-=== MIDDLEWARE DEBUG ===
-Pathname: /blog
-Method: GET
-Not an admin route or login page, proceeding
- GET /blog 200 in 137ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/3cd63002cfdc34e3.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/app/layout.3cd63002cfdc34e3.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.3cd63002cfdc34e3.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /blog
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/blog
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/blog/categories
-Method: GET
-API route, skipping middleware
- GET /api/blog/categories 200 in 284ms
- GET /api/blog?limit=12 200 in 313ms
- GET /blog 200 in 691ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/css/app/layout.css
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/blog
-Method: GET
-API route, skipping middleware
- GET /api/blog 200 in 198ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /blog/gfasgfsagff
-Method: GET
-Not an admin route or login page, proceeding
- ○ Compiling /blog/[slug] ...
- ✓ Compiled /blog/[slug] in 1637ms (1875 modules)
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/ed9132f86f39cda3.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/blog/gfasgfsagff
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.ed9132f86f39cda3.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
- ○ Compiling /api/blog/[slug] ...
- ✓ Compiled /api/blog/[slug] in 545ms (1877 modules)
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/782c1e5858f71c63.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
-Error: Route "/api/blog/[slug]" used `params.slug`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
-    at GET (src/app/api/blog/[slug]/route.ts:11:13)
-   9 | export async function GET(request: NextRequest, { params }: { params: { slug: string } }) {
-  10 |   try {
-> 11 |     const { slug } = params
-     |             ^
-  12 |
-  13 |     // Fetch blog post
-  14 |     const { data: post, error } = await supabase
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.782c1e5858f71c63.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
- GET /api/blog/gfasgfsagff 200 in 1870ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/blog
-Method: GET
-API route, skipping middleware
- GET /api/blog?category=%C4%B0%C5%9F&limit=3 200 in 155ms
- GET /blog/gfasgfsagff 200 in 4812ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /blog
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/blog
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/blog/categories
-Method: GET
-API route, skipping middleware
- GET /api/blog?limit=12 200 in 166ms
- GET /api/blog/categories 200 in 202ms
- GET /blog 200 in 579ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /blog/gfasgfsagff
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/blog/gfasgfsagff
-Method: GET
-API route, skipping middleware
-Error: Route "/api/blog/[slug]" used `params.slug`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
-    at GET (src/app/api/blog/[slug]/route.ts:11:13)
-   9 | export async function GET(request: NextRequest, { params }: { params: { slug: string } }) {
-  10 |   try {
-> 11 |     const { slug } = params
-     |             ^
-  12 |
-  13 |     // Fetch blog post
-  14 |     const { data: post, error } = await supabase
- GET /api/blog/gfasgfsagff 200 in 572ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/blog
-Method: GET
-API route, skipping middleware
- GET /api/blog?category=%C4%B0%C5%9F&limit=3 200 in 156ms
- GET /blog/gfasgfsagff 200 in 918ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /blog/gfasgfsagff
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/blog/gfasgfsagff
-Method: GET
-API route, skipping middleware
-Error: Route "/api/blog/[slug]" used `params.slug`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
-    at GET (src/app/api/blog/[slug]/route.ts:11:13)
-   9 | export async function GET(request: NextRequest, { params }: { params: { slug: string } }) {
-  10 |   try {
-> 11 |     const { slug } = params
-     |             ^
-  12 |
-  13 |     // Fetch blog post
-  14 |     const { data: post, error } = await supabase
- GET /api/blog/gfasgfsagff 200 in 577ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/blog
-Method: GET
-API route, skipping middleware
- GET /api/blog?category=%C4%B0%C5%9F&limit=3 200 in 182ms
- GET /blog/gfasgfsagff 200 in 892ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app/blog/%5Bslug%5D/page.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /blog
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/blog
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/blog/categories
-Method: GET
-API route, skipping middleware
- GET /api/blog?limit=12 200 in 198ms
- GET /api/blog/categories 200 in 223ms
- GET /blog 200 in 295ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /blog/gfasgfsagff
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/blog/gfasgfsagff
-Method: GET
-API route, skipping middleware
-Error: Route "/api/blog/[slug]" used `params.slug`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
-    at GET (src/app/api/blog/[slug]/route.ts:11:13)
-   9 | export async function GET(request: NextRequest, { params }: { params: { slug: string } }) {
-  10 |   try {
-> 11 |     const { slug } = params
-     |             ^
-  12 |
-  13 |     // Fetch blog post
-  14 |     const { data: post, error } = await supabase
- GET /api/blog/gfasgfsagff 200 in 612ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/blog
-Method: GET
-API route, skipping middleware
- GET /api/blog?category=%C4%B0%C5%9F&limit=3 200 in 159ms
- GET /blog/gfasgfsagff 200 in 877ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /blog
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/blog
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/blog/categories
-Method: GET
-API route, skipping middleware
- GET /api/blog?limit=12 200 in 201ms
- GET /api/blog/categories 200 in 250ms
- GET /blog 200 in 314ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/local/blog
-Method: GET
-API route, skipping middleware
- ○ Compiling /_not-found ...
- ✓ Compiled /_not-found in 1285ms (1882 modules)
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/dc00661c44c81f93.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
- GET /api/local/blog?page=2&limit=12 404 in 1627ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.dc00661c44c81f93.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
- ⚠ Cross origin request detected from preview-chat-11f1154a-dbfe-4c94-8c26-53277fb8c2e5.space.z.ai to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
-Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
- ✓ Compiled in 587ms (1896 modules)
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/d25f5acb44392061.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /blog
-Method: GET
-Not an admin route or login page, proceeding
- GET /blog 200 in 108ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/app/blog/page.d25f5acb44392061.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/app/layout.d25f5acb44392061.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.d25f5acb44392061.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/css/app/layout.css
-Method: GET
-Not an admin route or login page, proceeding
- ✓ Compiled in 542ms (1801 modules)
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/5cca9aa085095629.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /blog
-Method: GET
-Not an admin route or login page, proceeding
- GET /blog 200 in 209ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/app/layout.5cca9aa085095629.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/app/blog/page.5cca9aa085095629.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.5cca9aa085095629.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/css/app/layout.css
-Method: GET
-Not an admin route or login page, proceeding
- ✓ Compiled in 604ms (1801 modules)
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/55deff367169b468.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /blog
-Method: GET
-Not an admin route or login page, proceeding
- GET /blog 200 in 132ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/app/blog/[slug]/page.55deff367169b468.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/app/layout.55deff367169b468.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.55deff367169b468.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/css/app/layout.css
-Method: GET
-Not an admin route or login page, proceeding
- ✓ Compiled in 558ms (1801 modules)
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/56766417ff292d40.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /blog
-Method: GET
-Not an admin route or login page, proceeding
- GET /blog 200 in 86ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /blog
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/blog
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/blog/categories
-Method: GET
-API route, skipping middleware
- ✓ Compiled /api/blog/categories in 227ms (1059 modules)
- ✓ Compiled (1061 modules)
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/app/layout.56766417ff292d40.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/app/blog/[slug]/page.56766417ff292d40.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
- GET /api/blog?limit=12 200 in 1364ms
- GET /api/blog/categories 200 in 1561ms
- GET /blog 200 in 1893ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.56766417ff292d40.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/css/app/layout.css
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /blog
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/blog
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/blog/categories
-Method: GET
-API route, skipping middleware
- GET /api/blog/categories 200 in 201ms
- GET /api/blog?limit=12 200 in 211ms
- GET /blog 200 in 596ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /blog
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/blog
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/blog/categories
-Method: GET
-API route, skipping middleware
- GET /api/blog?limit=12 200 in 198ms
- GET /api/blog/categories 200 in 205ms
- GET /blog 200 in 334ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /blog/gfasgfsagff
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/blog/gfasgfsagff
-Method: GET
-API route, skipping middleware
- ✓ Compiled /api/blog/[slug] in 343ms (1062 modules)
-Error: Route "/api/blog/[slug]" used `params.slug`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
-    at GET (src/app/api/blog/[slug]/route.ts:11:13)
-   9 | export async function GET(request: NextRequest, { params }: { params: { slug: string } }) {
-  10 |   try {
-> 11 |     const { slug } = params
-     |             ^
-  12 |
-  13 |     // Fetch blog post
-  14 |     const { data: post, error } = await supabase
- GET /api/blog/gfasgfsagff 200 in 1009ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/blog
-Method: GET
-API route, skipping middleware
- GET /api/blog?category=%C4%B0%C5%9F&limit=3 200 in 171ms
- GET /blog/gfasgfsagff 200 in 1412ms
- ✓ Compiled in 1712ms (1889 modules)
-=== MIDDLEWARE DEBUG ===
-Pathname: /blog
-Method: GET
-Not an admin route or login page, proceeding
- GET /blog 200 in 138ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/f7b87036019a0e8e.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/app/page.f7b87036019a0e8e.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/app/blog/page.f7b87036019a0e8e.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/app/layout.f7b87036019a0e8e.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/app/blog/[slug]/page.f7b87036019a0e8e.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.f7b87036019a0e8e.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/css/app/layout.css
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /blog
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/blog
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/blog/categories
-Method: GET
-API route, skipping middleware
- GET /api/blog?limit=12 200 in 307ms
- ✓ Compiled /api/blog/categories in 304ms (1060 modules)
- GET /api/blog/categories 200 in 553ms
- GET /blog 200 in 920ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /blog/gfasgfsagff
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/blog/gfasgfsagff
-Method: GET
-API route, skipping middleware
- ✓ Compiled /api/blog/[slug] in 245ms (1062 modules)
-Error: Route "/api/blog/[slug]" used `params.slug`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
-    at GET (src/app/api/blog/[slug]/route.ts:11:13)
-   9 | export async function GET(request: NextRequest, { params }: { params: { slug: string } }) {
-  10 |   try {
-> 11 |     const { slug } = params
-     |             ^
-  12 |
-  13 |     // Fetch blog post
-  14 |     const { data: post, error } = await supabase
- GET /api/blog/gfasgfsagff 200 in 1057ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/blog
-Method: GET
-API route, skipping middleware
- GET /api/blog?category=%C4%B0%C5%9F&limit=3 200 in 155ms
- GET /blog/gfasgfsagff 200 in 1629ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /
-Method: GET
-Not an admin route or login page, proceeding
- GET / 200 in 246ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/webpack.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/css/app/layout.css
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/main-app.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app/layout.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app/page.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app-pages-internals.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /favicon.png
-Method: GET
-Not an admin route or login page, proceeding
- ✓ Compiled in 1979ms (1796 modules)
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/7be846a4d852f017.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /
-Method: GET
-Not an admin route or login page, proceeding
- GET / 200 in 217ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/app/layout.7be846a4d852f017.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.7be846a4d852f017.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/css/app/layout.css
-Method: GET
-Not an admin route or login page, proceeding
- ✓ Compiled in 566ms (1796 modules)
-=== MIDDLEWARE DEBUG ===
-Pathname: /
-Method: GET
-Not an admin route or login page, proceeding
- GET / 200 in 113ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/ec38af35fa3bf32a.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.ec38af35fa3bf32a.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/app/layout.ec38af35fa3bf32a.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/css/app/layout.css
-Method: GET
-Not an admin route or login page, proceeding
- ✓ Compiled in 1563ms (1804 modules)
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/87607df1fea52b6d.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /
-Method: GET
-Not an admin route or login page, proceeding
- GET / 200 in 96ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/app/layout.87607df1fea52b6d.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.87607df1fea52b6d.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/css/app/layout.css
-Method: GET
-Not an admin route or login page, proceeding
- ✓ Compiled in 589ms (1804 modules)
-=== MIDDLEWARE DEBUG ===
-Pathname: /
-Method: GET
-Not an admin route or login page, proceeding
- GET / 200 in 84ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/d3853df18dc318ec.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.d3853df18dc318ec.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/app/layout.d3853df18dc318ec.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/css/app/layout.css
-Method: GET
-Not an admin route or login page, proceeding
- ✓ Compiled in 472ms (1804 modules)
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/f62b3168b21c9f22.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /
-Method: GET
-Not an admin route or login page, proceeding
- GET / 200 in 81ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/app/layout.f62b3168b21c9f22.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.f62b3168b21c9f22.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/css/app/layout.css
-Method: GET
-Not an admin route or login page, proceeding
- ✓ Compiled in 575ms (1804 modules)
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/edf043b5854b1e03.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /
-Method: GET
-Not an admin route or login page, proceeding
- GET / 200 in 76ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.edf043b5854b1e03.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/app/layout.edf043b5854b1e03.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/css/app/layout.css
-Method: GET
-Not an admin route or login page, proceeding
- ✓ Compiled in 530ms (1804 modules)
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/4db66e634cd90eed.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /
-Method: GET
-Not an admin route or login page, proceeding
- GET / 200 in 73ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.4db66e634cd90eed.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/app/layout.4db66e634cd90eed.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/css/app/layout.css
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /blog
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/blog
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/blog/categories
-Method: GET
-API route, skipping middleware
- ○ Compiling /api/blog/categories ...
- ✓ Compiled /api/blog/categories in 619ms (1062 modules)
- ✓ Compiled (1064 modules)
- GET /api/blog/categories 200 in 1684ms
- GET /api/blog?limit=12 200 in 1695ms
- GET /blog 200 in 1802ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app/blog/page.js
-Method: GET
-Not an admin route or login page, proceeding
- ✓ Compiled in 1671ms (1899 modules)
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/97cc7ec6b44045ba.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /blog
-Method: GET
-Not an admin route or login page, proceeding
- GET /blog 200 in 147ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/app/layout.97cc7ec6b44045ba.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.97cc7ec6b44045ba.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/css/app/layout.css
-Method: GET
-Not an admin route or login page, proceeding
- ✓ Compiled in 614ms (1806 modules)
-=== MIDDLEWARE DEBUG ===
-Pathname: /blog
-Method: GET
-Not an admin route or login page, proceeding
- GET /blog 200 in 209ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/37f2a0d02909d516.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.37f2a0d02909d516.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/app/layout.37f2a0d02909d516.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/css/app/layout.css
-Method: GET
-Not an admin route or login page, proceeding
- ✓ Compiled in 399ms (834 modules)
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/ea5cc50051d44ce4.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /blog
-Method: GET
-Not an admin route or login page, proceeding
- GET /blog 200 in 44ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/app/layout.ea5cc50051d44ce4.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.ea5cc50051d44ce4.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/css/app/layout.css
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /
-Method: GET
-Not an admin route or login page, proceeding
- GET / 200 in 431ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/css/app/layout.css
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/webpack.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/main-app.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app/layout.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app-pages-internals.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app/page.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /favicon.png
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /blog
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/blog
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/blog/categories
-Method: GET
-API route, skipping middleware
- ✓ Compiled /api/blog/categories in 318ms (1063 modules)
- ✓ Compiled (1065 modules)
- GET /api/blog/categories 200 in 1197ms
- GET /api/blog?limit=12 200 in 1252ms
- GET /blog 200 in 1325ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app/blog/page.js
-Method: GET
-Not an admin route or login page, proceeding
- ✓ Compiled in 512ms (834 modules)
-=== MIDDLEWARE DEBUG ===
-Pathname: /blog
-Method: GET
-Not an admin route or login page, proceeding
- GET /blog 200 in 122ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/a955e9c1d94988ab.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
- ✓ Compiled in 259ms (834 modules)
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.a955e9c1d94988ab.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/app/layout.a955e9c1d94988ab.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/526828a2a84b1062.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.526828a2a84b1062.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/app/layout.526828a2a84b1062.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
- ✓ Compiled in 226ms (834 modules)
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/b6b636a4068836d2.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/app/layout.b6b636a4068836d2.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.b6b636a4068836d2.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /
-Method: GET
-Not an admin route or login page, proceeding
- GET / 200 in 438ms
+ GET / 200 in 49ms
 === MIDDLEWARE DEBUG ===
 Pathname: /_next/static/css/app/layout.css
 Method: GET
@@ -1101,20 +63,29 @@ Attempted import error: 'supabase' is not exported from '@/lib/db' (imported as 
 Import trace for requested module:
 ./src/lib/logger.ts
 ./src/app/api/auth/signin/route.ts
-AuthService: Starting signin for email: vtheophiluss@proton.me
+AuthService: Starting signin for email: noyan4job@gmail.com
 === MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/81c57f47ce76d8a8.webpack.hot-update.json
+Pathname: /_next/static/webpack/0cd05b6153c98dcd.webpack.hot-update.json
 Method: GET
 Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.81c57f47ce76d8a8.hot-update.js
+Pathname: /
+Method: GET
+Not an admin route or login page, proceeding
+ GET / 200 in 78ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.0cd05b6153c98dcd.hot-update.js
 Method: GET
 Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
-Pathname: /blog
+Pathname: /_next/static/webpack/webpack.0cd05b6153c98dcd.hot-update.js
 Method: GET
 Not an admin route or login page, proceeding
-AuthService: Signin successful for: vtheophiluss@proton.me
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+AuthService: Signin successful for: noyan4job@gmail.com
 Failed to log to database: TypeError: Cannot read properties of undefined (reading 'from')
     at Logger.log (src/lib/logger.ts:43:15)
     at Logger.logUserLogin (src/lib/logger.ts:77:16)
@@ -1129,11 +100,11 @@ Failed to log to database: TypeError: Cannot read properties of undefined (readi
 [USER_LOGIN] user_login_attempt: User logged in successfully {
   type: 'user_login',
   level: 'info',
-  userId: 'user_1765293907925_5nbi7qlvt',
+  userId: 'user_1765285604327_pdegojjr8',
   action: 'user_login_attempt',
   description: 'User logged in successfully',
   ipAddress: '21.0.0.1',
-  userAgent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36',
+  userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition Yx GX TR 1)',
   metadata: { success: true }
 }
 Failed to log to database: TypeError: Cannot read properties of undefined (reading 'from')
@@ -1150,38 +121,18 @@ Failed to log to database: TypeError: Cannot read properties of undefined (readi
 [API_REQUEST] api_request: POST /api/auth/signin - 200 {
   type: 'api_request',
   level: 'info',
-  userId: 'user_1765293907925_5nbi7qlvt',
+  userId: 'user_1765285604327_pdegojjr8',
   adminId: undefined,
   action: 'api_request',
   description: 'POST /api/auth/signin - 200',
   endpoint: '/api/auth/signin',
   method: 'POST',
   statusCode: 200,
-  responseTime: 1091,
+  responseTime: 1273,
   ipAddress: '21.0.0.1',
-  userAgent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36'
+  userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition Yx GX TR 1)'
 }
- POST /api/auth/signin 200 in 3473ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/blog
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/blog/categories
-Method: GET
-API route, skipping middleware
- ⚠ ./src/lib/logger.ts
-Attempted import error: 'supabase' is not exported from '@/lib/db' (imported as 'supabase').
-
-Import trace for requested module:
-./src/lib/logger.ts
-./src/app/api/auth/signin/route.ts
- ⚠ ./src/lib/logger.ts
-Attempted import error: 'supabase' is not exported from '@/lib/db' (imported as 'supabase').
-
-Import trace for requested module:
-./src/lib/logger.ts
-./src/app/api/auth/signin/route.ts
+ POST /api/auth/signin 200 in 2773ms
 === MIDDLEWARE DEBUG ===
 Pathname: /app
 Method: GET
@@ -1198,25 +149,13 @@ Attempted import error: 'supabase' is not exported from '@/lib/db' (imported as 
 Import trace for requested module:
 ./src/lib/logger.ts
 ./src/app/api/auth/signin/route.ts
- ⚠ ./src/lib/logger.ts
-Attempted import error: 'supabase' is not exported from '@/lib/db' (imported as 'supabase').
-
-Import trace for requested module:
-./src/lib/logger.ts
-./src/app/api/auth/signin/route.ts
+ GET /app 200 in 2985ms
 === MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/c03c701648b9d538.webpack.hot-update.json
+Pathname: /_next/static/webpack/148c7f7d6a920acc.webpack.hot-update.json
 Method: GET
 Not an admin route or login page, proceeding
- GET /app 200 in 7530ms
- GET /api/blog?limit=12 200 in 7882ms
- GET /api/blog/categories 200 in 8008ms
- ⨯ [TypeError: Cannot read properties of undefined (reading 'call')] {
-  digest: '3236941083'
-}
- GET /blog 500 in 8948ms
 === MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.c03c701648b9d538.hot-update.js
+Pathname: /_next/static/webpack/webpack.148c7f7d6a920acc.hot-update.js
 Method: GET
 Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
@@ -1240,10 +179,10 @@ Import trace for requested module:
 ./src/lib/logger.ts
 ./src/app/api/auth/signin/route.ts
 AuthService: Verifying token
-AuthService: Token verification successful for: vtheophiluss@proton.me
- GET /api/auth/me 200 in 828ms
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 581ms
 === MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/57c6b0e8ca8d74ad.webpack.hot-update.json
+Pathname: /_next/static/webpack/85b598c562adf3fd.webpack.hot-update.json
 Method: GET
 Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
@@ -1261,12 +200,12 @@ Attempted import error: 'supabase' is not exported from '@/lib/db' (imported as 
 Import trace for requested module:
 ./src/lib/logger.ts
 ./src/app/api/auth/signin/route.ts
-AuthService: Token verification successful for: vtheophiluss@proton.me
- GET /api/auth/me 200 in 181ms
 === MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.57c6b0e8ca8d74ad.hot-update.js
+Pathname: /_next/static/webpack/webpack.85b598c562adf3fd.hot-update.js
 Method: GET
 Not an admin route or login page, proceeding
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 186ms
  ⚠ ./src/lib/logger.ts
 Attempted import error: 'supabase' is not exported from '@/lib/db' (imported as 'supabase').
 
@@ -1274,44 +213,47 @@ Import trace for requested module:
 ./src/lib/logger.ts
 ./src/app/api/auth/signin/route.ts
 AuthService: Verifying token
-AuthService: Token verification successful for: vtheophiluss@proton.me
- GET /api/data/balances 200 in 971ms
+AuthService: Token verification successful for: noyan4job@gmail.com
 === MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/6892a4b604c2269e.webpack.hot-update.json
+Pathname: /_next/static/webpack/4ee204a6b715c505.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+ GET /api/data/balances 200 in 743ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.4ee204a6b715c505.hot-update.js
 Method: GET
 Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
 Pathname: /api/data/balances
 Method: GET
 API route, skipping middleware
+AuthService: Verifying token
 === MIDDLEWARE DEBUG ===
 Pathname: /api/auth/me
 Method: GET
 API route, skipping middleware
 AuthService: Verifying token
-AuthService: Verifying token
-AuthService: Token verification successful for: vtheophiluss@proton.me
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/data/balances 200 in 289ms
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 387ms
 === MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.6892a4b604c2269e.hot-update.js
+Pathname: /api/auth/me
 Method: GET
-Not an admin route or login page, proceeding
- GET /api/data/balances 200 in 312ms
-AuthService: Token verification successful for: vtheophiluss@proton.me
- GET /api/auth/me 200 in 459ms
+API route, skipping middleware
 === MIDDLEWARE DEBUG ===
 Pathname: /api/data/transactions
 Method: GET
 API route, skipping middleware
+AuthService: Verifying token
  ⚠ ./src/lib/logger.ts
 Attempted import error: 'supabase' is not exported from '@/lib/db' (imported as 'supabase').
 
 Import trace for requested module:
 ./src/lib/logger.ts
 ./src/app/api/auth/signin/route.ts
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 177ms
  ⚠ ./src/lib/logger.ts
 Attempted import error: 'supabase' is not exported from '@/lib/db' (imported as 'supabase').
 
@@ -1319,15 +261,8 @@ Import trace for requested module:
 ./src/lib/logger.ts
 ./src/app/api/auth/signin/route.ts
 AuthService: Verifying token
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/52bfc6dfdcb3f69d.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
-AuthService: Token verification successful for: vtheophiluss@proton.me
- GET /api/auth/me 200 in 736ms
-AuthService: Token verification successful for: vtheophiluss@proton.me
-Fetching transactions for userId: user_1765293907925_5nbi7qlvt {
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching transactions for userId: user_1765285604327_pdegojjr8 {
   limit: 50,
   offset: 0,
   type: null,
@@ -1335,33 +270,39 @@ Fetching transactions for userId: user_1765293907925_5nbi7qlvt {
   startDate: null,
   endDate: null
 }
-Transactions fetched successfully: 3
- GET /api/data/transactions 200 in 1337ms
+Transactions fetched successfully: 0
+ GET /api/data/transactions 200 in 685ms
 === MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.52bfc6dfdcb3f69d.hot-update.js
+Pathname: /_next/static/webpack/f0ed2b75799ca1b6.webpack.hot-update.json
 Method: GET
 Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/transactions
+Method: GET
+API route, skipping middleware
 === MIDDLEWARE DEBUG ===
 Pathname: /api/auth/me
 Method: GET
 API route, skipping middleware
 AuthService: Verifying token
-AuthService: Token verification successful for: vtheophiluss@proton.me
+AuthService: Verifying token
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.f0ed2b75799ca1b6.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching transactions for userId: user_1765285604327_pdegojjr8 {
+  limit: 50,
+  offset: 0,
+  type: null,
+  category: null,
+  startDate: null,
+  endDate: null
+}
+AuthService: Token verification successful for: noyan4job@gmail.com
  GET /api/auth/me 200 in 163ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: vtheophiluss@proton.me
-Fetching transactions for userId: user_1765293907925_5nbi7qlvt {
-  limit: 50,
-  offset: 0,
-  type: null,
-  category: null,
-  startDate: null,
-  endDate: null
-}
+Transactions fetched successfully: 0
+ GET /api/data/transactions 200 in 282ms
 === MIDDLEWARE DEBUG ===
 Pathname: /api/data/recurring-transactions
 Method: GET
@@ -1372,8 +313,10 @@ Attempted import error: 'supabase' is not exported from '@/lib/db' (imported as 
 Import trace for requested module:
 ./src/lib/logger.ts
 ./src/app/api/auth/signin/route.ts
-Transactions fetched successfully: 3
- GET /api/data/transactions 200 in 302ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
  ⚠ ./src/lib/logger.ts
 Attempted import error: 'supabase' is not exported from '@/lib/db' (imported as 'supabase').
 
@@ -1381,19 +324,19 @@ Import trace for requested module:
 ./src/lib/logger.ts
 ./src/app/api/auth/signin/route.ts
 AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
 AuthService: Verifying token
-AuthService: Token verification successful for: vtheophiluss@proton.me
-Fetching recurring transactions for userId: user_1765293907925_5nbi7qlvt
-AuthService: Token verification successful for: vtheophiluss@proton.me
- GET /api/auth/me 200 in 173ms
-Recurring transactions fetched successfully: 0
- GET /api/data/recurring-transactions 200 in 988ms
 === MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/5b6fe4c99c87ae70.webpack.hot-update.json
+Pathname: /_next/static/webpack/d2321ebc05f4beb2.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching recurring transactions for userId: user_1765285604327_pdegojjr8
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 663ms
+Recurring transactions fetched successfully: 0
+ GET /api/data/recurring-transactions 200 in 917ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.d2321ebc05f4beb2.hot-update.js
 Method: GET
 Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
@@ -1402,20 +345,16 @@ Method: GET
 API route, skipping middleware
 AuthService: Verifying token
 === MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.5b6fe4c99c87ae70.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-AuthService: Token verification successful for: vtheophiluss@proton.me
-Fetching recurring transactions for userId: user_1765293907925_5nbi7qlvt
-=== MIDDLEWARE DEBUG ===
 Pathname: /api/auth/me
 Method: GET
 API route, skipping middleware
 AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching recurring transactions for userId: user_1765285604327_pdegojjr8
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 143ms
 Recurring transactions fetched successfully: 0
- GET /api/data/recurring-transactions 200 in 318ms
-AuthService: Token verification successful for: vtheophiluss@proton.me
- GET /api/auth/me 200 in 169ms
+ GET /api/data/recurring-transactions 200 in 283ms
 === MIDDLEWARE DEBUG ===
 Pathname: /api/data/notes
 Method: GET
@@ -1436,31 +375,31 @@ Attempted import error: 'supabase' is not exported from '@/lib/db' (imported as 
 Import trace for requested module:
 ./src/lib/logger.ts
 ./src/app/api/auth/signin/route.ts
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/8ff9bfd7ffb7a48e.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
 AuthService: Verifying token
 AuthService: Verifying token
-AuthService: Token verification successful for: vtheophiluss@proton.me
- GET /api/auth/me 200 in 886ms
-AuthService: Token verification successful for: vtheophiluss@proton.me
-Fetching notes for userId: user_1765293907925_5nbi7qlvt { limit: 50, offset: 0 }
 === MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.8ff9bfd7ffb7a48e.hot-update.js
+Pathname: /_next/static/webpack/96f293e234eb3c3c.webpack.hot-update.json
 Method: GET
 Not an admin route or login page, proceeding
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching notes for userId: user_1765285604327_pdegojjr8 { limit: 50, offset: 0 }
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 692ms
 Notes fetched successfully: 0
- GET /api/data/notes 200 in 1548ms
+ GET /api/data/notes 200 in 970ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.96f293e234eb3c3c.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
 Pathname: /api/data/notes
 Method: GET
 API route, skipping middleware
 AuthService: Verifying token
-AuthService: Token verification successful for: vtheophiluss@proton.me
-Fetching notes for userId: user_1765293907925_5nbi7qlvt { limit: 50, offset: 0 }
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching notes for userId: user_1765285604327_pdegojjr8 { limit: 50, offset: 0 }
 Notes fetched successfully: 0
- GET /api/data/notes 200 in 285ms
+ GET /api/data/notes 200 in 317ms
 === MIDDLEWARE DEBUG ===
 Pathname: /api/admin-access
 Method: POST
@@ -1479,86 +418,415 @@ Import trace for requested module:
 ./src/app/api/auth/signin/route.ts
 === ADMIN ACCESS API START ===
 ❌ No token provided for admin access check
- POST /api/admin-access 401 in 900ms
+ POST /api/admin-access 401 in 449ms
 === MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/e4251cbab4109e79.webpack.hot-update.json
+Pathname: /_next/static/webpack/087be261de1775e3.webpack.hot-update.json
 Method: GET
 Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.e4251cbab4109e79.hot-update.js
+Pathname: /_next/static/webpack/webpack.087be261de1775e3.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+ ⚠ ./src/lib/logger.ts
+Attempted import error: 'supabase' is not exported from '@/lib/db' (imported as 'supabase').
+
+Import trace for requested module:
+./src/lib/logger.ts
+./src/app/api/auth/signin/route.ts
+=== MIDDLEWARE DEBUG ===
+Pathname: /app
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app 200 in 89ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/d516e1e88f3b9d26.webpack.hot-update.json
 Method: GET
 Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: vtheophiluss@proton.me
- GET /api/auth/me 200 in 211ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/recurring-transactions
-Method: POST
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: vtheophiluss@proton.me
- GET /api/auth/me 200 in 165ms
-AuthService: Token verification successful for: vtheophiluss@proton.me
-Creating recurring transaction: {
-  userId: 'user_1765293907925_5nbi7qlvt',
-  amount: 123,
-  description: 'asd',
-  category: 'Faturalar',
-  frequency: 'monthly',
-  startDate: '2025-12-10',
-  endDate: null
-}
-Recurring transaction created successfully: recurring_user_1765293907925_5nbi7qlvt_1765377185031_w1h48uf4q
- POST /api/data/recurring-transactions 200 in 358ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: POST
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: vtheophiluss@proton.me
-Creating transaction: {
-  userId: 'user_1765293907925_5nbi7qlvt',
-  amount: 123,
-  description: 'asd (Otomatik)',
-  category: 'Faturalar',
-  type: 'expense'
-}
-Transaction created successfully: trans_user_1765293907925_5nbi7qlvt_1765377185492_v6h7hidv6
- POST /api/data/transactions 200 in 332ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: vtheophiluss@proton.me
- GET /api/auth/me 200 in 181ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: PUT
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: vtheophiluss@proton.me
- PUT /api/data/balances 200 in 461ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /
+Pathname: /_next/static/webpack/webpack.d516e1e88f3b9d26.hot-update.js
 Method: GET
 Not an admin route or login page, proceeding
- GET / 200 in 370ms
 === MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/webpack.js
+Pathname: /_next/static/webpack/app/layout.d516e1e88f3b9d26.hot-update.js
 Method: GET
 Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
 Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+ ✓ Compiled /api/admin-access in 986ms (2906 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /app
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app 200 in 135ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/45a6eee9b56ea6bf.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /app
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app 200 in 23ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.45a6eee9b56ea6bf.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.45a6eee9b56ea6bf.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+ ✓ Compiled in 232ms (1341 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /app
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app 200 in 35ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/8bdc59aea33d0562.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.8bdc59aea33d0562.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.8bdc59aea33d0562.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+ ✓ Compiled in 230ms (1341 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /app
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app 200 in 47ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/8d1403cf71412dea.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.8d1403cf71412dea.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.8d1403cf71412dea.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+ ✓ Compiled in 196ms (1341 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /app
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/22f0a80b7f457ab7.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app 200 in 36ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.22f0a80b7f457ab7.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.22f0a80b7f457ab7.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+ ✓ Compiled in 212ms (1341 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /app
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/f2e3b641025a9916.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app 200 in 28ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.f2e3b641025a9916.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.f2e3b641025a9916.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+ ✓ Compiled in 194ms (1341 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /app
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/e78f60a60d6444ab.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app 200 in 28ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.e78f60a60d6444ab.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.e78f60a60d6444ab.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+ ✓ Compiled in 1854ms (2808 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/1e019bafb200b8ca.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /app
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.1e019bafb200b8ca.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app 200 in 109ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/app/page.1e019bafb200b8ca.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.1e019bafb200b8ca.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+ ✓ Compiled /api/auth/me in 192ms (1626 modules)
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 1671ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/balances
+Method: GET
+API route, skipping middleware
+ ✓ Compiled /api/data/balances in 157ms (1628 modules)
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/data/balances 200 in 551ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 157ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/transactions
+Method: GET
+API route, skipping middleware
+ ✓ Compiled /api/data/transactions in 188ms (1630 modules)
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching transactions for userId: user_1765285604327_pdegojjr8 {
+  limit: 50,
+  offset: 0,
+  type: null,
+  category: null,
+  startDate: null,
+  endDate: null
+}
+Transactions fetched successfully: 0
+ GET /api/data/transactions 200 in 510ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 143ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/recurring-transactions
+Method: GET
+API route, skipping middleware
+ ✓ Compiled /api/data/recurring-transactions in 261ms (1632 modules)
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching recurring transactions for userId: user_1765285604327_pdegojjr8
+Recurring transactions fetched successfully: 0
+ GET /api/data/recurring-transactions 200 in 601ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 148ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/notes
+Method: GET
+API route, skipping middleware
+ ✓ Compiled /api/data/notes in 200ms (1634 modules)
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching notes for userId: user_1765285604327_pdegojjr8 { limit: 50, offset: 0 }
+Notes fetched successfully: 0
+ GET /api/data/notes 200 in 565ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/admin-access
+Method: POST
+API route, skipping middleware
+ ✓ Compiled /api/admin-access in 186ms (1636 modules)
+=== ADMIN ACCESS API START ===
+❌ No token provided for admin access check
+ POST /api/admin-access 401 in 233ms
+ ✓ Compiled in 246ms (1342 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /app
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/a201c65ecdfb7c53.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app 200 in 83ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.a201c65ecdfb7c53.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.a201c65ecdfb7c53.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+ ✓ Compiled in 366ms (1342 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/3d909fcd4197e43b.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /app
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app 200 in 27ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.3d909fcd4197e43b.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.3d909fcd4197e43b.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+ ✓ Compiled in 215ms (1342 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /app
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/952f724778b04a97.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app 200 in 34ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.952f724778b04a97.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.952f724778b04a97.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /app/notes
+Method: GET
+Not an admin route or login page, proceeding
+ ○ Compiling /app/notes ...
+ ✓ Compiled /app/notes in 1570ms (2831 modules)
+ GET /app/notes 200 in 1924ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/f7c75ff73fb6f143.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.f7c75ff73fb6f143.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/notes
+Method: GET
+API route, skipping middleware
+ ✓ Compiled /api/data/notes in 212ms (1646 modules)
+AuthService: Verifying token
+AuthService: Token verification error: JWSInvalid: Invalid Compact JWS
+    at AuthService.verifyToken (src/lib/auth-service.ts:241:42)
+    at authenticate (src/app/api/data/notes/route.ts:21:34)
+    at GET (src/app/api/data/notes/route.ts:32:24)
+  239 |       console.log('AuthService: Verifying token')
+  240 |       
+> 241 |       const { payload } = await jwtVerify(token, JWT_SECRET)
+      |                                          ^
+  242 |       const decoded = payload as { userId: string; email: string; role?: string; id?: string }
+  243 |       
+  244 |       // Find user in database {
+  code: 'ERR_JWS_INVALID'
+}
+ GET /api/data/notes 401 in 416ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /app/notes
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app/notes 200 in 67ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/app/notes/page.js
+Method: GET
+Not an admin route or login page, proceeding
+ ⚠ Cross origin request detected from preview-chat-9f03726b-6764-4f39-a29e-b20acaa69bd7.space.z.ai to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
+Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+ ✓ Compiled in 546ms (1359 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /app/notes
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/abd55d279c83efe6.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app/notes 200 in 258ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/webpack.js
 Method: GET
 Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
@@ -1574,6 +842,43 @@ Pathname: /_next/static/chunks/app/layout.js
 Method: GET
 Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/app/notes/page.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+ ✓ Compiled /api/auth/me in 396ms (1646 modules)
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 1109ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /
+Method: GET
+Not an admin route or login page, proceeding
+ GET / 200 in 225ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/webpack.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app-pages-internals.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/main-app.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/layout.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
 Pathname: /_next/static/chunks/app/page.js
 Method: GET
 Not an admin route or login page, proceeding
@@ -1582,13 +887,13 @@ Pathname: /api/auth/me
 Method: GET
 API route, skipping middleware
 AuthService: Verifying token
-AuthService: Token verification successful for: vtheophiluss@proton.me
- GET /api/auth/me 200 in 182ms
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 424ms
 === MIDDLEWARE DEBUG ===
 Pathname: /app
 Method: GET
 Not an admin route or login page, proceeding
- GET /app 200 in 62ms
+ GET /app 200 in 39ms
 === MIDDLEWARE DEBUG ===
 Pathname: /_next/static/chunks/app/app/page.js
 Method: GET
@@ -1598,32 +903,10 @@ Pathname: /api/auth/me
 Method: GET
 API route, skipping middleware
 AuthService: Verifying token
-AuthService: Token verification successful for: vtheophiluss@proton.me
- GET /api/auth/me 200 in 219ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: vtheophiluss@proton.me
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 156ms
 === MIDDLEWARE DEBUG ===
 Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
- GET /api/data/balances 200 in 321ms
-AuthService: Token verification successful for: vtheophiluss@proton.me
- GET /api/auth/me 200 in 176ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /blog
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/blog
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/blog/categories
 Method: GET
 API route, skipping middleware
 === MIDDLEWARE DEBUG ===
@@ -1631,18 +914,51 @@ Pathname: /api/data/balances
 Method: GET
 API route, skipping middleware
 AuthService: Verifying token
- GET /api/blog/categories 200 in 179ms
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 242ms
+ ✓ Compiled /api/data/balances in 233ms (1648 modules)
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/data/balances 200 in 618ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/balances
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
 === MIDDLEWARE DEBUG ===
 Pathname: /api/auth/me
 Method: GET
 API route, skipping middleware
 AuthService: Verifying token
- GET /api/blog?limit=12 200 in 238ms
- GET /blog 200 in 437ms
-AuthService: Token verification successful for: vtheophiluss@proton.me
-AuthService: Token verification successful for: vtheophiluss@proton.me
- GET /api/auth/me 200 in 147ms
- GET /api/data/balances 200 in 457ms
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/data/balances 200 in 306ms
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 364ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/transactions
+Method: GET
+API route, skipping middleware
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+ ○ Compiling /api/data/transactions ...
+ ✓ Compiled /api/data/transactions in 566ms (1650 modules)
+AuthService: Verifying token
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 942ms
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching transactions for userId: user_1765285604327_pdegojjr8 {
+  limit: 50,
+  offset: 0,
+  type: null,
+  category: null,
+  startDate: null,
+  endDate: null
+}
+Transactions fetched successfully: 0
+ GET /api/data/transactions 200 in 1092ms
 === MIDDLEWARE DEBUG ===
 Pathname: /api/auth/me
 Method: GET
@@ -1653,10 +969,10 @@ Pathname: /api/data/transactions
 Method: GET
 API route, skipping middleware
 AuthService: Verifying token
-AuthService: Token verification successful for: vtheophiluss@proton.me
- GET /api/auth/me 200 in 156ms
-AuthService: Token verification successful for: vtheophiluss@proton.me
-Fetching transactions for userId: user_1765293907925_5nbi7qlvt {
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 163ms
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching transactions for userId: user_1765285604327_pdegojjr8 {
   limit: 50,
   offset: 0,
   type: null,
@@ -1664,22 +980,231 @@ Fetching transactions for userId: user_1765293907925_5nbi7qlvt {
   startDate: null,
   endDate: null
 }
-Transactions fetched successfully: 4
+Transactions fetched successfully: 0
+ GET /api/data/transactions 200 in 287ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/recurring-transactions
+Method: GET
+API route, skipping middleware
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+ ✓ Compiled /api/data/recurring-transactions in 267ms (1652 modules)
+AuthService: Verifying token
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching recurring transactions for userId: user_1765285604327_pdegojjr8
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 538ms
+Recurring transactions fetched successfully: 0
+ GET /api/data/recurring-transactions 200 in 807ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/recurring-transactions
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching recurring transactions for userId: user_1765285604327_pdegojjr8
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 170ms
+Recurring transactions fetched successfully: 0
+ GET /api/data/recurring-transactions 200 in 255ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/notes
+Method: GET
+API route, skipping middleware
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+ ✓ Compiled /api/data/notes in 246ms (1654 modules)
+AuthService: Verifying token
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 524ms
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching notes for userId: user_1765285604327_pdegojjr8 { limit: 50, offset: 0 }
+Notes fetched successfully: 0
+ GET /api/data/notes 200 in 823ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/notes
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching notes for userId: user_1765285604327_pdegojjr8 { limit: 50, offset: 0 }
+Notes fetched successfully: 0
+ GET /api/data/notes 200 in 282ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/admin-access
+Method: POST
+API route, skipping middleware
+ ✓ Compiled /api/admin-access in 246ms (1656 modules)
+=== ADMIN ACCESS API START ===
+❌ No token provided for admin access check
+ POST /api/admin-access 401 in 292ms
+ ✓ Compiled in 901ms (3015 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/e636c60b9b971bdd.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.e636c60b9b971bdd.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /app
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/app/page.e636c60b9b971bdd.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.e636c60b9b971bdd.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app 200 in 93ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 259ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/balances
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/data/balances 200 in 293ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 149ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/transactions
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching transactions for userId: user_1765285604327_pdegojjr8 {
+  limit: 50,
+  offset: 0,
+  type: null,
+  category: null,
+  startDate: null,
+  endDate: null
+}
+Transactions fetched successfully: 0
  GET /api/data/transactions 200 in 303ms
 === MIDDLEWARE DEBUG ===
 Pathname: /api/auth/me
 Method: GET
 API route, skipping middleware
 AuthService: Verifying token
-AuthService: Token verification successful for: vtheophiluss@proton.me
- GET /api/auth/me 200 in 158ms
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 145ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/recurring-transactions
+Method: GET
+API route, skipping middleware
+ ✓ Compiled in 523ms (3015 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/8c7fa00e1359f3b1.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching recurring transactions for userId: user_1765285604327_pdegojjr8
+=== MIDDLEWARE DEBUG ===
+Pathname: /app
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/app/page.8c7fa00e1359f3b1.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.8c7fa00e1359f3b1.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app 200 in 69ms
+Recurring transactions fetched successfully: 0
+ GET /api/data/recurring-transactions 200 in 606ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.8c7fa00e1359f3b1.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 147ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/notes
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 173ms
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching notes for userId: user_1765285604327_pdegojjr8 { limit: 50, offset: 0 }
+Notes fetched successfully: 0
+ GET /api/data/notes 200 in 310ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/balances
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/admin-access
+Method: POST
+API route, skipping middleware
+=== ADMIN ACCESS API START ===
+❌ No token provided for admin access check
+ POST /api/admin-access 401 in 21ms
+ GET /api/data/balances 200 in 281ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 147ms
 === MIDDLEWARE DEBUG ===
 Pathname: /api/data/transactions
 Method: GET
 API route, skipping middleware
 AuthService: Verifying token
-AuthService: Token verification successful for: vtheophiluss@proton.me
-Fetching transactions for userId: user_1765293907925_5nbi7qlvt {
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching transactions for userId: user_1765285604327_pdegojjr8 {
   limit: 50,
   offset: 0,
   type: null,
@@ -1687,91 +1212,135 @@ Fetching transactions for userId: user_1765293907925_5nbi7qlvt {
   startDate: null,
   endDate: null
 }
-Transactions fetched successfully: 4
- GET /api/data/transactions 200 in 281ms
+Transactions fetched successfully: 0
+ GET /api/data/transactions 200 in 302ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 157ms
 === MIDDLEWARE DEBUG ===
 Pathname: /api/data/recurring-transactions
 Method: GET
 API route, skipping middleware
 AuthService: Verifying token
-AuthService: Token verification successful for: vtheophiluss@proton.me
-Fetching recurring transactions for userId: user_1765293907925_5nbi7qlvt
-Recurring transactions fetched successfully: 1
- GET /api/data/recurring-transactions 200 in 360ms
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching recurring transactions for userId: user_1765285604327_pdegojjr8
+Recurring transactions fetched successfully: 0
+ GET /api/data/recurring-transactions 200 in 296ms
 === MIDDLEWARE DEBUG ===
 Pathname: /api/auth/me
 Method: GET
 API route, skipping middleware
 AuthService: Verifying token
-AuthService: Token verification successful for: vtheophiluss@proton.me
- GET /api/auth/me 200 in 174ms
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 153ms
 === MIDDLEWARE DEBUG ===
-Pathname: /blog
+Pathname: /api/data/notes
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching notes for userId: user_1765285604327_pdegojjr8 { limit: 50, offset: 0 }
+Notes fetched successfully: 0
+ GET /api/data/notes 200 in 299ms
+ ✓ Compiled in 788ms (3015 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/5d8ff5e73d26d0a3.webpack.hot-update.json
 Method: GET
 Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
-Pathname: /api/blog
+Pathname: /app
 Method: GET
-API route, skipping middleware
+Not an admin route or login page, proceeding
+ GET /app 200 in 76ms
 === MIDDLEWARE DEBUG ===
-Pathname: /api/blog/categories
+Pathname: /_next/static/webpack/app/layout.5d8ff5e73d26d0a3.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/app/page.5d8ff5e73d26d0a3.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.5d8ff5e73d26d0a3.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
 Method: GET
 API route, skipping middleware
- GET /api/blog?limit=12 200 in 180ms
- GET /api/blog/categories 200 in 186ms
- GET /blog 200 in 305ms
+AuthService: Verifying token
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 199ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/balances
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/data/balances 200 in 283ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 145ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/transactions
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching transactions for userId: user_1765285604327_pdegojjr8 {
+  limit: 50,
+  offset: 0,
+  type: null,
+  category: null,
+  startDate: null,
+  endDate: null
+}
+Transactions fetched successfully: 0
+ GET /api/data/transactions 200 in 296ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 141ms
 === MIDDLEWARE DEBUG ===
 Pathname: /api/data/recurring-transactions
 Method: GET
 API route, skipping middleware
 AuthService: Verifying token
-AuthService: Token verification successful for: vtheophiluss@proton.me
-Fetching recurring transactions for userId: user_1765293907925_5nbi7qlvt
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching recurring transactions for userId: user_1765285604327_pdegojjr8
+Recurring transactions fetched successfully: 0
+ GET /api/data/recurring-transactions 200 in 300ms
 === MIDDLEWARE DEBUG ===
 Pathname: /api/auth/me
 Method: GET
 API route, skipping middleware
 AuthService: Verifying token
-Recurring transactions fetched successfully: 1
- GET /api/data/recurring-transactions 200 in 312ms
-AuthService: Token verification successful for: vtheophiluss@proton.me
- GET /api/auth/me 200 in 152ms
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 136ms
 === MIDDLEWARE DEBUG ===
 Pathname: /api/data/notes
 Method: GET
 API route, skipping middleware
 AuthService: Verifying token
-AuthService: Token verification successful for: vtheophiluss@proton.me
-Fetching notes for userId: user_1765293907925_5nbi7qlvt { limit: 50, offset: 0 }
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching notes for userId: user_1765285604327_pdegojjr8 { limit: 50, offset: 0 }
 Notes fetched successfully: 0
- GET /api/data/notes 200 in 301ms
-AuthService: Token verification successful for: vtheophiluss@proton.me
- GET /api/auth/me 200 in 160ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/notes
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: vtheophiluss@proton.me
-Fetching notes for userId: user_1765293907925_5nbi7qlvt { limit: 50, offset: 0 }
-Notes fetched successfully: 0
- GET /api/data/notes 200 in 300ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /favicon.png
-Method: GET
-Not an admin route or login page, proceeding
-AuthService: Verifying token
-AuthService: Token verification successful for: vtheophiluss@proton.me
- GET /api/auth/me 200 in 184ms
+ GET /api/data/notes 200 in 270ms
 === MIDDLEWARE DEBUG ===
 Pathname: /api/admin-access
 Method: POST
@@ -1780,228 +1349,253 @@ API route, skipping middleware
 ❌ No token provided for admin access check
  POST /api/admin-access 401 in 20ms
 === MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: POST
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: vtheophiluss@proton.me
-Creating transaction: {
-  userId: 'user_1765293907925_5nbi7qlvt',
-  amount: 123,
-  description: 'asd (Otomatik)',
-  category: 'Faturalar',
-  type: 'expense'
-}
-Transaction created successfully: trans_user_1765293907925_5nbi7qlvt_1765377207158_eyfm3g98h
- POST /api/data/transactions 200 in 310ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
+Pathname: /_next/static/webpack/b436146ff952aa23.webpack.hot-update.json
 Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: vtheophiluss@proton.me
- GET /api/auth/me 200 in 182ms
+Not an admin route or login page, proceeding
+ ✓ Compiled in 1710ms (3021 modules)
 === MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: PUT
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: vtheophiluss@proton.me
- PUT /api/data/balances 200 in 447ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /blog
+Pathname: /_next/static/webpack/app/layout.b436146ff952aa23.hot-update.js
 Method: GET
 Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
-Pathname: /api/blog
+Pathname: /_next/static/webpack/app/app/page.b436146ff952aa23.hot-update.js
 Method: GET
-API route, skipping middleware
+Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
-Pathname: /api/blog/categories
+Pathname: /app
 Method: GET
-API route, skipping middleware
- GET /api/blog?limit=12 200 in 192ms
- GET /api/blog/categories 200 in 202ms
- GET /blog 200 in 336ms
+Not an admin route or login page, proceeding
+ GET /app 200 in 69ms
 === MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
+Pathname: /_next/static/webpack/webpack.b436146ff952aa23.hot-update.js
 Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: vtheophiluss@proton.me
- GET /api/auth/me 200 in 195ms
+Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
 Pathname: /api/auth/me
 Method: GET
 API route, skipping middleware
 AuthService: Verifying token
-AuthService: Token verification successful for: vtheophiluss@proton.me
- GET /api/auth/me 200 in 171ms
 === MIDDLEWARE DEBUG ===
-Pathname: /api/data/recurring-transactions
-Method: POST
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 216ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/balances
+Method: GET
 API route, skipping middleware
 AuthService: Verifying token
-AuthService: Token verification successful for: vtheophiluss@proton.me
-Creating recurring transaction: {
-  userId: 'user_1765293907925_5nbi7qlvt',
-  amount: 322,
-  description: 'fdsd',
-  category: 'Faturalar',
-  frequency: 'monthly',
-  startDate: '2025-09-10',
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/data/balances 200 in 320ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 162ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/transactions
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching transactions for userId: user_1765285604327_pdegojjr8 {
+  limit: 50,
+  offset: 0,
+  type: null,
+  category: null,
+  startDate: null,
   endDate: null
 }
+Transactions fetched successfully: 0
+ GET /api/data/transactions 200 in 325ms
 === MIDDLEWARE DEBUG ===
 Pathname: /api/auth/me
 Method: GET
 API route, skipping middleware
 AuthService: Verifying token
-Recurring transaction created successfully: recurring_user_1765293907925_5nbi7qlvt_1765377221757_by7qtsisz
- POST /api/data/recurring-transactions 200 in 333ms
-AuthService: Token verification successful for: vtheophiluss@proton.me
- GET /api/auth/me 200 in 206ms
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 167ms
 === MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
+Pathname: /api/data/recurring-transactions
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching recurring transactions for userId: user_1765285604327_pdegojjr8
+Recurring transactions fetched successfully: 0
+ GET /api/data/recurring-transactions 200 in 318ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 154ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/notes
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching notes for userId: user_1765285604327_pdegojjr8 { limit: 50, offset: 0 }
+Notes fetched successfully: 0
+ GET /api/data/notes 200 in 307ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/admin-access
 Method: POST
 API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: vtheophiluss@proton.me
-Creating transaction: {
-  userId: 'user_1765293907925_5nbi7qlvt',
-  amount: 322,
-  description: 'fdsd (Otomatik)',
-  category: 'Faturalar',
-  type: 'expense'
-}
+=== ADMIN ACCESS API START ===
+❌ No token provided for admin access check
+ POST /api/admin-access 401 in 17ms
+ ✓ Compiled in 677ms (3110 modules)
 === MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-Transaction created successfully: trans_user_1765293907925_5nbi7qlvt_1765377222290_18lg89i71
- POST /api/data/transactions 200 in 313ms
-AuthService: Token verification successful for: vtheophiluss@proton.me
- GET /api/auth/me 200 in 170ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: POST
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: vtheophiluss@proton.me
-Creating transaction: {
-  userId: 'user_1765293907925_5nbi7qlvt',
-  amount: 322,
-  description: 'fdsd (Otomatik)',
-  category: 'Faturalar',
-  type: 'expense'
-}
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-Transaction created successfully: trans_user_1765293907925_5nbi7qlvt_1765377222811_oqfc5gds5
- POST /api/data/transactions 200 in 309ms
-AuthService: Token verification successful for: vtheophiluss@proton.me
- GET /api/auth/me 200 in 203ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: POST
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: vtheophiluss@proton.me
-Creating transaction: {
-  userId: 'user_1765293907925_5nbi7qlvt',
-  amount: 322,
-  description: 'fdsd (Otomatik)',
-  category: 'Faturalar',
-  type: 'expense'
-}
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-Transaction created successfully: trans_user_1765293907925_5nbi7qlvt_1765377223359_ytdw681pa
- POST /api/data/transactions 200 in 351ms
-AuthService: Verifying token
-AuthService: Token verification successful for: vtheophiluss@proton.me
- GET /api/auth/me 200 in 206ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: POST
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: vtheophiluss@proton.me
-Creating transaction: {
-  userId: 'user_1765293907925_5nbi7qlvt',
-  amount: 322,
-  description: 'fdsd (Otomatik)',
-  category: 'Faturalar',
-  type: 'expense'
-}
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-Transaction created successfully: trans_user_1765293907925_5nbi7qlvt_1765377223983_74srgc3b9
- POST /api/data/transactions 200 in 326ms
-AuthService: Verifying token
-AuthService: Token verification successful for: vtheophiluss@proton.me
- GET /api/auth/me 200 in 202ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: PUT
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: vtheophiluss@proton.me
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: vtheophiluss@proton.me
- GET /api/auth/me 200 in 159ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: PUT
-API route, skipping middleware
- PUT /api/data/balances 200 in 508ms
-AuthService: Verifying token
-AuthService: Token verification successful for: vtheophiluss@proton.me
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: vtheophiluss@proton.me
- GET /api/auth/me 200 in 162ms
- PUT /api/data/balances 200 in 495ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: PUT
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: vtheophiluss@proton.me
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: PUT
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: vtheophiluss@proton.me
- PUT /api/data/balances 200 in 453ms
- PUT /api/data/balances 200 in 495ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /
+Pathname: /app
 Method: GET
 Not an admin route or login page, proceeding
- GET / 200 in 105ms
+ GET /app 200 in 76ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/10369471ad37f57b.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.10369471ad37f57b.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.10369471ad37f57b.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /app
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app 200 in 28ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+ ✓ Compiled in 222ms (1351 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /app
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app 200 in 30ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/cdd0f84022171738.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.cdd0f84022171738.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.cdd0f84022171738.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+ ✓ Compiled in 214ms (1351 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /app
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/2c039fa0c27b280b.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app 200 in 26ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.2c039fa0c27b280b.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.2c039fa0c27b280b.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+ ✓ Compiled in 219ms (1351 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /app
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/fa7bc5a332594777.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app 200 in 29ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.fa7bc5a332594777.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.fa7bc5a332594777.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+ ✓ Compiled in 205ms (1351 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /app
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/b978f5b6d8930aac.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app 200 in 31ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.b978f5b6d8930aac.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.b978f5b6d8930aac.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
 Pathname: /_next/static/css/app/layout.css
 Method: GET
 Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
+Pathname: /app
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app 200 in 415ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /app/notes
+Method: GET
+Not an admin route or login page, proceeding
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 1325ms (2817 modules)
+ GET /app/notes 404 in 1601ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/51764953a3bd7a14.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.51764953a3bd7a14.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /
+Method: GET
+Not an admin route or login page, proceeding
+ GET / 200 in 113ms
+=== MIDDLEWARE DEBUG ===
 Pathname: /_next/static/chunks/webpack.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
 Method: GET
 Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
@@ -2009,11 +1603,11 @@ Pathname: /_next/static/chunks/main-app.js
 Method: GET
 Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app-pages-internals.js
+Pathname: /_next/static/chunks/app/layout.js
 Method: GET
 Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app/layout.js
+Pathname: /_next/static/chunks/app-pages-internals.js
 Method: GET
 Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
@@ -2021,25 +1615,171 @@ Pathname: /_next/static/chunks/app/page.js
 Method: GET
 Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
-Pathname: /favicon.png
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+ ○ Compiling /api/auth/me ...
+ ✓ Compiled /api/auth/me in 511ms (1635 modules)
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 1442ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /app
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app 200 in 91ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/app/page.js
 Method: GET
 Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
-Pathname: /blog
+Pathname: /api/auth/me
 Method: GET
-Not an admin route or login page, proceeding
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 255ms
 === MIDDLEWARE DEBUG ===
-Pathname: /api/blog
+Pathname: /api/auth/me
 Method: GET
 API route, skipping middleware
 === MIDDLEWARE DEBUG ===
-Pathname: /api/blog/categories
+Pathname: /api/data/balances
 Method: GET
 API route, skipping middleware
- GET /api/blog/categories 200 in 690ms
- GET /api/blog?limit=12 200 in 714ms
- GET /blog 200 in 828ms
+AuthService: Verifying token
+ ✓ Compiled /api/data/balances in 226ms (1637 modules)
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 338ms
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/data/balances 200 in 708ms
 === MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app/blog/page.js
+Pathname: /api/data/balances
 Method: GET
-Not an admin route or login page, proceeding
+API route, skipping middleware
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 218ms
+ GET /api/data/balances 200 in 363ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/transactions
+Method: GET
+API route, skipping middleware
+ ✓ Compiled /api/data/transactions in 192ms (1639 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching transactions for userId: user_1765285604327_pdegojjr8 {
+  limit: 50,
+  offset: 0,
+  type: null,
+  category: null,
+  startDate: null,
+  endDate: null
+}
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 236ms
+Transactions fetched successfully: 0
+ GET /api/data/transactions 200 in 631ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/transactions
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching transactions for userId: user_1765285604327_pdegojjr8 {
+  limit: 50,
+  offset: 0,
+  type: null,
+  category: null,
+  startDate: null,
+  endDate: null
+}
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 188ms
+Transactions fetched successfully: 0
+ GET /api/data/transactions 200 in 358ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/recurring-transactions
+Method: GET
+API route, skipping middleware
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+ ○ Compiling /api/data/recurring-transactions ...
+ ✓ Compiled /api/data/recurring-transactions in 658ms (1641 modules)
+AuthService: Verifying token
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching recurring transactions for userId: user_1765285604327_pdegojjr8
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 638ms
+Recurring transactions fetched successfully: 0
+ GET /api/data/recurring-transactions 200 in 1247ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/recurring-transactions
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 199ms
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching recurring transactions for userId: user_1765285604327_pdegojjr8
+Recurring transactions fetched successfully: 0
+ GET /api/data/recurring-transactions 200 in 362ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/notes
+Method: GET
+API route, skipping middleware
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+ ✓ Compiled /api/data/notes in 262ms (1643 modules)
+AuthService: Verifying token
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching notes for userId: user_1765285604327_pdegojjr8 { limit: 50, offset: 0 }
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 688ms
+Notes fetched successfully: 0
+ GET /api/data/notes 200 in 951ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/notes
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching notes for userId: user_1765285604327_pdegojjr8 { limit: 50, offset: 0 }
+Notes fetched successfully: 0
+ GET /api/data/notes 200 in 315ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/admin-access
+Method: POST
+API route, skipping middleware
+ ✓ Compiled /api/admin-access in 218ms (1645 modules)
+=== ADMIN ACCESS API START ===
+❌ No token provided for admin access check
+ POST /api/admin-access 401 in 260ms
