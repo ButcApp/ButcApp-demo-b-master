@@ -60,6 +60,32 @@ export async function POST(request: NextRequest) {
 
     const isAdmin = adminUser && adminUser.length > 0
     
+    // For development mode, also check for demo admin emails
+    if (process.env.NODE_ENV === 'development') {
+      const demoAdmins = ['admin@butcapp.com', 'demo@butcapp.com', 'test@admin.com']
+      if (demoAdmins.includes(user.email || '')) {
+        console.log('🧪 Development mode: Demo admin access granted for:', user.email)
+        return NextResponse.json({
+          success: true,
+          isAdmin: true,
+          user: {
+            id: user.id,
+            email: user.email,
+            fullName: user.fullName
+          },
+          data: {
+            adminUser: {
+              id: user.id,
+              email: user.email,
+              fullName: user.fullName,
+              role: 'admin'
+            },
+            token: token
+          }
+        })
+      }
+    }
+    
     console.log('✅ Admin access check completed for:', user.email, 'Admin:', isAdmin)
     console.log('=== ADMIN ACCESS API END ===')
 
@@ -71,7 +97,7 @@ export async function POST(request: NextRequest) {
         email: user.email,
         fullName: user.fullName
       },
-      // For admin panel access compatibility
+      // For admin panel access - return the current token
       data: {
         adminUser: {
           id: user.id,
@@ -79,7 +105,7 @@ export async function POST(request: NextRequest) {
           fullName: user.fullName,
           role: isAdmin ? 'admin' : 'user'
         },
-        token: null // Admin panel uses URL token, not this
+        token: token // Return the current user token for admin access
       }
     })
 

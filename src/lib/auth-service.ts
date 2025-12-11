@@ -240,6 +240,16 @@ export class AuthService {
       console.log('AuthService: Token length:', token?.length || 0)
       console.log('AuthService: Token preview:', token?.substring(0, 20) + '...')
       
+      // Demo token için development modunda izin ver
+      if (process.env.NODE_ENV === 'development' && token === 'demo-token-for-ubuntu-testing') {
+        console.log('🧪 Development mode: Demo token accepted in AuthService')
+        return {
+          id: 'demo-user-id',
+          email: 'admin@butcapp.com',
+          fullName: 'Demo Admin',
+        }
+      }
+      
       const { payload } = await jwtVerify(token, JWT_SECRET)
       const decoded = payload as { userId: string; email: string; role?: string; id?: string }
       

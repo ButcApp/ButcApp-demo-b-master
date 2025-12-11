@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { verifyAdminToken } from '@/lib/jwt'
+import { verifyToken } from '@/lib/jwt'
 
 // Admin route'larını koruyan middleware
 export async function middleware(request: NextRequest) {
@@ -24,6 +24,7 @@ export async function middleware(request: NextRequest) {
   // Admin paneli route kontrolü
   if (pathname.startsWith('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/')) {
     console.log('🔐 Admin route accessed:', pathname)
+    console.log('🔐 Full URL:', request.url)
     
     // Token'ı birden fazla kaynaktan dene
     let token = request.cookies.get('auth_token')?.value
@@ -53,26 +54,47 @@ export async function middleware(request: NextRequest) {
 
     try {
       // Token'ı doğrula ve kullanıcı bilgilerini al
-      const isValidAdmin = await verifyAdminToken(token)
+      const payload = await verifyToken(token)
+      console.log('✅ Token verified for user:', { id: payload?.id || payload?.userId, email: payload?.email })
       
-      if (!isValidAdmin) {
-        console.log('Invalid admin token, redirecting to login');
+      // Handle both id and userId fields for compatibility
+      const userId = payload?.id || payload?.userId
+      
+      // For development mode, check for demo admin emails first
+      if (process.env.NODE_ENV === 'development') {
+        const demoAdmins = ['admin@butcapp.com', 'demo@butcapp.com', 'test@admin.com']
+        if (demoAdmins.includes(payload.email || '')) {
+          console.log('🧪 Development mode: Demo admin access granted for:', payload.email)
+          const response = NextResponse.next()
+          response.headers.set('x-user-id', userId)
+          response.headers.set('x-user-role', 'admin')
+          return response
+        }
+      }
+      
+      // Check if user is admin by checking admin_users table
+      const { createClient } = await import('@supabase/supabase-js')
+      const supabaseUrl = "https://dfiwgngtifuqrrxkvknn.supabase.co";
+      const supabaseServiceKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRmaXdnbmd0aWZ1cXJyeGt2a25uIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NTI3NzMyMSwiZXhwIjoyMDgwODUzMzIxfQ.uCfJ5DzQ2QCiyXycTrHEaKh1EvAFbuP8HBORmBSPbX8";
+      const supabase = createClient(supabaseUrl, supabaseServiceKey);
+
+      const { data: adminUser, error } = await supabase
+        .from('admin_users')
+        .select('*')
+        .eq('userid', userId)
+        .limit(1)
+
+      const isAdmin = adminUser && adminUser.length > 0
+      
+      if (!isAdmin) {
+        console.log('❌ User is not in admin_users table, redirecting to login');
         return NextResponse.redirect(new URL('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login', request.url))
       }
 
-      // Get payload for user info (if needed)
-      let payload = null;
-      try {
-        // Try to get actual payload for logging
-        const { verifyToken } = await import('@/lib/jwt');
-        payload = await verifyToken(token);
-        console.log('User authenticated:', { id: payload?.id, role: payload?.role });
-      } catch (error) {
-        console.log('Could not decode payload, but admin token is valid');
-      }
+      console.log('✅ User confirmed as admin:', payload.email)
 
       // Moderatör erişim kontrolü - sadece blog sayfasına erişebilir
-      if (payload && payload.role === 'moderator') {
+      if (payload.role === 'moderator') {
         const allowedPaths = [
           '/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/dashboard',
           '/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/blog',
@@ -90,10 +112,8 @@ export async function middleware(request: NextRequest) {
 
       // Token'ı response header'a ekle (client-side için)
       const response = NextResponse.next()
-      if (payload) {
-        response.headers.set('x-user-id', payload.id)
-        response.headers.set('x-user-role', payload.role)
-      }
+      response.headers.set('x-user-id', userId)
+      response.headers.set('x-user-role', payload.role || 'admin')
       
       return response
 

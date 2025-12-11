@@ -128,27 +128,26 @@ export function UserAuthButton({ onSignInClick, onSignUpClick }: UserAuthButtonP
       const data = await response.json()
       console.log('🔍 Admin panel access response data:', data)
       
-      if (data.success) {
-        // Store admin user info in localStorage and sessionStorage
-        localStorage.setItem('adminUser', JSON.stringify(data.data.adminUser))
-        localStorage.setItem('adminToken', data.data.token)
-        sessionStorage.setItem('adminToken', data.data.token)
+      if (data.success && data.isAdmin) {
+        // Store admin user info in localStorage
+        localStorage.setItem('adminUser', JSON.stringify(data.user))
+        
+        // Use the token returned from API (it's the current user token)
+        const adminToken = data.data.token
+        localStorage.setItem('adminToken', adminToken)
+        sessionStorage.setItem('adminToken', adminToken)
         
         // Also try to set cookie as backup
-        setTokenCookie(data.data.token)
+        setTokenCookie(adminToken)
         
-        console.log('Admin access: Token stored in all storages')
+        console.log('Admin access: Token stored in all storages for admin access')
         
-        // Create a new token for admin access (using current user token)
-        const currentToken = localStorage.getItem('auth_token')
-        if (currentToken) {
-          // Set cookie for middleware to read
-          document.cookie = `auth_token=${currentToken}; path=/; max-age=86400; SameSite=Lax;`
-          console.log('🍪 Set auth_token cookie for admin access')
-        }
+        // Set cookie for middleware to read
+        document.cookie = `auth_token=${adminToken}; path=/; max-age=86400; SameSite=Lax;`
+        console.log('🍪 Set auth_token cookie for admin access')
         
-        // Redirect to admin panel with token in URL
-        router.push(`/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/dashboard?token=${data.data.token}`)
+        // Redirect to admin panel with the token
+        router.push(`/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/dashboard?token=${adminToken}`)
       } else {
         alert('Admin paneline erişim izniniz bulunmuyor.')
       }

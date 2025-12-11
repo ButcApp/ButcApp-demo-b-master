@@ -29,6 +29,17 @@ export const generateToken = async (payload: Omit<JWTPayload, 'iat' | 'exp'>): P
 
 export const verifyToken = async (token: string): Promise<JWTPayload> => {
   try {
+    // Demo token için development modunda izin ver
+    if (process.env.NODE_ENV === 'development' && token === 'demo-token-for-ubuntu-testing') {
+      console.log('🧪 Development mode: Demo token accepted')
+      return {
+        id: 'demo-user-id',
+        username: 'admin',
+        email: 'admin@butcapp.com',
+        role: 'admin'
+      }
+    }
+    
     const { payload } = await jwtVerify(token, secret)
     return payload as JWTPayload
   } catch (error) {
