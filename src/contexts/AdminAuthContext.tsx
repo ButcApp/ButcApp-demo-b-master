@@ -33,7 +33,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const setTokenCookie = (tokenValue: string) => {
     const isSecure = process.env.NODE_ENV === 'production'
     const sameSite = isSecure ? 'None' : 'lax'
-    document.cookie = `auth-token=${tokenValue}; path=/; max-age=${24 * 60 * 60}; samesite=${sameSite}${isSecure ? '; secure' : ''}`
+    // Max age'ı 7 güne çıkardık
+    document.cookie = `auth-token=${tokenValue}; path=/; max-age=${7 * 24 * 60 * 60}; samesite=${sameSite}${isSecure ? '; secure' : ''}`
   }
 
   // Token'ı her iki yere de set etme fonksiyonu
@@ -43,6 +44,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   useEffect(() => {
+    let persistInterval: NodeJS.Timeout | null = null
+    
     // Sayfa yüklendiğinde tüm storage'lardan token ve user bilgisini al
     const cookieToken = document.cookie
       .split('; ')
@@ -73,13 +76,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         console.log('AdminAuthContext: Token synced to all storages')
         
         // Token persistency için interval ekle
-        const persistInterval = setInterval(() => {
+        persistInterval = setInterval(() => {
           setTokenCookie(token)
-        }, 30000) // 30 saniyede bir
+        }, 60000) // 1 dakikada bir
         
-        return () => {
-          clearInterval(persistInterval)
-        }
       } catch (error) {
         console.error('Error parsing stored user data:', error)
         localStorage.removeItem('adminUser')
@@ -90,7 +90,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     } else {
       console.log('AdminAuthContext: No authentication data found')
     }
+    
     setIsLoading(false)
+    
+    // Cleanup function
+    return () => {
+      if (persistInterval) {
+        clearInterval(persistInterval)
+      }
+    }
   }, [])
 
   // Router events ile token persist sağla - DEAKTİF EDİLDİ
@@ -148,7 +156,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       console.log('Auth response status:', response.status);
       console.log('Auth response OK:', response.ok);
-      console.log('Auth response headers:', response.headers);
 
       // Response text'ini önce al
       const responseText = await response.text();
@@ -173,6 +180,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (data.success) {
         const { user: userData, token } = data.data
         
+        console.log('Login successful, setting state...');
+        
         // Token ve user bilgisini state'e ve tüm storage'lara kaydet
         setToken(token)
         setUser(userData)
@@ -185,6 +194,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
         console.log('Login successful, user data set:', userData);
         console.log('Token set successfully');
+        console.log('State updated:', { token: !!token, user: !!userData });
+
+        // State'in güncellendiğinden emin olmak için küçük bir bekleme
+        await new Promise(resolve => setTimeout(resolve, 50));
 
         return { success: true, token }
       } else {

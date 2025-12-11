@@ -37,6 +37,9 @@ export async function middleware(request: NextRequest) {
     }
 
     console.log('Token found:', !!token);
+    if (token) {
+      console.log('Token preview:', token.substring(0, 20) + '...');
+    }
 
     if (!token) {
       console.log('No token found, redirecting to login');

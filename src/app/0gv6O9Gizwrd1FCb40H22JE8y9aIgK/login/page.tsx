@@ -40,21 +40,10 @@ export default function AdminLoginPage() {
       console.log('Login result:', result);
 
       if (result.success) {
-        console.log('Login successful, checking cookie...');
+        console.log('Login successful, redirecting to dashboard...');
         
-        // Cookie'nin set olup olmadığını kontrol et
-        const cookies = document.cookie.split(';');
-        const authTokenCookie = cookies.find(cookie => cookie.trim().startsWith('auth-token='));
-        console.log('Cookie found:', !!authTokenCookie);
-        if (authTokenCookie) {
-          console.log('Cookie value:', authTokenCookie.split('=')[1]);
-        }
-        
-        // State'in güncellenmesini bekle
-        setTimeout(() => {
-          console.log('Redirecting to dashboard...');
-          router.push('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/dashboard');
-        }, 1000);
+        // Doğrudan redirect et - login fonksiyonu içinde state güncellemesi beklendi
+        router.push('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/dashboard');
       } else {
         console.log('Login failed:', result.error);
         setError(result.error || 'Giriş başarısız oldu')

@@ -72,7 +72,7 @@ export default function ServerStatusPage() {
                    sessionStorage.getItem('adminToken')
       
       if (!token) {
-        console.log('❌ Server Status: Token bulunamadı, fetch iptal ediliyor')
+        console.log('❌ Server Status: Token bulunamadı, redirect ediliyor...')
         router.push('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login')
         return
       }
@@ -90,17 +90,21 @@ export default function ServerStatusPage() {
       })
       
       console.log('📡 Server Status: API yanıtı status:', response.status)
-      console.log('📡 Server Status: API yanıtı headers:', response.headers)
       
       if (!response.ok) {
         const errorText = await response.text()
         console.log('❌ Server Status: API hata yanıtı:', errorText)
         
         if (response.status === 401) {
-          console.log('🔄 Server Status: 401 hatası, token siliniyor...')
-          localStorage.removeItem('adminToken')
-          sessionStorage.removeItem('adminToken')
-          document.cookie = 'auth-token=; path=/; expires=Thu, 01 Jan1970 00:00:00 GMT'
+          console.log('🔄 Server Status: 401 hatası, token yenileniyor...')
+          // Token'ı yenile
+          const newToken = localStorage.getItem('adminToken') || sessionStorage.getItem('adminToken')
+          if (newToken && newToken !== token) {
+            console.log('🔄 Server Status: Yeni token bulundu, tekrar deneniyor...')
+            return fetchSystemInfo()
+          }
+          
+          console.log('🔄 Server Status: Token bulunamadı, redirect ediliyor...')
           router.push('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login')
           return
         }
@@ -131,6 +135,7 @@ export default function ServerStatusPage() {
       userId: user?.id
     })
     
+    // isAuthenticated false ise redirect et
     if (!isAuthenticated) {
       console.log('❌ Server Status: Not authenticated, redirecting to login')
       router.push('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login')
@@ -140,8 +145,9 @@ export default function ServerStatusPage() {
     console.log('🚀 Server Status: Component mount edildi')
     fetchSystemInfo()
     
-    const interval = setInterval(fetchSystemInfo, 5000)
-    console.log('⏰ Server Status: Interval ayarlandı (5 saniye)')
+    // Interval'i 15 saniyeye çıkardık
+    const interval = setInterval(fetchSystemInfo, 15000)
+    console.log('⏰ Server Status: Interval ayarlandı (15 saniye)')
     
     return () => {
       console.log('🛑 Server Status: Component unmount edildi, interval temizleniyor')
