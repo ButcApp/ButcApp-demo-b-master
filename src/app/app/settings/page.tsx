@@ -264,19 +264,32 @@ function SettingsContent() {
 
     setResetLoading(true)
     try {
+      // Get auth token
+      const token = ClientAuthService.getToken()
+      console.log('🔑 Token for reset:', token ? 'exists' : 'missing')
+      
+      if (!token) {
+        showMessage('error', 'Oturum bulunamadı. Lütfen tekrar giriş yapın.')
+        return
+      }
+
+      console.log('🔄 Starting data reset request...')
+      
       const response = await fetch('/api/data/reset', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${ClientAuthService.getToken()}`
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({ 
-          userId: user?.id,
           password: resetPassword
         })
       })
       
+      console.log('📡 Reset response status:', response.status)
+      
       const result = await response.json()
+      console.log('📋 Reset response result:', result)
       
       if (!response.ok) {
         throw new Error(result.error || 'Veriler sıfırlanırken hata oluştu')
@@ -294,6 +307,7 @@ function SettingsContent() {
       }, 1500)
 
     } catch (error: any) {
+      console.error('❌ Reset data error:', error)
       showMessage('error', error.message || 'Veriler sıfırlanırken hata oluştu')
     } finally {
       setResetLoading(false)

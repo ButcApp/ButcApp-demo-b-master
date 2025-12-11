@@ -193,8 +193,11 @@ export class ClientAuthService {
 
   static getToken(): string | null {
     if (typeof window !== 'undefined') {
-      return localStorage.getItem('auth_token')
+      const token = localStorage.getItem('auth_token')
+      console.log('🔑 ClientAuthService.getToken():', token ? 'found' : 'not found')
+      return token
     }
+    console.log('🔑 ClientAuthService.getToken(): server environment, returning null')
     return null
   }
 
