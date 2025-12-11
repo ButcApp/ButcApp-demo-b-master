@@ -24,7 +24,7 @@ export async function middleware(request: NextRequest) {
   // Admin paneli route kontrolü
   if (pathname.startsWith('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/')) {
     // Token'ı birden fazla kaynaktan dene
-    let token = request.cookies.get('auth-token')?.value
+    let token = request.cookies.get('auth_token')?.value
     
     // Cookie'de yoksa Authorization header'dan dene
     if (!token) {

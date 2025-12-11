@@ -61,8 +61,16 @@ export function UserAuthButton({ onSignInClick, onSignUpClick }: UserAuthButtonP
     
     setIsAdminCheckLoading(true)
     try {
-      // Get auth token from localStorage
-      const token = localStorage.getItem('auth-token')
+      // Get auth token from localStorage (using the same key as ClientAuthService)
+      const token = localStorage.getItem('auth_token')
+      console.log('🔍 Admin access check - Token exists:', !!token)
+      console.log('🔍 Admin access check - User email:', user.email)
+      console.log('🔍 Admin access check - Token length:', token?.length || 0)
+      
+      if (!token) {
+        console.error('❌ No auth token found in localStorage')
+        return
+      }
       
       const response = await fetch('/api/admin-access', {
         method: 'POST',
@@ -73,12 +81,18 @@ export function UserAuthButton({ onSignInClick, onSignUpClick }: UserAuthButtonP
         body: JSON.stringify({ email: user.email })
       })
       
+      console.log('🔍 Admin access response status:', response.status)
       const data = await response.json()
+      console.log('🔍 Admin access response data:', data)
+      
       if (data.success) {
         setIsAdmin(true)
+        console.log('✅ User is admin:', user.email)
+      } else {
+        console.log('❌ User is not admin or error:', data.error)
       }
     } catch (error) {
-      console.error('Admin access check failed:', error)
+      console.error('❌ Admin access check failed:', error)
     } finally {
       setIsAdminCheckLoading(false)
     }

@@ -5,7 +5,7 @@ export async function POST(request: NextRequest) {
   try {
     console.log('=== ADMIN ACCESS API START ===')
     
-    const token = request.cookies.get('auth-token')?.value || 
+    const token = request.cookies.get('auth_token')?.value || 
                   request.headers.get('authorization')?.replace('Bearer ', '') ||
                   request.nextUrl.searchParams.get('token')
 
