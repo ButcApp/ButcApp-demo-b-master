@@ -222,35 +222,64 @@ export async function PUT(request: NextRequest) {
   }
 }
 
-// DELETE /api/data/notes - Reset all user notes
-export async function DELETE(request: NextRequest) {
+// DELETE /api/data/notes/[noteId] - Delete note
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ noteId: string }> }
+) {
   try {
     const auth = await authenticate(request)
     if (auth.error) {
       return NextResponse.json({ error: auth.error }, { status: auth.status })
     }
 
-    // Use authenticated user's ID instead of requiring userId parameter
     const userId = auth.user.id
+    const noteId = (await params).noteId
 
-    const { data, error } = await supabase
-      .from('user_data')
-      .delete()
-      .eq('userid', userId)
-      .eq('type', 'note')
-
-    if (error) {
-      console.error('Notes reset error:', error)
+    if (!noteId) {
       return NextResponse.json({
         success: false,
-        error: 'Notes reset failed'
+        error: 'Note ID is required'
+      }, { status: 400 })
+    }
+
+    console.log('Deleting note:', { noteId, userId })
+
+    // First check if note exists and belongs to user
+    const { data: existingNote, error: fetchError } = await supabase
+      .from('user_data')
+      .select('*')
+      .eq('id', noteId)
+      .eq('userid', userId)
+      .eq('type', 'note')
+      .single()
+
+    if (fetchError || !existingNote) {
+      return NextResponse.json({
+        success: false,
+        error: 'Note not found'
+      }, { status: 404 })
+    }
+
+    const { error: deleteError } = await supabase
+      .from('user_data')
+      .delete()
+      .eq('id', noteId)
+      .eq('userid', userId)
+
+    if (deleteError) {
+      console.error('Note delete error:', deleteError)
+      return NextResponse.json({
+        success: false,
+        error: 'Failed to delete note'
       }, { status: 500 })
     }
 
+    console.log('Note deleted successfully:', noteId)
+
     return NextResponse.json({
       success: true,
-      message: 'All notes successfully deleted',
-      count: data?.length || 0
+      message: 'Note deleted successfully'
     })
 
   } catch (error) {

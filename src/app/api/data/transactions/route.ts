@@ -46,42 +46,35 @@ export async function GET(request: NextRequest) {
     const endDate = searchParams.get('endDate')
 
     console.log('Fetching transactions for userId:', userId, {
-      limit,
-      offset,
-      type,
-      category,
-      startDate,
-      endDate
+      limit, offset, type, category, startDate, endDate
     })
 
     let query = supabase
       .from('user_data')
       .select('*')
       .eq('userid', userId)
-      .in('type', ['income', 'expense']) // Only income and expense transactions
-      .order('createdat', { ascending: false })
+      .eq('type', 'transaction')
 
     // Apply filters
-    if (type && type !== 'all') {
-      query = query.eq('type', type)
+    if (type) {
+      query = query.eq('category', type)
     }
     
-    if (category && category !== 'all') {
+    if (category) {
       query = query.eq('category', category)
     }
-    
+
     if (startDate) {
-      query = query.gte('date', new Date(startDate).toISOString())
-    }
-    
-    if (endDate) {
-      query = query.lte('date', new Date(endDate).toISOString())
+      query = query.gte('date', startDate)
     }
 
-    // Apply pagination
-    query = query.range(offset, offset + limit - 1)
+    if (endDate) {
+      query = query.lte('date', endDate)
+    }
 
     const { data: transactions, error } = await query
+      .order('date', { ascending: false })
+      .range(offset, limit)
 
     if (error) {
       console.error('Transactions fetch error:', error)
@@ -95,7 +88,12 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      data: transactions || []
+      data: transactions || [],
+      pagination: {
+        limit,
+        offset,
+        hasMore: transactions && transactions.length === limit
+      }
     })
 
   } catch (error) {
@@ -119,20 +117,12 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
 
     // Validate required fields
-    const { type, amount, description, category, date, account } = body
+    const { amount, description, category, type = 'expense' } = body
     
-    if (!type || !amount || !description || !category || !account) {
+    if (!amount || !description || !category) {
       return NextResponse.json({
         success: false,
-        error: 'Missing required fields: type, amount, description, category, account'
-      }, { status: 400 })
-    }
-
-    // Validate type
-    if (!['income', 'expense'].includes(type)) {
-      return NextResponse.json({
-        success: false,
-        error: 'Type must be either income or expense'
+        error: 'Missing required fields: amount, description, category'
       }, { status: 400 })
     }
 
@@ -145,18 +135,26 @@ export async function POST(request: NextRequest) {
       }, { status: 400 })
     }
 
-    console.log('Creating transaction:', { userId, type, amount, description, category, account })
+    // Validate type
+    if (!['income', 'expense'].includes(type)) {
+      return NextResponse.json({
+        success: false,
+        error: 'Type must be either income or expense'
+      }, { status: 400 })
+    }
+
+    console.log('Creating transaction:', { userId, amount, description, category, type })
 
     const { data: transaction, error } = await supabase
       .from('user_data')
       .insert({
-        id: `transaction_${userId}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+        id: `trans_${userId}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
         userid: userId,
-        type: type,
+        type: 'transaction',
         amount: parsedAmount,
         description: description.trim(),
         category: category.trim(),
-        date: date ? new Date(date).toISOString() : new Date().toISOString(),
+        date: new Date(body.date || Date.now()).toISOString(),
         createdat: new Date().toISOString(),
         updatedat: new Date().toISOString()
       })
@@ -197,7 +195,7 @@ export async function PUT(request: NextRequest) {
 
     const userId = auth.user.id
     const body = await request.json()
-    const { id, type, amount, description, category, date } = body
+    const { id, amount, description, category, type, date } = body
 
     if (!id) {
       return NextResponse.json({
@@ -214,7 +212,7 @@ export async function PUT(request: NextRequest) {
       .select('*')
       .eq('id', id)
       .eq('userid', userId)
-      .in('type', ['income', 'expense'])
+      .eq('type', 'transaction')
       .single()
 
     if (fetchError || !existingTransaction) {
@@ -227,16 +225,6 @@ export async function PUT(request: NextRequest) {
     // Prepare update data
     const updateData: any = {
       updatedat: new Date().toISOString()
-    }
-
-    if (type !== undefined) {
-      if (!['income', 'expense'].includes(type)) {
-        return NextResponse.json({
-          success: false,
-          error: 'Type must be either income or expense'
-        }, { status: 400 })
-      }
-      updateData.type = type
     }
 
     if (amount !== undefined) {
@@ -252,6 +240,10 @@ export async function PUT(request: NextRequest) {
 
     if (category !== undefined) {
       updateData.category = category.trim()
+    }
+
+    if (type !== undefined && ['income', 'expense'].includes(type)) {
+      updateData.type = type
     }
 
     if (date !== undefined) {
@@ -299,24 +291,24 @@ export async function DELETE(request: NextRequest) {
 
     const userId = auth.user.id
     const { searchParams } = new URL(request.url)
-    const id = searchParams.get('id')
+    const transactionId = searchParams.get('id')
 
-    if (!id) {
+    if (!transactionId) {
       return NextResponse.json({
         success: false,
         error: 'Transaction ID is required'
       }, { status: 400 })
     }
 
-    console.log('Deleting transaction:', { id, userId })
+    console.log('Deleting transaction:', { transactionId, userId })
 
     // First check if transaction exists and belongs to user
     const { data: existingTransaction, error: fetchError } = await supabase
       .from('user_data')
       .select('*')
-      .eq('id', id)
+      .eq('id', transactionId)
       .eq('userid', userId)
-      .in('type', ['income', 'expense'])
+      .eq('type', 'transaction')
       .single()
 
     if (fetchError || !existingTransaction) {
@@ -326,26 +318,25 @@ export async function DELETE(request: NextRequest) {
       }, { status: 404 })
     }
 
-    const { data, error } = await supabase
+    const { error: deleteError } = await supabase
       .from('user_data')
       .delete()
-      .eq('id', id)
+      .eq('id', transactionId)
       .eq('userid', userId)
 
-    if (error) {
-      console.error('Transaction delete error:', error)
+    if (deleteError) {
+      console.error('Transaction delete error:', deleteError)
       return NextResponse.json({
         success: false,
         error: 'Failed to delete transaction'
       }, { status: 500 })
     }
 
-    console.log('Transaction deleted successfully:', id)
+    console.log('Transaction deleted successfully:', transactionId)
 
     return NextResponse.json({
       success: true,
-      message: 'Transaction deleted successfully',
-      data: existingTransaction
+      message: 'Transaction deleted successfully'
     })
 
   } catch (error) {

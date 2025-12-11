@@ -67,7 +67,6 @@ import { dataSync } from '@/lib/data-sync'
 import { PieChart, Pie, Cell, ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, BarChart, Bar, AreaChart, Area } from 'recharts'
 import Link from 'next/link'
 import EditRecurringDialog from '@/components/EditRecurringDialog'
-import { NotesModal } from '@/components/NotesModal'
 import { MiniChart } from '@/components/ui/mini-chart'
 import { CategorySummary } from '@/components/ui/category-summary'
 import { useMobile } from '@/hooks/useMobile'
@@ -142,7 +141,6 @@ export default function ButcapApp() {
   const [noteFilter, setNoteFilter] = useState<'all' | 'today' | 'week' | 'month'>('all')
   const [showNavigationConfirmDialog, setShowNavigationConfirmDialog] = useState(false)
   const [balanceHidden, setBalanceHidden] = useState(false)
-  const [showNotesModal, setShowNotesModal] = useState(false)
   
   // Notlar state
   const [notes, setNotes] = useState<Note[]>([])
@@ -341,10 +339,8 @@ export default function ButcapApp() {
 
   // Tekrarlayan işlemleri kontrol et
   useEffect(() => {
-    if (user && recurringTransactions.length > 0) {
-      checkAndApplyRecurringTransactions()
-    }
-  }, [recurringTransactions.length, user])
+    checkAndApplyRecurringTransactions()
+  }, [recurringTransactions.length, user, checkAndApplyRecurringTransactions])
 
   const getRecurringDates = (recurring: RecurringTransaction, startDate: Date, endDate: Date): Date[] => {
     const dates: Date[] = []
@@ -579,9 +575,15 @@ export default function ButcapApp() {
     .filter(t => t.type === 'income')
     .reduce((sum, t) => sum + t.amount, 0)
 
-  const totalExpense = transactions
+  const expense = transactions
     .filter(t => t.type === 'expense')
     .reduce((sum, t) => sum + t.amount, 0)
+
+  const chartData = [
+    { name: 'Nakit', value: balances.cash, color: '#10b981' },
+    { name: 'Banka', value: balances.bank, color: '#3b82f6' },
+    { name: 'Birikim', value: balances.savings, color: '#8b5cf6' }
+  ]
 
   const monthlyData = transactions
     .filter(t => t.type !== 'transfer')
@@ -604,20 +606,6 @@ export default function ButcapApp() {
       return acc
     }, [] as { month: string; income: number; expense: number }[])
     .slice(-6)
-
-  // Mevcut ayın toplam giderini hesapla
-  const currentMonth = new Date().toLocaleDateString('tr-TR', { month: 'short' })
-  const currentMonthData = monthlyData.find(m => m.month === currentMonth)
-  const currentMonthExpense = currentMonthData ? currentMonthData.expense : 0
-
-  // Mevcut ayın toplam gelirini hesapla
-  const currentMonthIncome = currentMonthData ? currentMonthData.income : 0
-
-  const chartData = [
-    { name: 'Nakit', value: balances.cash, color: '#10b981' },
-    { name: 'Banka', value: balances.bank, color: '#3b82f6' },
-    { name: 'Birikim', value: balances.savings, color: '#8b5cf6' }
-  ]
 
   // Kategori ikonları
   const getCategoryIcon = (category: string) => {
@@ -1110,19 +1098,6 @@ export default function ButcapApp() {
               <span className="text-sm font-medium text-gray-700">Yatırımlar</span>
             </div>
           </Button>
-
-          <Button 
-            variant="outline" 
-            className="h-20 bg-white hover:bg-gray-50 border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-200 group"
-            onClick={() => setShowNotesModal(true)}
-          >
-            <div className="flex flex-col items-center space-y-2">
-              <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                <FileText className="h-6 w-6 text-white" />
-              </div>
-              <span className="text-sm font-medium text-gray-700">Notlar</span>
-            </div>
-          </Button>
         </div>
 
         {/* Stats Cards */}
@@ -1134,9 +1109,6 @@ export default function ButcapApp() {
                   <p className="text-green-600 text-sm font-medium mb-1">Toplam Gelir</p>
                   <p className="text-3xl font-bold text-green-700">
                     {income.toLocaleString('tr-TR')} TL
-                  </p>
-                  <p className="text-xs text-green-500 mt-1">
-                    Bu ay: {currentMonthIncome.toLocaleString('tr-TR')} TL
                   </p>
                 </div>
                 <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center shadow-lg">
@@ -1152,10 +1124,7 @@ export default function ButcapApp() {
                 <div>
                   <p className="text-red-600 text-sm font-medium mb-1">Toplam Gider</p>
                   <p className="text-3xl font-bold text-red-700">
-                    {totalExpense.toLocaleString('tr-TR')} TL
-                  </p>
-                  <p className="text-xs text-red-500 mt-1">
-                    Bu ay: {(currentMonthData ? currentMonthData.expense : 0).toLocaleString('tr-TR')} TL
+                    {expense.toLocaleString('tr-TR')} TL
                   </p>
                 </div>
                 <div className="w-16 h-16 bg-gradient-to-r from-red-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-lg">
@@ -1305,9 +1274,6 @@ export default function ButcapApp() {
           </div>
         </DialogContent>
       </Dialog>
-
-      {/* Notes Modal */}
-      <NotesModal isOpen={showNotesModal} onClose={() => setShowNotesModal(false)} />
     </div>
   )
 }

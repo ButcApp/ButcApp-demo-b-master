@@ -1,6 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { AuthService } from '@/lib/auth-service'
-import { supabase } from '@/lib/db'
+import { createClient } from '@supabase/supabase-js'
+import { Logger } from '@/lib/logger'
+
+// Create Supabase client directly
+const supabaseUrl = "https://dfiwgngtifuqrrxkvknn.supabase.co";
+const supabaseServiceKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRmaXdnbmd0aWZ1cXJyeGt2a25uIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NTI3NzMyMSwiZXhwIjoyMDgwODUzMzIxfQ.uCfJ5DzQ2QCiyXycTrHEaKh1EvAFbuP8HBORmBSPbX8";
+const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
 // Authentication middleware
 async function authenticate(request: NextRequest) {
@@ -35,9 +41,9 @@ export async function GET(request: NextRequest) {
     const { data: recurringTransactions, error } = await supabase
       .from('user_data')
       .select('*')
-      .eq('userId', userId)
+      .eq('userid', userId)
       .eq('type', 'recurring')
-      .order('createdAt', { ascending: false })
+      .order('createdat', { ascending: false })
 
     if (error) {
       console.error('Recurring transactions fetch error:', error)
@@ -108,16 +114,16 @@ export async function POST(request: NextRequest) {
       .from('user_data')
       .insert({
         id: `recurring_${userId}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-        userId: userId,
+        userid: userId,
         type: 'recurring',
         amount: parsedAmount,
         description: description.trim(),
         category: category.trim(),
         frequency: frequency,
-        startDate: new Date(startDate).toISOString(),
-        endDate: endDate ? new Date(endDate).toISOString() : null,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
+        startdate: new Date(startDate).toISOString(),
+        enddate: endDate ? new Date(endDate).toISOString() : null,
+        createdat: new Date().toISOString(),
+        updatedat: new Date().toISOString()
       })
       .select()
       .single()
@@ -172,7 +178,7 @@ export async function PUT(request: NextRequest) {
       .from('user_data')
       .select('*')
       .eq('id', id)
-      .eq('userId', userId)
+      .eq('userid', userId)
       .eq('type', 'recurring')
       .single()
 
@@ -185,7 +191,7 @@ export async function PUT(request: NextRequest) {
 
     // Prepare update data
     const updateData: any = {
-      updatedAt: new Date().toISOString()
+      updatedat: new Date().toISOString()
     }
 
     if (amount !== undefined) {
@@ -211,11 +217,11 @@ export async function PUT(request: NextRequest) {
     }
 
     if (startDate !== undefined) {
-      updateData.startDate = new Date(startDate).toISOString()
+      updateData.startdate = new Date(startDate).toISOString()
     }
 
     if (endDate !== undefined) {
-      updateData.endDate = endDate ? new Date(endDate).toISOString() : null
+      updateData.enddate = endDate ? new Date(endDate).toISOString() : null
     }
 
     const { data: updatedTransaction, error: updateError } = await supabase
@@ -249,7 +255,7 @@ export async function PUT(request: NextRequest) {
   }
 }
 
-// DELETE /api/data/recurring-transactions - Reset all user recurring transactions
+// DELETE /api/data/recurring-transactions - Delete recurring transaction
 export async function DELETE(request: NextRequest) {
   try {
     const auth = await authenticate(request)
@@ -258,29 +264,57 @@ export async function DELETE(request: NextRequest) {
     }
 
     const userId = auth.user.id
+    const { searchParams } = new URL(request.url)
+    const recurringTransactionId = searchParams.get('id')
 
-    const { data, error } = await supabase
-      .from('user_data')
-      .delete()
-      .eq('userId', userId)
-      .eq('type', 'recurring')
-
-    if (error) {
-      console.error('Recurring transactions reset error:', error)
+    if (!recurringTransactionId) {
       return NextResponse.json({
         success: false,
-        error: 'Recurring transactions reset failed'
+        error: 'Recurring transaction ID is required'
+      }, { status: 400 })
+    }
+
+    console.log('Deleting recurring transaction:', { recurringTransactionId, userId })
+
+    // First check if transaction exists and belongs to user
+    const { data: existingTransaction, error: fetchError } = await supabase
+      .from('user_data')
+      .select('*')
+      .eq('id', recurringTransactionId)
+      .eq('userid', userId)
+      .eq('type', 'recurring')
+      .single()
+
+    if (fetchError || !existingTransaction) {
+      return NextResponse.json({
+        success: false,
+        error: 'Recurring transaction not found'
+      }, { status: 404 })
+    }
+
+    const { error: deleteError } = await supabase
+      .from('user_data')
+      .delete()
+      .eq('id', recurringTransactionId)
+      .eq('userid', userId)
+
+    if (deleteError) {
+      console.error('Recurring transaction delete error:', deleteError)
+      return NextResponse.json({
+        success: false,
+        error: 'Failed to delete recurring transaction'
       }, { status: 500 })
     }
 
+    console.log('Recurring transaction deleted successfully:', recurringTransactionId)
+
     return NextResponse.json({
       success: true,
-      message: 'All recurring transactions successfully deleted',
-      count: data?.length || 0
+      message: 'Recurring transaction deleted successfully'
     })
 
   } catch (error) {
-    console.error('Recurring transactions DELETE error:', error)
+    console.error('Recurring Transactions DELETE error:', error)
     return NextResponse.json({
       success: false,
       error: 'Internal server error'

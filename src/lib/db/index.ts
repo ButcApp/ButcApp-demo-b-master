@@ -1,18 +1,19 @@
 import { createClient } from '@supabase/supabase-js';
 
-// Service role key for server-side operations
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://dfiwgngtifuqrrxkvknn.supabase.co';
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRmaXdnbmd0aWZ1cXJyeGt2a25uIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NTI3NzMyMSwiZXhwIjoyMDgwODUzMzIxfQ.uCfJ5DzQ2QCiyXycTrHEaKh1EvAFbuP8HBORmBSPbX8';
+// Environment variables from .env file
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 
-if (!supabaseUrl || !supabaseServiceKey) {
-  throw new Error('Missing Supabase environment variables.');
+if (!supabaseUrl || !supabaseAnonKey) {
+  throw new Error('Missing Supabase environment variables. Please check your .env file.');
 }
 
-// Create service client for server-side operations
-const supabase = createClient(supabaseUrl, supabaseServiceKey, {
+// Create a single supabase client for interacting with your database
+const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
-    persistSession: false,
-    autoRefreshToken: false
+    persistSession: true,
+    autoRefreshToken: true,
+    detectSessionInUrl: true
   }
 });
 

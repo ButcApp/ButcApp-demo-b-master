@@ -146,7 +146,6 @@ export const dataSync = {
         description: transaction.description || transaction.category, // Eğer açıklama yoksa kategoriyi kullan
         category: transaction.category,
         type: transaction.type || 'expense', // Varsayılan olarak 'expense' (gider) kullan
-        account: transaction.account || 'cash', // Account alanını ekle
         date: transaction.date || new Date().toISOString()
       }
 
