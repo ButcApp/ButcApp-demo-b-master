@@ -23,8 +23,20 @@ export async function middleware(request: NextRequest) {
 
   // Admin paneli route kontrolü
   if (pathname.startsWith('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/')) {
-    // Token'ı cookie'den al
-    const token = request.cookies.get('auth-token')?.value
+    // Token'ı birden fazla kaynaktan dene
+    let token = request.cookies.get('auth-token')?.value
+    
+    // Cookie'de yoksa Authorization header'dan dene
+    if (!token) {
+      token = request.headers.get('authorization')?.replace('Bearer ', '')
+    }
+    
+    // Orada da yoksa query param'dan dene
+    if (!token) {
+      token = request.nextUrl.searchParams.get('token')
+    }
+
+    console.log('Token found:', !!token);
 
     if (!token) {
       console.log('No token found, redirecting to login');

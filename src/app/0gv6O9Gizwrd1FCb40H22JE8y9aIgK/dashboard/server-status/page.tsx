@@ -66,8 +66,10 @@ export default function ServerStatusPage() {
       setLoading(true)
       setError(null)
       
-      const token = localStorage.getItem('adminToken') || 
-                   document.cookie.split('; ').find(row => row.startsWith('auth-token='))?.split('=')[1]
+      // Token'ı birden fazla kaynaktan dene
+      let token = localStorage.getItem('adminToken') || 
+                   document.cookie.split('; ').find(row => row.startsWith('auth-token='))?.split('=')[1] ||
+                   sessionStorage.getItem('adminToken')
       
       if (!token) {
         console.log('❌ Server Status: Token bulunamadı, fetch iptal ediliyor')
@@ -97,6 +99,8 @@ export default function ServerStatusPage() {
         if (response.status === 401) {
           console.log('🔄 Server Status: 401 hatası, token siliniyor...')
           localStorage.removeItem('adminToken')
+          sessionStorage.removeItem('adminToken')
+          document.cookie = 'auth-token=; path=/; expires=Thu, 01 Jan1970 00:00:00 GMT'
           router.push('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login')
           return
         }

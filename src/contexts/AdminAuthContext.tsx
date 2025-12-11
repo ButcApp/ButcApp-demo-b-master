@@ -31,7 +31,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   // Token'ı cookie'e set etme fonksiyonu
   const setTokenCookie = (tokenValue: string) => {
-    document.cookie = `auth-token=${tokenValue}; path=/; max-age=${24 * 60 * 60}; samesite=lax;`
+    const isSecure = process.env.NODE_ENV === 'production'
+    const sameSite = isSecure ? 'None' : 'lax'
+    document.cookie = `auth-token=${tokenValue}; path=/; max-age=${24 * 60 * 60}; samesite=${sameSite}${isSecure ? '; secure' : ''}`
   }
 
   // Token'ı her iki yere de set etme fonksiyonu
@@ -69,6 +71,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         sessionStorage.setItem('adminToken', token)
         setTokenCookie(token)
         console.log('AdminAuthContext: Token synced to all storages')
+        
+        // Token persistency için interval ekle
+        const persistInterval = setInterval(() => {
+          setTokenCookie(token)
+        }, 30000) // 30 saniyede bir
+        
+        return () => {
+          clearInterval(persistInterval)
+        }
       } catch (error) {
         console.error('Error parsing stored user data:', error)
         localStorage.removeItem('adminUser')
