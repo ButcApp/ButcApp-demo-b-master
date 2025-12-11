@@ -155,6 +155,19 @@ export function UserAuthButton({ onSignInClick, onSignUpClick }: UserAuthButtonP
   // Check admin access when component mounts or user changes
   useEffect(() => {
     if (user?.email) {
+      console.log('🔍 UserAuthButton useEffect - User email:', user.email)
+      console.log('🔍 UserAuthButton useEffect - Checking localStorage for token...')
+      
+      // List all localStorage items
+      if (typeof window !== 'undefined') {
+        console.log('🔍 localStorage items:')
+        for (let i = 0; i < localStorage.length; i++) {
+          const key = localStorage.key(i)
+          const value = localStorage.getItem(key || '')
+          console.log(`  - ${key}: ${value?.substring(0, 20)}${value && value.length > 20 ? '...' : ''}`)
+        }
+      }
+      
       checkAdminAccess()
     }
   }, [user?.email])
