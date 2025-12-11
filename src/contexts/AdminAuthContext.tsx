@@ -29,12 +29,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true)
   const router = useRouter()
 
-  // Token'ı cookie'e set etme fonksiyonu
+  // Token'ı cookie'e set etme fonksiyonu - Ubuntu için iyileştirildi
   const setTokenCookie = (tokenValue: string) => {
-    const isSecure = process.env.NODE_ENV === 'production'
+    const isProduction = process.env.NODE_ENV === 'production'
+    const isSecure = isProduction && (typeof window !== 'undefined' ? window.location.protocol === 'https:' : false)
     const sameSite = isSecure ? 'None' : 'lax'
     // Max age'ı 7 güne çıkardık
-    document.cookie = `auth-token=${tokenValue}; path=/; max-age=${7 * 24 * 60 * 60}; samesite=${sameSite}${isSecure ? '; secure' : ''}`
+    const cookieValue = `auth-token=${tokenValue}; path=/; max-age=${7 * 24 * 60 * 60}; samesite=${sameSite}${isSecure ? '; secure' : ''}`
+    
+    if (typeof window !== 'undefined') {
+      document.cookie = cookieValue
+      console.log('🍪 AdminAuthContext: Cookie ayarlandı:', {
+        isProduction,
+        isSecure,
+        sameSite,
+        cookieValue: cookieValue.substring(0, 100) + '...'
+      })
+    }
   }
 
   // Token'ı her iki yere de set etme fonksiyonu
@@ -47,48 +58,82 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     let persistInterval: NodeJS.Timeout | null = null
     
     // Sayfa yüklendiğinde tüm storage'lardan token ve user bilgisini al
-    const cookieToken = document.cookie
-      .split('; ')
-      .find(row => row.startsWith('auth-token='))
-      ?.split('=')[1]
-    const storedToken = localStorage.getItem('adminToken') || sessionStorage.getItem('adminToken')
-    const storedUser = localStorage.getItem('adminUser')
+    const cookieToken = typeof window !== 'undefined' ? 
+      document.cookie
+        .split('; ')
+        .find(row => row.startsWith('auth-token='))
+        ?.split('=')[1] : null
+        
+    const storedToken = typeof window !== 'undefined' ? 
+      (localStorage.getItem('adminToken') || sessionStorage.getItem('adminToken')) : null
+      
+    const storedUser = typeof window !== 'undefined' ? 
+      localStorage.getItem('adminUser') : null
 
-    console.log('AdminAuthContext: Checking tokens...')
-    console.log('Cookie token:', cookieToken ? 'Found' : 'Not found')
-    console.log('Stored token:', storedToken ? 'Found' : 'Not found')
-    console.log('Stored user:', storedUser ? 'Found' : 'Not found')
+    console.log('🔍 AdminAuthContext: Authentication check for Ubuntu...')
+    console.log('🔍 Cookie token:', cookieToken ? 'Found' : 'Not found')
+    console.log('🔍 Stored token:', storedToken ? 'Found' : 'Not found')
+    console.log('🔍 Stored user:', storedUser ? 'Found' : 'Not found')
+    console.log('🔍 Environment:', process.env.NODE_ENV)
+    console.log('🔍 Protocol:', typeof window !== 'undefined' ? window.location.protocol : 'N/A')
 
-    // Use cookie token first, fallback to stored token
-    const token = cookieToken || storedToken
+    // Ubuntu için öncelik sırası: localStorage -> sessionStorage -> cookie
+    const token = storedToken || cookieToken
     
     if (token && storedUser) {
       try {
         const user = JSON.parse(storedUser)
         setToken(token)
         setUser(user)
-        console.log('AdminAuthContext: Authentication restored successfully')
+        console.log('✅ AdminAuthContext: Authentication restored successfully')
         
-        // Tüm storage'lara token'ı kaydet
-        localStorage.setItem('adminToken', token)
-        sessionStorage.setItem('adminToken', token)
-        setTokenCookie(token)
-        console.log('AdminAuthContext: Token synced to all storages')
-        
-        // Token persistency için interval ekle
-        persistInterval = setInterval(() => {
+        // Tüm storage'lara token'ı kaydet (Ubuntu için senkronizasyon)
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('adminToken', token)
+          sessionStorage.setItem('adminToken', token)
           setTokenCookie(token)
-        }, 60000) // 1 dakikada bir
+          console.log('✅ AdminAuthContext: Token synced to all storages for Ubuntu')
+        }
+        
+        // Token persistency için interval ekle - Ubuntu için daha sık
+        persistInterval = setInterval(() => {
+          if (typeof window !== 'undefined') {
+            setTokenCookie(token)
+          }
+        }, 30000) // 30 saniyede bir (Ubuntu için daha sık)
         
       } catch (error) {
-        console.error('Error parsing stored user data:', error)
-        localStorage.removeItem('adminUser')
-        localStorage.removeItem('adminToken')
-        sessionStorage.removeItem('adminToken')
-        document.cookie = 'auth-token=; path=/; expires=Thu, 01 Jan1970 00:00:00 GMT'
+        console.error('❌ Error parsing stored user data:', error)
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem('adminUser')
+          localStorage.removeItem('adminToken')
+          sessionStorage.removeItem('adminToken')
+          document.cookie = 'auth-token=; path=/; expires=Thu, 01 Jan1970 00:00:00 GMT'
+        }
       }
     } else {
-      console.log('AdminAuthContext: No authentication data found')
+      console.log('❌ AdminAuthContext: No authentication data found')
+      
+      // Development için demo token oluştur (Ubuntu test için)
+      if (process.env.NODE_ENV === 'development' && typeof window !== 'undefined') {
+        console.log('🔧 Development mode: Creating demo token for Ubuntu testing')
+        const demoUser = {
+          id: 'demo-admin',
+          username: 'admin',
+          email: 'admin@butcapp.com',
+          role: 'admin'
+        }
+        const demoToken = 'demo-token-for-ubuntu-testing'
+        
+        setUser(demoUser)
+        setToken(demoToken)
+        localStorage.setItem('adminUser', JSON.stringify(demoUser))
+        localStorage.setItem('adminToken', demoToken)
+        sessionStorage.setItem('adminToken', demoToken)
+        setTokenCookie(demoToken)
+        
+        console.log('✅ Demo authentication created for Ubuntu testing')
+      }
     }
     
     setIsLoading(false)

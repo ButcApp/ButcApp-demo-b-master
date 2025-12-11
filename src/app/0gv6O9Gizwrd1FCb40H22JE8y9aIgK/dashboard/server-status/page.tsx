@@ -66,27 +66,53 @@ export default function ServerStatusPage() {
       setLoading(true)
       setError(null)
       
-      // Token'ı birden fazla kaynaktan dene
+      // Ubuntu sunucu için daha güvenilir token yönetimi
+      // Öncelik sırası: localStorage -> sessionStorage -> cookie
       let token = localStorage.getItem('adminToken') || 
-                   document.cookie.split('; ').find(row => row.startsWith('auth-token='))?.split('=')[1] ||
-                   sessionStorage.getItem('adminToken')
+                   sessionStorage.getItem('adminToken') ||
+                   document.cookie.split('; ').find(row => row.startsWith('auth-token='))?.split('=')[1]
+      
+      // Token yoksa, URL'den token parametresini kontrol et (development için)
+      if (!token && typeof window !== 'undefined') {
+        const urlParams = new URLSearchParams(window.location.search)
+        const urlToken = urlParams.get('token')
+        if (urlToken) {
+          token = urlToken
+          localStorage.setItem('adminToken', urlToken)
+          sessionStorage.setItem('adminToken', urlToken)
+          console.log('📡 Server Status: Token URL\'den alındı ve storage\'a kaydedildi')
+        }
+      }
       
       if (!token) {
-        console.log('❌ Server Status: Token bulunamadı, redirect ediliyor...')
+        console.log('❌ Server Status: Token bulunamadı, storage durumları:')
+        console.log('localStorage adminToken:', !!localStorage.getItem('adminToken'))
+        console.log('sessionStorage adminToken:', !!sessionStorage.getItem('adminToken'))
+        console.log('Cookie auth-token:', !!document.cookie.split('; ').find(row => row.startsWith('auth-token=')))
         router.push('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login')
         return
       }
       
       console.log('📡 Server Status: Token bulundu, fetch başlatılıyor...')
-      console.log('📡 Server Status: Token:', token.substring(0, 20) + '...')
+      console.log('📡 Server Status: Token kaynağı:', 
+        localStorage.getItem('adminToken') === token ? 'localStorage' :
+        sessionStorage.getItem('adminToken') === token ? 'sessionStorage' : 'cookie'
+      )
+      
+      // Ubuntu için cookie ayarlarını iyileştir
+      const isProduction = process.env.NODE_ENV === 'production'
+      const isSecure = isProduction && window.location.protocol === 'https:'
       
       const response = await fetch('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/system-status', {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'X-Forwarded-Proto': isSecure ? 'https' : 'http',
+          'X-Real-IP': '127.0.0.1' // Ubuntu için
         },
-        cache: 'no-store'
+        cache: 'no-store',
+        credentials: 'include' // Ubuntu için cookie'leri dahil et
       })
       
       console.log('📡 Server Status: API yanıtı status:', response.status)
@@ -95,16 +121,35 @@ export default function ServerStatusPage() {
         const errorText = await response.text()
         console.log('❌ Server Status: API hata yanıtı:', errorText)
         
-        if (response.status === 401) {
-          console.log('🔄 Server Status: 401 hatası, token yenileniyor...')
-          // Token'ı yenile
-          const newToken = localStorage.getItem('adminToken') || sessionStorage.getItem('adminToken')
+        if (response.status === 401 || response.status === 403) {
+          console.log('🔄 Server Status: Auth hatası, token yenileniyor...')
+          
+          // Tüm storage'lardan token'ı yeniden kontrol et
+          const newToken = localStorage.getItem('adminToken') || 
+                           sessionStorage.getItem('adminToken') ||
+                           document.cookie.split('; ').find(row => row.startsWith('auth-token='))?.split('=')[1]
+          
           if (newToken && newToken !== token) {
             console.log('🔄 Server Status: Yeni token bulundu, tekrar deneniyor...')
             return fetchSystemInfo()
           }
           
+          // Token'ı yenilemek için cookie'yi manuel olarak ayarla
+          if (newToken) {
+            const cookieValue = `auth-token=${newToken}; path=/; max-age=${7 * 24 * 60 * 60}; samesite=lax${isSecure ? '; secure' : ''}`
+            document.cookie = cookieValue
+            console.log('🔄 Server Status: Cookie yeniden ayarlandı')
+            
+            // Tekrar dene
+            return fetchSystemInfo()
+          }
+          
           console.log('🔄 Server Status: Token bulunamadı, redirect ediliyor...')
+          // Tüm storage'ları temizle
+          localStorage.removeItem('adminToken')
+          sessionStorage.removeItem('adminToken')
+          document.cookie = 'auth-token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
+          
           router.push('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login')
           return
         }
