@@ -4,209 +4,26 @@
 
    ▲ Next.js 15.5.7
    - Local:        http://localhost:3000
-   - Network:      http://21.0.2.171:3000
+   - Network:      http://21.0.3.138:3000
    - Environments: .env.development
    - Experiments (use with caution):
      · optimizePackageImports
 
  ✓ Starting...
- ✓ Ready in 2s
- ○ Compiling /middleware ...
- ✓ Compiled /middleware in 715ms (114 modules)
+ ✓ Ready in 1518ms
+ ✓ Compiled /middleware in 492ms (114 modules)
 === MIDDLEWARE DEBUG ===
 Pathname: /
 Method: GET
 Not an admin route or login page, proceeding
  ○ Compiling / ...
-=== MIDDLEWARE DEBUG ===
-Pathname: /app
-Method: GET
-Not an admin route or login page, proceeding
- ✓ Compiled /app in 15.9s (2805 modules)
- ⨯ ReferenceError: Cannot access 'checkAndApplyRecurringTransactions' before initialization
-    at ButcapApp (src/app/app/page.tsx:233:43)
-  231 |   useEffect(() => {
-  232 |     checkAndApplyRecurringTransactions()
-> 233 |   }, [recurringTransactions.length, user, checkAndApplyRecurringTransactions])
-      |                                           ^
-  234 |
-  235 |   const checkAndApplyRecurringTransactions = useCallback(() => {
-  236 |     if (!user) return {
-  digest: '655438177'
-}
- GET /app 500 in 9850ms
- GET / 200 in 17163ms
+ ✓ Compiled / in 5.9s (1698 modules)
+ GET / 200 in 6439ms
 === MIDDLEWARE DEBUG ===
 Pathname: /
 Method: GET
 Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /
-Method: GET
-Not an admin route or login page, proceeding
- GET / 200 in 146ms
- GET / 200 in 147ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /
-Method: GET
-Not an admin route or login page, proceeding
- GET / 200 in 105ms
- GET / 200 in 73ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/webpack.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/css/app/layout.css
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/main-app.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app/layout.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app-pages-internals.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app/page.js
-Method: GET
-Not an admin route or login page, proceeding
- ⨯ ./src/app/app/page.tsx
-Module parse failed: Identifier 'checkAndApplyRecurringTransactions' has already been declared (260:10)
-|         checkAndApplyRecurringTransactions
-|     ]);
->     const checkAndApplyRecurringTransactions = useCallback({
-|         "ButcapApp.useCallback[checkAndApplyRecurringTransactions]": ()=>{
-|             if (!user) return;
-
-Import trace for requested module:
-./src/app/app/page.tsx
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
- ○ Compiling /api/auth/me ...
- ⨯ ./src/app/app/page.tsx
-Module parse failed: Identifier 'checkAndApplyRecurringTransactions' has already been declared (260:10)
-|         checkAndApplyRecurringTransactions
-|     ]);
->     const checkAndApplyRecurringTransactions = useCallback({
-|         "ButcapApp.useCallback[checkAndApplyRecurringTransactions]": ()=>{
-|             if (!user) return;
-
-Import trace for requested module:
-./src/app/app/page.tsx
- ⨯ ./src/app/app/page.tsx
-Module parse failed: Identifier 'checkAndApplyRecurringTransactions' has already been declared (260:10)
-|         checkAndApplyRecurringTransactions
-|     ]);
->     const checkAndApplyRecurringTransactions = useCallback({
-|         "ButcapApp.useCallback[checkAndApplyRecurringTransactions]": ()=>{
-|             if (!user) return;
-
-Import trace for requested module:
-./src/app/app/page.tsx
-=== MIDDLEWARE DEBUG ===
-Pathname: /
-Method: GET
-Not an admin route or login page, proceeding
- ⨯ ./src/app/app/page.tsx
-Module parse failed: Identifier 'checkAndApplyRecurringTransactions' has already been declared (260:10)
-|         checkAndApplyRecurringTransactions
-|     ]);
->     const checkAndApplyRecurringTransactions = useCallback({
-|         "ButcapApp.useCallback[checkAndApplyRecurringTransactions]": ()=>{
-|             if (!user) return;
-
-Import trace for requested module:
-./src/app/app/page.tsx
- GET /api/auth/me 500 in 7866ms
- GET / 500 in 745ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /favicon.png
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /
-Method: GET
-Not an admin route or login page, proceeding
- GET / 500 in 35ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /
-Method: GET
-Not an admin route or login page, proceeding
- GET / 500 in 28ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/fallback/main.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/fallback/webpack.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/fallback/react-refresh.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/fallback/pages/_app.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/fallback/pages/_error.js
-Method: GET
-Not an admin route or login page, proceeding
- ⨯ ./src/app/app/page.tsx
-Module parse failed: Identifier 'addTransaction' has already been declared (343:10)
-|         }
-|     };
->     const addTransaction = useCallback({
-|         "ButcapApp.useCallback[addTransaction]": async (transaction)=>{
-|             if (!user) {
-
-Import trace for requested module:
-./src/app/app/page.tsx
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/development/_devMiddlewareManifest.json
-Method: GET
-Not an admin route or login page, proceeding
- ⚠ Cross origin request detected from preview-chat-b4777b8b-5fd0-4a4d-8b6b-c72d10e6598f.space.z.ai to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
-Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
- ⨯ ./src/app/app/page.tsx
-Module parse failed: Identifier 'addTransaction' has already been declared (343:10)
-|         }
-|     };
->     const addTransaction = useCallback({
-|         "ButcapApp.useCallback[addTransaction]": async (transaction)=>{
-|             if (!user) {
-
-Import trace for requested module:
-./src/app/app/page.tsx
- ✓ Compiled /_error in 1654ms (2755 modules)
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/09a1cab4658c34be.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /
-Method: GET
-Not an admin route or login page, proceeding
- ⚠ Fast Refresh had to perform a full reload due to a runtime error.
- GET / 200 in 600ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /
-Method: GET
-Not an admin route or login page, proceeding
- GET / 200 in 70ms
+ GET / 200 in 49ms
 === MIDDLEWARE DEBUG ===
 Pathname: /_next/static/css/app/layout.css
 Method: GET
@@ -224,24 +41,17 @@ Pathname: /_next/static/chunks/app-pages-internals.js
 Method: GET
 Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app/page.js
+Pathname: /_next/static/chunks/app/layout.js
 Method: GET
 Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app/layout.js
+Pathname: /_next/static/chunks/app/page.js
 Method: GET
 Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
 Pathname: /favicon.png
 Method: GET
 Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /app
-Method: GET
-Not an admin route or login page, proceeding
- ○ Compiling /app ...
- ✓ Compiled /app in 603ms (1653 modules)
- GET /app 200 in 1335ms
 === MIDDLEWARE DEBUG ===
 Pathname: /api/auth/signin
 Method: POST
@@ -255,11 +65,24 @@ Import trace for requested module:
 ./src/app/api/auth/signin/route.ts
 AuthService: Starting signin for email: noyan4job@gmail.com
 === MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/dd8a0c8a45958bd4.webpack.hot-update.json
+Pathname: /_next/static/webpack/0cd05b6153c98dcd.webpack.hot-update.json
 Method: GET
 Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.dd8a0c8a45958bd4.hot-update.js
+Pathname: /
+Method: GET
+Not an admin route or login page, proceeding
+ GET / 200 in 78ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.0cd05b6153c98dcd.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.0cd05b6153c98dcd.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
 Method: GET
 Not an admin route or login page, proceeding
 AuthService: Signin successful for: noyan4job@gmail.com
@@ -305,11 +128,11 @@ Failed to log to database: TypeError: Cannot read properties of undefined (readi
   endpoint: '/api/auth/signin',
   method: 'POST',
   statusCode: 200,
-  responseTime: 1165,
+  responseTime: 1273,
   ipAddress: '21.0.0.1',
   userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition Yx GX TR 1)'
 }
- POST /api/auth/signin 200 in 3621ms
+ POST /api/auth/signin 200 in 2773ms
 === MIDDLEWARE DEBUG ===
 Pathname: /app
 Method: GET
@@ -326,38 +149,17 @@ Attempted import error: 'supabase' is not exported from '@/lib/db' (imported as 
 Import trace for requested module:
 ./src/lib/logger.ts
 ./src/app/api/auth/signin/route.ts
- GET /app 200 in 576ms
+ GET /app 200 in 2985ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/148c7f7d6a920acc.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.148c7f7d6a920acc.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
 Pathname: /_next/static/chunks/app/app/page.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /
-Method: GET
-Not an admin route or login page, proceeding
- GET / 200 in 454ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/webpack.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/css/app/layout.css
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/main-app.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app/layout.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app-pages-internals.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app/page.js
 Method: GET
 Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
@@ -370,92 +172,94 @@ Attempted import error: 'supabase' is not exported from '@/lib/db' (imported as 
 Import trace for requested module:
 ./src/lib/logger.ts
 ./src/app/api/auth/signin/route.ts
- ✓ Compiled /api/auth/me in 1177ms (1813 modules)
+ ⚠ ./src/lib/logger.ts
+Attempted import error: 'supabase' is not exported from '@/lib/db' (imported as 'supabase').
+
+Import trace for requested module:
+./src/lib/logger.ts
+./src/app/api/auth/signin/route.ts
 AuthService: Verifying token
 AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 1848ms
+ GET /api/auth/me 200 in 581ms
 === MIDDLEWARE DEBUG ===
-Pathname: /app
-Method: GET
-Not an admin route or login page, proceeding
- GET /app 200 in 103ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app/app/page.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/css/app/layout.css
-Method: GET
-Not an admin route or login page, proceeding
- ✓ Compiled in 1647ms (3145 modules)
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/a7ad3412fd0917d8.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /app
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/app/layout.a7ad3412fd0917d8.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/app/app/page.a7ad3412fd0917d8.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
- GET /app 200 in 257ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.a7ad3412fd0917d8.hot-update.js
+Pathname: /_next/static/webpack/85b598c562adf3fd.webpack.hot-update.json
 Method: GET
 Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
 Pathname: /api/auth/me
 Method: GET
 API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/css/app/layout.css
-Method: GET
-Not an admin route or login page, proceeding
- ✓ Compiled /api/auth/me in 365ms (1813 modules)
 AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 812ms
 === MIDDLEWARE DEBUG ===
 Pathname: /api/data/balances
 Method: GET
 API route, skipping middleware
- ○ Compiling /api/data/balances ...
- ✓ Compiled /api/data/balances in 1762ms (3293 modules)
+ ⚠ ./src/lib/logger.ts
+Attempted import error: 'supabase' is not exported from '@/lib/db' (imported as 'supabase').
+
+Import trace for requested module:
+./src/lib/logger.ts
+./src/app/api/auth/signin/route.ts
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.85b598c562adf3fd.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 186ms
+ ⚠ ./src/lib/logger.ts
+Attempted import error: 'supabase' is not exported from '@/lib/db' (imported as 'supabase').
+
+Import trace for requested module:
+./src/lib/logger.ts
+./src/app/api/auth/signin/route.ts
 AuthService: Verifying token
 AuthService: Token verification successful for: noyan4job@gmail.com
 === MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/da07c1a048bcdd87.webpack.hot-update.json
+Pathname: /_next/static/webpack/4ee204a6b715c505.webpack.hot-update.json
 Method: GET
 Not an admin route or login page, proceeding
- GET /api/data/balances 200 in 2200ms
+ GET /api/data/balances 200 in 743ms
 === MIDDLEWARE DEBUG ===
-Pathname: /app
+Pathname: /_next/static/webpack/webpack.4ee204a6b715c505.hot-update.js
 Method: GET
 Not an admin route or login page, proceeding
- GET /app 200 in 628ms
 === MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.da07c1a048bcdd87.hot-update.js
+Pathname: /api/data/balances
 Method: GET
-Not an admin route or login page, proceeding
+API route, skipping middleware
+AuthService: Verifying token
 === MIDDLEWARE DEBUG ===
 Pathname: /api/auth/me
 Method: GET
 API route, skipping middleware
 AuthService: Verifying token
 AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 182ms
+ GET /api/data/balances 200 in 289ms
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 387ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
 === MIDDLEWARE DEBUG ===
 Pathname: /api/data/transactions
 Method: GET
 API route, skipping middleware
- ○ Compiling /api/data/transactions ...
- ✓ Compiled /api/data/transactions in 659ms (3295 modules)
+AuthService: Verifying token
+ ⚠ ./src/lib/logger.ts
+Attempted import error: 'supabase' is not exported from '@/lib/db' (imported as 'supabase').
+
+Import trace for requested module:
+./src/lib/logger.ts
+./src/app/api/auth/signin/route.ts
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 177ms
+ ⚠ ./src/lib/logger.ts
+Attempted import error: 'supabase' is not exported from '@/lib/db' (imported as 'supabase').
+
+Import trace for requested module:
+./src/lib/logger.ts
+./src/app/api/auth/signin/route.ts
 AuthService: Verifying token
 AuthService: Token verification successful for: noyan4job@gmail.com
 Fetching transactions for userId: user_1765285604327_pdegojjr8 {
@@ -466,42 +270,369 @@ Fetching transactions for userId: user_1765285604327_pdegojjr8 {
   startDate: null,
   endDate: null
 }
+Transactions fetched successfully: 0
+ GET /api/data/transactions 200 in 685ms
 === MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/acac4f97f95fc5dd.webpack.hot-update.json
+Pathname: /_next/static/webpack/f0ed2b75799ca1b6.webpack.hot-update.json
 Method: GET
 Not an admin route or login page, proceeding
-Transactions fetched successfully: 51
- GET /api/data/transactions 200 in 1091ms
 === MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.acac4f97f95fc5dd.hot-update.js
+Pathname: /api/data/transactions
+Method: GET
+API route, skipping middleware
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Verifying token
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.f0ed2b75799ca1b6.hot-update.js
 Method: GET
 Not an admin route or login page, proceeding
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching transactions for userId: user_1765285604327_pdegojjr8 {
+  limit: 50,
+  offset: 0,
+  type: null,
+  category: null,
+  startDate: null,
+  endDate: null
+}
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 163ms
+Transactions fetched successfully: 0
+ GET /api/data/transactions 200 in 282ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/recurring-transactions
+Method: GET
+API route, skipping middleware
+ ⚠ ./src/lib/logger.ts
+Attempted import error: 'supabase' is not exported from '@/lib/db' (imported as 'supabase').
+
+Import trace for requested module:
+./src/lib/logger.ts
+./src/app/api/auth/signin/route.ts
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+ ⚠ ./src/lib/logger.ts
+Attempted import error: 'supabase' is not exported from '@/lib/db' (imported as 'supabase').
+
+Import trace for requested module:
+./src/lib/logger.ts
+./src/app/api/auth/signin/route.ts
+AuthService: Verifying token
+AuthService: Verifying token
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/d2321ebc05f4beb2.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching recurring transactions for userId: user_1765285604327_pdegojjr8
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 663ms
+Recurring transactions fetched successfully: 0
+ GET /api/data/recurring-transactions 200 in 917ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.d2321ebc05f4beb2.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/recurring-transactions
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
 === MIDDLEWARE DEBUG ===
 Pathname: /api/auth/me
 Method: GET
 API route, skipping middleware
 AuthService: Verifying token
 AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 187ms
+Fetching recurring transactions for userId: user_1765285604327_pdegojjr8
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 143ms
+Recurring transactions fetched successfully: 0
+ GET /api/data/recurring-transactions 200 in 283ms
 === MIDDLEWARE DEBUG ===
-Pathname: /api/data/recurring-transactions
+Pathname: /api/data/notes
 Method: GET
 API route, skipping middleware
- ○ Compiling /api/data/recurring-transactions ...
- ✓ Compiled /api/data/recurring-transactions in 645ms (3297 modules)
+ ⚠ ./src/lib/logger.ts
+Attempted import error: 'supabase' is not exported from '@/lib/db' (imported as 'supabase').
+
+Import trace for requested module:
+./src/lib/logger.ts
+./src/app/api/auth/signin/route.ts
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+ ⚠ ./src/lib/logger.ts
+Attempted import error: 'supabase' is not exported from '@/lib/db' (imported as 'supabase').
+
+Import trace for requested module:
+./src/lib/logger.ts
+./src/app/api/auth/signin/route.ts
+AuthService: Verifying token
+AuthService: Verifying token
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/96f293e234eb3c3c.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching notes for userId: user_1765285604327_pdegojjr8 { limit: 50, offset: 0 }
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 692ms
+Notes fetched successfully: 0
+ GET /api/data/notes 200 in 970ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.96f293e234eb3c3c.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/notes
+Method: GET
+API route, skipping middleware
 AuthService: Verifying token
 AuthService: Token verification successful for: noyan4job@gmail.com
-Fetching recurring transactions for userId: user_1765285604327_pdegojjr8
+Fetching notes for userId: user_1765285604327_pdegojjr8 { limit: 50, offset: 0 }
+Notes fetched successfully: 0
+ GET /api/data/notes 200 in 317ms
 === MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/25436d4e8faa35b9.webpack.hot-update.json
+Pathname: /api/admin-access
+Method: POST
+API route, skipping middleware
+ ⚠ ./src/lib/logger.ts
+Attempted import error: 'supabase' is not exported from '@/lib/db' (imported as 'supabase').
+
+Import trace for requested module:
+./src/lib/logger.ts
+./src/app/api/auth/signin/route.ts
+ ⚠ ./src/lib/logger.ts
+Attempted import error: 'supabase' is not exported from '@/lib/db' (imported as 'supabase').
+
+Import trace for requested module:
+./src/lib/logger.ts
+./src/app/api/auth/signin/route.ts
+=== ADMIN ACCESS API START ===
+❌ No token provided for admin access check
+ POST /api/admin-access 401 in 449ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/087be261de1775e3.webpack.hot-update.json
 Method: GET
 Not an admin route or login page, proceeding
-Recurring transactions fetched successfully: 3
- GET /api/data/recurring-transactions 200 in 1020ms
 === MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.25436d4e8faa35b9.hot-update.js
+Pathname: /_next/static/webpack/webpack.087be261de1775e3.hot-update.js
 Method: GET
 Not an admin route or login page, proceeding
+ ⚠ ./src/lib/logger.ts
+Attempted import error: 'supabase' is not exported from '@/lib/db' (imported as 'supabase').
+
+Import trace for requested module:
+./src/lib/logger.ts
+./src/app/api/auth/signin/route.ts
+=== MIDDLEWARE DEBUG ===
+Pathname: /app
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app 200 in 89ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/d516e1e88f3b9d26.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.d516e1e88f3b9d26.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.d516e1e88f3b9d26.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+ ✓ Compiled /api/admin-access in 986ms (2906 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /app
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app 200 in 135ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/45a6eee9b56ea6bf.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /app
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app 200 in 23ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.45a6eee9b56ea6bf.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.45a6eee9b56ea6bf.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+ ✓ Compiled in 232ms (1341 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /app
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app 200 in 35ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/8bdc59aea33d0562.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.8bdc59aea33d0562.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.8bdc59aea33d0562.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+ ✓ Compiled in 230ms (1341 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /app
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app 200 in 47ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/8d1403cf71412dea.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.8d1403cf71412dea.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.8d1403cf71412dea.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+ ✓ Compiled in 196ms (1341 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /app
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/22f0a80b7f457ab7.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app 200 in 36ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.22f0a80b7f457ab7.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.22f0a80b7f457ab7.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+ ✓ Compiled in 212ms (1341 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /app
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/f2e3b641025a9916.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app 200 in 28ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.f2e3b641025a9916.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.f2e3b641025a9916.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+ ✓ Compiled in 194ms (1341 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /app
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/e78f60a60d6444ab.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app 200 in 28ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.e78f60a60d6444ab.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.e78f60a60d6444ab.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+ ✓ Compiled in 1854ms (2808 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/1e019bafb200b8ca.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /app
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.1e019bafb200b8ca.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app 200 in 109ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/app/page.1e019bafb200b8ca.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.1e019bafb200b8ca.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+ ✓ Compiled /api/auth/me in 192ms (1626 modules)
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 1671ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/balances
+Method: GET
+API route, skipping middleware
+ ✓ Compiled /api/data/balances in 157ms (1628 modules)
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/data/balances 200 in 551ms
 === MIDDLEWARE DEBUG ===
 Pathname: /api/auth/me
 Method: GET
@@ -510,310 +641,10 @@ AuthService: Verifying token
 AuthService: Token verification successful for: noyan4job@gmail.com
  GET /api/auth/me 200 in 157ms
 === MIDDLEWARE DEBUG ===
-Pathname: /api/data/notes
-Method: GET
-API route, skipping middleware
- ○ Compiling /api/data/notes ...
- ✓ Compiled /api/data/notes in 658ms (3299 modules)
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-Fetching notes for userId: user_1765285604327_pdegojjr8 { limit: 50, offset: 0 }
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/da3cf01b5cfb894d.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
-Notes fetched successfully: 0
- GET /api/data/notes 200 in 1031ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.da3cf01b5cfb894d.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/admin-access
-Method: POST
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
- ○ Compiling /api/admin-access ...
- ✓ Compiled /api/admin-access in 1034ms (3301 modules)
-=== MIDDLEWARE DEBUG ===
-Pathname: /app
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/a938f3e28f361612.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
-=== ADMIN ACCESS API START ===
-❌ No token provided for admin access check
- POST /api/admin-access 401 in 1127ms
-AuthService: Verifying token
- GET /app 200 in 492ms
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 1469ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.a938f3e28f361612.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: POST
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-Creating transaction: {
-  userId: 'user_1765285604327_pdegojjr8',
-  amount: 100,
-  description: 'fsd (Otomatik)',
-  category: 'Maaş',
-  type: 'income'
-}
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 197ms
-Transaction created successfully: trans_user_1765285604327_pdegojjr8_1765380807277_984o9oebl
- POST /api/data/transactions 200 in 349ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: POST
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-Creating transaction: {
-  userId: 'user_1765285604327_pdegojjr8',
-  amount: 100,
-  description: 'fsd (Otomatik)',
-  category: 'Maaş',
-  type: 'income'
-}
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 154ms
-Transaction created successfully: trans_user_1765285604327_pdegojjr8_1765380807859_21ebucplb
- POST /api/data/transactions 200 in 305ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: POST
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-Creating transaction: {
-  userId: 'user_1765285604327_pdegojjr8',
-  amount: 100,
-  description: 'fsd (Otomatik)',
-  category: 'Maaş',
-  type: 'income'
-}
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 150ms
-Transaction created successfully: trans_user_1765285604327_pdegojjr8_1765380808435_6ylytmc9d
- POST /api/data/transactions 200 in 305ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: POST
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-Creating transaction: {
-  userId: 'user_1765285604327_pdegojjr8',
-  amount: 2234,
-  description: '312 (Otomatik)',
-  category: 'Faturalar',
-  type: 'expense'
-}
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 177ms
-Transaction created successfully: trans_user_1765285604327_pdegojjr8_1765380808976_g4dglxw1n
- POST /api/data/transactions 200 in 304ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: POST
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 177ms
-AuthService: Token verification successful for: noyan4job@gmail.com
-Creating transaction: {
-  userId: 'user_1765285604327_pdegojjr8',
-  amount: 123,
-  description: '312 (Otomatik)',
-  category: 'Sigorta',
-  type: 'expense'
-}
-Transaction created successfully: trans_user_1765285604327_pdegojjr8_1765380809613_ojj6gxvxm
- POST /api/data/transactions 200 in 316ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: PUT
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 166ms
-AuthService: Token verification successful for: noyan4job@gmail.com
- PUT /api/data/balances 200 in 482ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 171ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: PUT
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: PUT
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
- PUT /api/data/balances 200 in 405ms
-AuthService: Token verification successful for: noyan4job@gmail.com
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 190ms
- PUT /api/data/balances 200 in 451ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: PUT
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 163ms
- PUT /api/data/balances 200 in 419ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: PUT
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- PUT /api/data/balances 200 in 414ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /
-Method: GET
-Not an admin route or login page, proceeding
- GET / 200 in 211ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/css/app/layout.css
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/webpack.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app-pages-internals.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app/layout.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/main-app.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app/page.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 204ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /app
-Method: GET
-Not an admin route or login page, proceeding
- GET /app 200 in 51ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app/app/page.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 180ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 167ms
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/data/balances 200 in 308ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 149ms
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/data/balances 200 in 293ms
-=== MIDDLEWARE DEBUG ===
 Pathname: /api/data/transactions
 Method: GET
 API route, skipping middleware
+ ✓ Compiled /api/data/transactions in 188ms (1630 modules)
 AuthService: Verifying token
 AuthService: Token verification successful for: noyan4job@gmail.com
 Fetching transactions for userId: user_1765285604327_pdegojjr8 {
@@ -824,43 +655,8 @@ Fetching transactions for userId: user_1765285604327_pdegojjr8 {
   startDate: null,
   endDate: null
 }
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-Transactions fetched successfully: 51
- GET /api/data/transactions 200 in 303ms
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 164ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-Fetching transactions for userId: user_1765285604327_pdegojjr8 {
-  limit: 50,
-  offset: 0,
-  type: null,
-  category: null,
-  startDate: null,
-  endDate: null
-}
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 166ms
-Transactions fetched successfully: 51
- GET /api/data/transactions 200 in 285ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/recurring-transactions
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
+Transactions fetched successfully: 0
+ GET /api/data/transactions 200 in 510ms
 === MIDDLEWARE DEBUG ===
 Pathname: /api/auth/me
 Method: GET
@@ -868,921 +664,169 @@ API route, skipping middleware
 AuthService: Verifying token
 AuthService: Token verification successful for: noyan4job@gmail.com
  GET /api/auth/me 200 in 143ms
-AuthService: Token verification successful for: noyan4job@gmail.com
-Fetching recurring transactions for userId: user_1765285604327_pdegojjr8
-Recurring transactions fetched successfully: 3
- GET /api/data/recurring-transactions 200 in 324ms
 === MIDDLEWARE DEBUG ===
 Pathname: /api/data/recurring-transactions
 Method: GET
 API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
+ ✓ Compiled /api/data/recurring-transactions in 261ms (1632 modules)
 AuthService: Verifying token
 AuthService: Token verification successful for: noyan4job@gmail.com
 Fetching recurring transactions for userId: user_1765285604327_pdegojjr8
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 151ms
-Recurring transactions fetched successfully: 3
- GET /api/data/recurring-transactions 200 in 295ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/notes
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
+Recurring transactions fetched successfully: 0
+ GET /api/data/recurring-transactions 200 in 601ms
 === MIDDLEWARE DEBUG ===
 Pathname: /api/auth/me
 Method: GET
 API route, skipping middleware
 AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-Fetching notes for userId: user_1765285604327_pdegojjr8 { limit: 50, offset: 0 }
 AuthService: Token verification successful for: noyan4job@gmail.com
  GET /api/auth/me 200 in 148ms
-Notes fetched successfully: 0
- GET /api/data/notes 200 in 332ms
 === MIDDLEWARE DEBUG ===
 Pathname: /api/data/notes
 Method: GET
 API route, skipping middleware
+ ✓ Compiled /api/data/notes in 200ms (1634 modules)
 AuthService: Verifying token
 AuthService: Token verification successful for: noyan4job@gmail.com
 Fetching notes for userId: user_1765285604327_pdegojjr8 { limit: 50, offset: 0 }
 Notes fetched successfully: 0
- GET /api/data/notes 200 in 298ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
+ GET /api/data/notes 200 in 565ms
 === MIDDLEWARE DEBUG ===
 Pathname: /api/admin-access
 Method: POST
 API route, skipping middleware
+ ✓ Compiled /api/admin-access in 186ms (1636 modules)
 === ADMIN ACCESS API START ===
 ❌ No token provided for admin access check
- POST /api/admin-access 401 in 16ms
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 158ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: POST
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 169ms
-AuthService: Token verification successful for: noyan4job@gmail.com
-Creating transaction: {
-  userId: 'user_1765285604327_pdegojjr8',
-  amount: 100,
-  description: 'fsd (Otomatik)',
-  category: 'Maaş',
-  type: 'income'
-}
-Transaction created successfully: trans_user_1765285604327_pdegojjr8_1765380851358_a3tcbjlm4
- POST /api/data/transactions 200 in 310ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: POST
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 147ms
-AuthService: Token verification successful for: noyan4job@gmail.com
-Creating transaction: {
-  userId: 'user_1765285604327_pdegojjr8',
-  amount: 100,
-  description: 'fsd (Otomatik)',
-  category: 'Maaş',
-  type: 'income'
-}
-Transaction created successfully: trans_user_1765285604327_pdegojjr8_1765380851838_6ugqfnobo
- POST /api/data/transactions 200 in 297ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: POST
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 159ms
-AuthService: Token verification successful for: noyan4job@gmail.com
-Creating transaction: {
-  userId: 'user_1765285604327_pdegojjr8',
-  amount: 100,
-  description: 'fsd (Otomatik)',
-  category: 'Maaş',
-  type: 'income'
-}
-Transaction created successfully: trans_user_1765285604327_pdegojjr8_1765380852327_97y9nznaz
- POST /api/data/transactions 200 in 274ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: POST
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 155ms
-AuthService: Token verification successful for: noyan4job@gmail.com
-Creating transaction: {
-  userId: 'user_1765285604327_pdegojjr8',
-  amount: 2234,
-  description: '312 (Otomatik)',
-  category: 'Faturalar',
-  type: 'expense'
-}
-Transaction created successfully: trans_user_1765285604327_pdegojjr8_1765380852836_chxs4c0xe
- POST /api/data/transactions 200 in 280ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: POST
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 176ms
-AuthService: Token verification successful for: noyan4job@gmail.com
-Creating transaction: {
-  userId: 'user_1765285604327_pdegojjr8',
-  amount: 123,
-  description: '312 (Otomatik)',
-  category: 'Sigorta',
-  type: 'expense'
-}
-Transaction created successfully: trans_user_1765285604327_pdegojjr8_1765380853361_c0awd9ry9
- POST /api/data/transactions 200 in 274ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: PUT
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 163ms
-AuthService: Token verification successful for: noyan4job@gmail.com
- PUT /api/data/balances 200 in 445ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 163ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: PUT
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: PUT
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 147ms
- PUT /api/data/balances 200 in 413ms
-AuthService: Token verification successful for: noyan4job@gmail.com
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: PUT
-API route, skipping middleware
- PUT /api/data/balances 200 in 477ms
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 145ms
-AuthService: Token verification successful for: noyan4job@gmail.com
- PUT /api/data/balances 200 in 429ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: PUT
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- PUT /api/data/balances 200 in 425ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 408ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: POST
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-Creating transaction: {
-  userId: 'user_1765285604327_pdegojjr8',
-  amount: 10000,
-  description: 'fasdf',
-  category: 'hjgjh',
-  type: 'income'
-}
-Transaction created successfully: trans_user_1765285604327_pdegojjr8_1765380900795_cw0t548yf
- POST /api/data/transactions 200 in 338ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 152ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: PUT
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- PUT /api/data/balances 200 in 460ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 180ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: POST
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-Creating transaction: {
-  userId: 'user_1765285604327_pdegojjr8',
-  amount: 532454,
-  description: 'dfgsfdg',
-  category: 'gdfg',
-  type: 'income'
-}
-Transaction created successfully: trans_user_1765285604327_pdegojjr8_1765380917630_5rri4irkx
- POST /api/data/transactions 200 in 289ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 158ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: PUT
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- PUT /api/data/balances 200 in 412ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /app/investments
-Method: GET
-Not an admin route or login page, proceeding
- ○ Compiling /app/investments ...
- ✓ Compiled /app/investments in 4.7s (3334 modules)
- GET /app/investments 200 in 4921ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/77f0bf8ccef7144d.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.77f0bf8ccef7144d.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app/app/investments/page.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /favicon.png
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/admin-access
-Method: POST
-API route, skipping middleware
- ✓ Compiled /api/admin-access in 451ms (1840 modules)
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-=== ADMIN ACCESS API START ===
-❌ No token provided for admin access check
- POST /api/admin-access 401 in 597ms
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/currency
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/admin-access
-Method: POST
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/crypto
-Method: GET
-API route, skipping middleware
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 357ms
- ○ Compiling /api/crypto ...
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/investments
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/42a43df0fd253cdc.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
- ✓ Compiled /api/investments in 2s (3342 modules)
-=== ADMIN ACCESS API START ===
-❌ No token provided for admin access check
- POST /api/admin-access 401 in 2014ms
-=== CURRENCY API START ===
-📊 Fetching TCMB data from XML...
-🔍 Fetching from TCMB XML: https://www.tcmb.gov.tr/kurlar/today.xml
-=== CRYPTO API START ===
-=== INVESTMENTS API START ===
-Request URL: http://localhost:3000/api/investments?userId=user_1765285604327_pdegojjr8
-Request method: GET
-🔐 Starting authentication process
-Token found: true
-🔍 Verifying token...
-AuthService: Verifying token
-AuthService: Verifying token
-✅ Crypto data fetched successfully: 12 items
-=== CRYPTO API END ===
- GET /api/crypto 200 in 2141ms
-AuthService: Token verification successful for: noyan4job@gmail.com
-✅ Authentication successful for: noyan4job@gmail.com
-✅ Authentication successful for user: noyan4job@gmail.com
-📊 Fetching investments for userId: user_1765285604327_pdegojjr8
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 1600ms
-✅ Investments fetched successfully: 0 items
-✅ Investments transformed successfully
-=== INVESTMENTS API END ===
- GET /api/investments?userId=user_1765285604327_pdegojjr8 200 in 1697ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/crypto
-Method: GET
-API route, skipping middleware
-=== CRYPTO API START ===
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.42a43df0fd253cdc.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-✅ Crypto data fetched successfully: 12 items
-=== CRYPTO API END ===
- GET /api/crypto 200 in 121ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/investments
-Method: GET
-API route, skipping middleware
-=== INVESTMENTS API START ===
-Request URL: http://localhost:3000/api/investments?userId=user_1765285604327_pdegojjr8
-Request method: GET
-🔐 Starting authentication process
-Token found: true
-🔍 Verifying token...
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-✅ Authentication successful for: noyan4job@gmail.com
-✅ Authentication successful for user: noyan4job@gmail.com
-📊 Fetching investments for userId: user_1765285604327_pdegojjr8
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/49774bd8430c540c.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
-✅ Investments fetched successfully: 0 items
-✅ Investments transformed successfully
-=== INVESTMENTS API END ===
- GET /api/investments?userId=user_1765285604327_pdegojjr8 200 in 276ms
-📡 TCMB XML Response status: 200
-📊 TCMB XML Response length: 9448
-✅ USD: Buying=42.5179, Selling=42.5945, Price=42.5562
-✅ AUD: Buying=28.2022, Selling=28.3861, Price=28.294150000000002
-✅ EUR: Buying=49.4936, Selling=49.5828, Price=49.5382
-✅ GBP: Buying=56.5183, Selling=56.813, Price=56.66565
-✅ CHF: Buying=52.6847, Selling=53.023, Price=52.85385
-✅ CAD: Buying=30.6538, Selling=30.7921, Price=30.72295
-✅ NOK: Buying=4.1798, Selling=4.2079, Price=4.19385
-✅ SAR: Buying=11.33, Selling=11.3505, Price=11.340250000000001
-✅ JPY: Buying=27.0649, Selling=27.2442, Price=27.15455
-✅ RUB: Buying=0.54532, Selling=0.55246, Price=0.54889
-✅ CNY: Buying=5.986, Selling=6.0643, Price=6.02515
-✅ AED: Buying=11.5119, Selling=11.6626, Price=11.587250000000001
-✅ TCMB XML data processed successfully: 12 currencies
-=== CURRENCY API END ===
- GET /api/currency 200 in 3360ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.49774bd8430c540c.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/currency
-Method: GET
-API route, skipping middleware
-=== CURRENCY API START ===
-📊 Fetching TCMB data from XML...
-🔍 Fetching from TCMB XML: https://www.tcmb.gov.tr/kurlar/today.xml
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/6a1624fe39b7fe48.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
-📡 TCMB XML Response status: 200
-📊 TCMB XML Response length: 9448
-✅ USD: Buying=42.5179, Selling=42.5945, Price=42.5562
-✅ AUD: Buying=28.2022, Selling=28.3861, Price=28.294150000000002
-✅ EUR: Buying=49.4936, Selling=49.5828, Price=49.5382
-✅ GBP: Buying=56.5183, Selling=56.813, Price=56.66565
-✅ CHF: Buying=52.6847, Selling=53.023, Price=52.85385
-✅ CAD: Buying=30.6538, Selling=30.7921, Price=30.72295
-✅ NOK: Buying=4.1798, Selling=4.2079, Price=4.19385
-✅ SAR: Buying=11.33, Selling=11.3505, Price=11.340250000000001
-✅ JPY: Buying=27.0649, Selling=27.2442, Price=27.15455
-✅ RUB: Buying=0.54532, Selling=0.55246, Price=0.54889
-✅ CNY: Buying=5.986, Selling=6.0643, Price=6.02515
-✅ AED: Buying=11.5119, Selling=11.6626, Price=11.587250000000001
-✅ TCMB XML data processed successfully: 12 currencies
-=== CURRENCY API END ===
- GET /api/currency 200 in 266ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.6a1624fe39b7fe48.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/currency
-Method: GET
-API route, skipping middleware
-=== CURRENCY API START ===
-📊 Fetching TCMB data from XML...
-🔍 Fetching from TCMB XML: https://www.tcmb.gov.tr/kurlar/today.xml
-📡 TCMB XML Response status: 200
-📊 TCMB XML Response length: 9448
-✅ USD: Buying=42.5179, Selling=42.5945, Price=42.5562
-✅ AUD: Buying=28.2022, Selling=28.3861, Price=28.294150000000002
-✅ EUR: Buying=49.4936, Selling=49.5828, Price=49.5382
-✅ GBP: Buying=56.5183, Selling=56.813, Price=56.66565
-✅ CHF: Buying=52.6847, Selling=53.023, Price=52.85385
-✅ CAD: Buying=30.6538, Selling=30.7921, Price=30.72295
-✅ NOK: Buying=4.1798, Selling=4.2079, Price=4.19385
-✅ SAR: Buying=11.33, Selling=11.3505, Price=11.340250000000001
-✅ JPY: Buying=27.0649, Selling=27.2442, Price=27.15455
-✅ RUB: Buying=0.54532, Selling=0.55246, Price=0.54889
-✅ CNY: Buying=5.986, Selling=6.0643, Price=6.02515
-✅ AED: Buying=11.5119, Selling=11.6626, Price=11.587250000000001
-✅ TCMB XML data processed successfully: 12 currencies
-=== CURRENCY API END ===
- GET /api/currency 200 in 268ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/currency
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/crypto
-Method: GET
-API route, skipping middleware
-=== CURRENCY API START ===
-📊 Fetching TCMB data from XML...
-🔍 Fetching from TCMB XML: https://www.tcmb.gov.tr/kurlar/today.xml
-=== CRYPTO API START ===
-✅ Crypto data fetched successfully: 12 items
-=== CRYPTO API END ===
- GET /api/crypto 200 in 120ms
-📡 TCMB XML Response status: 200
-📊 TCMB XML Response length: 9448
-✅ USD: Buying=42.5179, Selling=42.5945, Price=42.5562
-✅ AUD: Buying=28.2022, Selling=28.3861, Price=28.294150000000002
-✅ EUR: Buying=49.4936, Selling=49.5828, Price=49.5382
-✅ GBP: Buying=56.5183, Selling=56.813, Price=56.66565
-✅ CHF: Buying=52.6847, Selling=53.023, Price=52.85385
-✅ CAD: Buying=30.6538, Selling=30.7921, Price=30.72295
-✅ NOK: Buying=4.1798, Selling=4.2079, Price=4.19385
-✅ SAR: Buying=11.33, Selling=11.3505, Price=11.340250000000001
-✅ JPY: Buying=27.0649, Selling=27.2442, Price=27.15455
-✅ RUB: Buying=0.54532, Selling=0.55246, Price=0.54889
-✅ CNY: Buying=5.986, Selling=6.0643, Price=6.02515
-✅ AED: Buying=11.5119, Selling=11.6626, Price=11.587250000000001
-✅ TCMB XML data processed successfully: 12 currencies
-=== CURRENCY API END ===
- GET /api/currency 200 in 275ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/crypto
-Method: GET
-API route, skipping middleware
-=== CRYPTO API START ===
-✅ Crypto data fetched successfully: 12 items
-=== CRYPTO API END ===
- GET /api/crypto 200 in 119ms
+ POST /api/admin-access 401 in 233ms
+ ✓ Compiled in 246ms (1342 modules)
 === MIDDLEWARE DEBUG ===
 Pathname: /app
 Method: GET
 Not an admin route or login page, proceeding
- GET /app 200 in 103ms
 === MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 167ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 153ms
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/data/balances 200 in 328ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 168ms
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/data/balances 200 in 310ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-Fetching transactions for userId: user_1765285604327_pdegojjr8 {
-  limit: 50,
-  offset: 0,
-  type: null,
-  category: null,
-  startDate: null,
-  endDate: null
-}
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-Transactions fetched successfully: 51
- GET /api/data/transactions 200 in 333ms
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 166ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-Fetching transactions for userId: user_1765285604327_pdegojjr8 {
-  limit: 50,
-  offset: 0,
-  type: null,
-  category: null,
-  startDate: null,
-  endDate: null
-}
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 204ms
-Transactions fetched successfully: 51
- GET /api/data/transactions 200 in 306ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/recurring-transactions
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
- ○ Compiling /api/data/recurring-transactions ...
- ✓ Compiled /api/data/recurring-transactions in 1092ms (1848 modules)
-AuthService: Verifying token
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-Fetching recurring transactions for userId: user_1765285604327_pdegojjr8
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 1794ms
-Recurring transactions fetched successfully: 3
- GET /api/data/recurring-transactions 200 in 1922ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/recurring-transactions
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-Fetching recurring transactions for userId: user_1765285604327_pdegojjr8
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 159ms
-Recurring transactions fetched successfully: 3
- GET /api/data/recurring-transactions 200 in 301ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/notes
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
- ✓ Compiled /api/data/notes in 450ms (1850 modules)
-AuthService: Verifying token
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-Fetching notes for userId: user_1765285604327_pdegojjr8 { limit: 50, offset: 0 }
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 1071ms
-Notes fetched successfully: 0
- GET /api/data/notes 200 in 1228ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/notes
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-Fetching notes for userId: user_1765285604327_pdegojjr8 { limit: 50, offset: 0 }
-Notes fetched successfully: 0
- GET /api/data/notes 200 in 279ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/admin-access
-Method: POST
-API route, skipping middleware
-=== ADMIN ACCESS API START ===
-❌ No token provided for admin access check
- POST /api/admin-access 401 in 23ms
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 157ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: POST
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 150ms
-AuthService: Token verification successful for: noyan4job@gmail.com
-Creating transaction: {
-  userId: 'user_1765285604327_pdegojjr8',
-  amount: 100,
-  description: 'fsd (Otomatik)',
-  category: 'Maaş',
-  type: 'income'
-}
-Transaction created successfully: trans_user_1765285604327_pdegojjr8_1765380968188_yno8wqlpe
- POST /api/data/transactions 200 in 309ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 146ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: POST
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-Creating transaction: {
-  userId: 'user_1765285604327_pdegojjr8',
-  amount: 100,
-  description: 'fsd (Otomatik)',
-  category: 'Maaş',
-  type: 'income'
-}
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-Transaction created successfully: trans_user_1765285604327_pdegojjr8_1765380968851_mbjy7uytz
- POST /api/data/transactions 200 in 275ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: POST
-API route, skipping middleware
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 165ms
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-Creating transaction: {
-  userId: 'user_1765285604327_pdegojjr8',
-  amount: 100,
-  description: 'fsd (Otomatik)',
-  category: 'Maaş',
-  type: 'income'
-}
-Transaction created successfully: trans_user_1765285604327_pdegojjr8_1765380969249_u9abe2rkc
- POST /api/data/transactions 200 in 311ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: POST
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 150ms
-AuthService: Token verification successful for: noyan4job@gmail.com
-Creating transaction: {
-  userId: 'user_1765285604327_pdegojjr8',
-  amount: 2234,
-  description: '312 (Otomatik)',
-  category: 'Faturalar',
-  type: 'expense'
-}
-Transaction created successfully: trans_user_1765285604327_pdegojjr8_1765380969651_2wklj1ht9
- POST /api/data/transactions 200 in 283ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: POST
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 164ms
-AuthService: Token verification successful for: noyan4job@gmail.com
-Creating transaction: {
-  userId: 'user_1765285604327_pdegojjr8',
-  amount: 123,
-  description: '312 (Otomatik)',
-  category: 'Sigorta',
-  type: 'expense'
-}
-Transaction created successfully: trans_user_1765285604327_pdegojjr8_1765380970101_bf7slnigb
- POST /api/data/transactions 200 in 304ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: PUT
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 147ms
-AuthService: Token verification successful for: noyan4job@gmail.com
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
- PUT /api/data/balances 200 in 442ms
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 165ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: PUT
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: PUT
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 195ms
-AuthService: Token verification successful for: noyan4job@gmail.com
- PUT /api/data/balances 200 in 462ms
- PUT /api/data/balances 200 in 590ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: PUT
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 152ms
-AuthService: Token verification successful for: noyan4job@gmail.com
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: PUT
-API route, skipping middleware
- PUT /api/data/balances 200 in 486ms
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- PUT /api/data/balances 200 in 445ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/8d42c0ed6eb70625.webpack.hot-update.json
+Pathname: /_next/static/webpack/a201c65ecdfb7c53.webpack.hot-update.json
 Method: GET
 Not an admin route or login page, proceeding
- ✓ Compiled in 4.1s (3184 modules)
+ GET /app 200 in 83ms
 === MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/app/app/page.8d42c0ed6eb70625.hot-update.js
+Pathname: /_next/static/webpack/app/layout.a201c65ecdfb7c53.hot-update.js
 Method: GET
 Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/app/layout.8d42c0ed6eb70625.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /app
-Method: GET
-Not an admin route or login page, proceeding
- GET /app 200 in 247ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.8d42c0ed6eb70625.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /app
-Method: GET
-Not an admin route or login page, proceeding
- ⚠ Fast Refresh had to perform a full reload due to a runtime error.
- GET /app 200 in 540ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/webpack.js
+Pathname: /_next/static/webpack/webpack.a201c65ecdfb7c53.hot-update.js
 Method: GET
 Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
 Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+ ✓ Compiled in 366ms (1342 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/3d909fcd4197e43b.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /app
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app 200 in 27ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.3d909fcd4197e43b.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.3d909fcd4197e43b.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+ ✓ Compiled in 215ms (1342 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /app
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/952f724778b04a97.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app 200 in 34ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.952f724778b04a97.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.952f724778b04a97.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /app/notes
+Method: GET
+Not an admin route or login page, proceeding
+ ○ Compiling /app/notes ...
+ ✓ Compiled /app/notes in 1570ms (2831 modules)
+ GET /app/notes 200 in 1924ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/f7c75ff73fb6f143.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.f7c75ff73fb6f143.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/notes
+Method: GET
+API route, skipping middleware
+ ✓ Compiled /api/data/notes in 212ms (1646 modules)
+AuthService: Verifying token
+AuthService: Token verification error: JWSInvalid: Invalid Compact JWS
+    at AuthService.verifyToken (src/lib/auth-service.ts:241:42)
+    at authenticate (src/app/api/data/notes/route.ts:21:34)
+    at GET (src/app/api/data/notes/route.ts:32:24)
+  239 |       console.log('AuthService: Verifying token')
+  240 |       
+> 241 |       const { payload } = await jwtVerify(token, JWT_SECRET)
+      |                                          ^
+  242 |       const decoded = payload as { userId: string; email: string; role?: string; id?: string }
+  243 |       
+  244 |       // Find user in database {
+  code: 'ERR_JWS_INVALID'
+}
+ GET /api/data/notes 401 in 416ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /app/notes
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app/notes 200 in 67ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/app/notes/page.js
+Method: GET
+Not an admin route or login page, proceeding
+ ⚠ Cross origin request detected from preview-chat-9f03726b-6764-4f39-a29e-b20acaa69bd7.space.z.ai to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
+Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+ ✓ Compiled in 546ms (1359 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /app/notes
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/abd55d279c83efe6.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app/notes 200 in 258ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/webpack.js
 Method: GET
 Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
@@ -1798,177 +842,265 @@ Pathname: /_next/static/chunks/app/layout.js
 Method: GET
 Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/app/notes/page.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+ ✓ Compiled /api/auth/me in 396ms (1646 modules)
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 1109ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /
+Method: GET
+Not an admin route or login page, proceeding
+ GET / 200 in 225ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/webpack.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app-pages-internals.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/main-app.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/layout.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/page.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 424ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /app
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app 200 in 39ms
+=== MIDDLEWARE DEBUG ===
 Pathname: /_next/static/chunks/app/app/page.js
 Method: GET
 Not an admin route or login page, proceeding
- ✓ Compiled in 863ms (3184 modules)
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
- ✓ Compiled /api/auth/me in 835ms (3184 modules)
- ✓ Compiled (3344 modules)
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 2065ms
 === MIDDLEWARE DEBUG ===
 Pathname: /api/auth/me
 Method: GET
 API route, skipping middleware
 AuthService: Verifying token
 AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 169ms
+ GET /api/auth/me 200 in 156ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
 === MIDDLEWARE DEBUG ===
 Pathname: /api/data/balances
 Method: GET
 API route, skipping middleware
- ○ Compiling /api/data/balances ...
- ✓ Compiled /api/data/balances in 2.3s (3346 modules)
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/c5918217d61f7b12.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
 AuthService: Verifying token
 AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 242ms
+ ✓ Compiled /api/data/balances in 233ms (1648 modules)
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/data/balances 200 in 618ms
 === MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/app/layout.c5918217d61f7b12.hot-update.js
+Pathname: /api/data/balances
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/data/balances 200 in 306ms
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 364ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/transactions
+Method: GET
+API route, skipping middleware
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+ ○ Compiling /api/data/transactions ...
+ ✓ Compiled /api/data/transactions in 566ms (1650 modules)
+AuthService: Verifying token
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 942ms
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching transactions for userId: user_1765285604327_pdegojjr8 {
+  limit: 50,
+  offset: 0,
+  type: null,
+  category: null,
+  startDate: null,
+  endDate: null
+}
+Transactions fetched successfully: 0
+ GET /api/data/transactions 200 in 1092ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/transactions
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 163ms
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching transactions for userId: user_1765285604327_pdegojjr8 {
+  limit: 50,
+  offset: 0,
+  type: null,
+  category: null,
+  startDate: null,
+  endDate: null
+}
+Transactions fetched successfully: 0
+ GET /api/data/transactions 200 in 287ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/recurring-transactions
+Method: GET
+API route, skipping middleware
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+ ✓ Compiled /api/data/recurring-transactions in 267ms (1652 modules)
+AuthService: Verifying token
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching recurring transactions for userId: user_1765285604327_pdegojjr8
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 538ms
+Recurring transactions fetched successfully: 0
+ GET /api/data/recurring-transactions 200 in 807ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/recurring-transactions
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching recurring transactions for userId: user_1765285604327_pdegojjr8
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 170ms
+Recurring transactions fetched successfully: 0
+ GET /api/data/recurring-transactions 200 in 255ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/notes
+Method: GET
+API route, skipping middleware
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+ ✓ Compiled /api/data/notes in 246ms (1654 modules)
+AuthService: Verifying token
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 524ms
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching notes for userId: user_1765285604327_pdegojjr8 { limit: 50, offset: 0 }
+Notes fetched successfully: 0
+ GET /api/data/notes 200 in 823ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/notes
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching notes for userId: user_1765285604327_pdegojjr8 { limit: 50, offset: 0 }
+Notes fetched successfully: 0
+ GET /api/data/notes 200 in 282ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/admin-access
+Method: POST
+API route, skipping middleware
+ ✓ Compiled /api/admin-access in 246ms (1656 modules)
+=== ADMIN ACCESS API START ===
+❌ No token provided for admin access check
+ POST /api/admin-access 401 in 292ms
+ ✓ Compiled in 901ms (3015 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/e636c60b9b971bdd.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.e636c60b9b971bdd.hot-update.js
 Method: GET
 Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
 Pathname: /app
 Method: GET
 Not an admin route or login page, proceeding
- GET /api/data/balances 200 in 2886ms
 === MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/app/app/page.c5918217d61f7b12.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
- GET /app 200 in 138ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.c5918217d61f7b12.hot-update.js
+Pathname: /_next/static/webpack/app/app/page.e636c60b9b971bdd.hot-update.js
 Method: GET
 Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 195ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/90bc6d532d0abcc0.webpack.hot-update.json
+Pathname: /_next/static/webpack/webpack.e636c60b9b971bdd.hot-update.js
 Method: GET
 Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
- ✓ Compiled /api/data/transactions in 420ms (1838 modules)
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/app/layout.90bc6d532d0abcc0.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/app/app/page.90bc6d532d0abcc0.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-AuthService: Verifying token
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.90bc6d532d0abcc0.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-AuthService: Token verification successful for: noyan4job@gmail.com
-Fetching transactions for userId: user_1765285604327_pdegojjr8 {
-  limit: 50,
-  offset: 0,
-  type: null,
-  category: null,
-  startDate: null,
-  endDate: null
-}
-Transactions fetched successfully: 51
- GET /api/data/transactions 200 in 1215ms
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 1182ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/4c469761655c929e.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 171ms
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/data/balances 200 in 322ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/app/app/page.4c469761655c929e.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/app/layout.4c469761655c929e.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 159ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
- GET /api/data/balances 200 in 303ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.4c469761655c929e.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 141ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/recurring-transactions
-Method: GET
-API route, skipping middleware
- ○ Compiling /api/data/recurring-transactions ...
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
+ GET /app 200 in 93ms
 === MIDDLEWARE DEBUG ===
 Pathname: /_next/static/css/app/layout.css
 Method: GET
 Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 259ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/balances
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/data/balances 200 in 293ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 149ms
+=== MIDDLEWARE DEBUG ===
 Pathname: /api/data/transactions
 Method: GET
 API route, skipping middleware
- ✓ Compiled /api/data/recurring-transactions in 992ms (1840 modules)
 AuthService: Verifying token
-AuthService: Verifying token
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-Fetching recurring transactions for userId: user_1765285604327_pdegojjr8
 AuthService: Token verification successful for: noyan4job@gmail.com
 Fetching transactions for userId: user_1765285604327_pdegojjr8 {
   limit: 50,
@@ -1978,24 +1110,99 @@ Fetching transactions for userId: user_1765285604327_pdegojjr8 {
   startDate: null,
   endDate: null
 }
-Recurring transactions fetched successfully: 3
- GET /api/data/recurring-transactions 200 in 1732ms
-Transactions fetched successfully: 51
- GET /api/data/transactions 200 in 1140ms
+Transactions fetched successfully: 0
+ GET /api/data/transactions 200 in 303ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
 AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 1253ms
+ GET /api/auth/me 200 in 145ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/recurring-transactions
+Method: GET
+API route, skipping middleware
+ ✓ Compiled in 523ms (3015 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/8c7fa00e1359f3b1.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching recurring transactions for userId: user_1765285604327_pdegojjr8
+=== MIDDLEWARE DEBUG ===
+Pathname: /app
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/app/page.8c7fa00e1359f3b1.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.8c7fa00e1359f3b1.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app 200 in 69ms
+Recurring transactions fetched successfully: 0
+ GET /api/data/recurring-transactions 200 in 606ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.8c7fa00e1359f3b1.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 147ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
 Pathname: /api/auth/me
 Method: GET
 API route, skipping middleware
 AuthService: Verifying token
 === MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
+Pathname: /api/data/notes
 Method: GET
 API route, skipping middleware
 AuthService: Verifying token
 AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 144ms
+ GET /api/auth/me 200 in 173ms
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching notes for userId: user_1765285604327_pdegojjr8 { limit: 50, offset: 0 }
+Notes fetched successfully: 0
+ GET /api/data/notes 200 in 310ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/balances
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/admin-access
+Method: POST
+API route, skipping middleware
+=== ADMIN ACCESS API START ===
+❌ No token provided for admin access check
+ POST /api/admin-access 401 in 21ms
+ GET /api/data/balances 200 in 281ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 147ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/transactions
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
 AuthService: Token verification successful for: noyan4job@gmail.com
 Fetching transactions for userId: user_1765285604327_pdegojjr8 {
   limit: 50,
@@ -2005,414 +1212,91 @@ Fetching transactions for userId: user_1765285604327_pdegojjr8 {
   startDate: null,
   endDate: null
 }
-Transactions fetched successfully: 51
+Transactions fetched successfully: 0
  GET /api/data/transactions 200 in 302ms
 === MIDDLEWARE DEBUG ===
 Pathname: /api/auth/me
 Method: GET
 API route, skipping middleware
 AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 160ms
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/data/balances 200 in 288ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/notes
-Method: GET
-API route, skipping middleware
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 145ms
- ✓ Compiled /api/data/notes in 450ms (1842 modules)
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/recurring-transactions
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-Fetching notes for userId: user_1765285604327_pdegojjr8 { limit: 50, offset: 0 }
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 155ms
-AuthService: Token verification successful for: noyan4job@gmail.com
-Fetching recurring transactions for userId: user_1765285604327_pdegojjr8
-Notes fetched successfully: 0
- GET /api/data/notes 200 in 776ms
-Recurring transactions fetched successfully: 3
- GET /api/data/recurring-transactions 200 in 286ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 164ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/recurring-transactions
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-Fetching recurring transactions for userId: user_1765285604327_pdegojjr8
-Recurring transactions fetched successfully: 3
- GET /api/data/recurring-transactions 200 in 316ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 156ms
-AuthService: Token verification successful for: noyan4job@gmail.com
-Fetching transactions for userId: user_1765285604327_pdegojjr8 {
-  limit: 50,
-  offset: 0,
-  type: null,
-  category: null,
-  startDate: null,
-  endDate: null
-}
-Transactions fetched successfully: 51
- GET /api/data/transactions 200 in 281ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/notes
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 149ms
-AuthService: Token verification successful for: noyan4job@gmail.com
-Fetching notes for userId: user_1765285604327_pdegojjr8 { limit: 50, offset: 0 }
-Notes fetched successfully: 0
- GET /api/data/notes 200 in 285ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 146ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/notes
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-Fetching notes for userId: user_1765285604327_pdegojjr8 { limit: 50, offset: 0 }
-Notes fetched successfully: 0
- GET /api/data/notes 200 in 271ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/recurring-transactions
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-Fetching recurring transactions for userId: user_1765285604327_pdegojjr8
-Recurring transactions fetched successfully: 3
- GET /api/data/recurring-transactions 200 in 274ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 144ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/notes
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-Fetching notes for userId: user_1765285604327_pdegojjr8 { limit: 50, offset: 0 }
-Notes fetched successfully: 0
- GET /api/data/notes 200 in 290ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /app
-Method: GET
-Not an admin route or login page, proceeding
- GET /app 200 in 533ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /
-Method: GET
-Not an admin route or login page, proceeding
- GET / 200 in 144ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/css/app/layout.css
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/webpack.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/main-app.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app/layout.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app/page.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app-pages-internals.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 226ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /app
-Method: GET
-Not an admin route or login page, proceeding
- GET /app 200 in 44ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app/app/page.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 186ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 166ms
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/data/balances 200 in 519ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 198ms
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/data/balances 200 in 413ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-Fetching transactions for userId: user_1765285604327_pdegojjr8 {
-  limit: 50,
-  offset: 0,
-  type: null,
-  category: null,
-  startDate: null,
-  endDate: null
-}
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-Transactions fetched successfully: 51
- GET /api/data/transactions 200 in 311ms
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 158ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 148ms
-AuthService: Token verification successful for: noyan4job@gmail.com
-Fetching transactions for userId: user_1765285604327_pdegojjr8 {
-  limit: 50,
-  offset: 0,
-  type: null,
-  category: null,
-  startDate: null,
-  endDate: null
-}
-Transactions fetched successfully: 51
- GET /api/data/transactions 200 in 324ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/recurring-transactions
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-Fetching recurring transactions for userId: user_1765285604327_pdegojjr8
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-Recurring transactions fetched successfully: 3
- GET /api/data/recurring-transactions 200 in 307ms
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 140ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/recurring-transactions
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-Fetching recurring transactions for userId: user_1765285604327_pdegojjr8
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 181ms
-Recurring transactions fetched successfully: 3
- GET /api/data/recurring-transactions 200 in 285ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/notes
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-Fetching notes for userId: user_1765285604327_pdegojjr8 { limit: 50, offset: 0 }
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 142ms
-Notes fetched successfully: 0
- GET /api/data/notes 200 in 305ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/notes
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-Fetching notes for userId: user_1765285604327_pdegojjr8 { limit: 50, offset: 0 }
-Notes fetched successfully: 0
- GET /api/data/notes 200 in 318ms
- ✓ Compiled in 2.2s (3184 modules)
-=== MIDDLEWARE DEBUG ===
-Pathname: /app
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/7b593ad41e3f5bf5.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
- GET /app 200 in 741ms
- ⚠ Fast Refresh had to perform a full reload due to a runtime error.
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/webpack.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/css/app/layout.css
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/main-app.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app-pages-internals.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app/layout.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app/app/page.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
- ✓ Compiled /api/auth/me in 370ms (1834 modules)
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 1240ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /app
-Method: GET
-Not an admin route or login page, proceeding
- GET /app 200 in 515ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 211ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: GET
-API route, skipping middleware
- ✓ Compiled /api/data/balances in 332ms (1836 modules)
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/data/balances 200 in 738ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
 AuthService: Token verification successful for: noyan4job@gmail.com
  GET /api/auth/me 200 in 157ms
 === MIDDLEWARE DEBUG ===
+Pathname: /api/data/recurring-transactions
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching recurring transactions for userId: user_1765285604327_pdegojjr8
+Recurring transactions fetched successfully: 0
+ GET /api/data/recurring-transactions 200 in 296ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 153ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/notes
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching notes for userId: user_1765285604327_pdegojjr8 { limit: 50, offset: 0 }
+Notes fetched successfully: 0
+ GET /api/data/notes 200 in 299ms
+ ✓ Compiled in 788ms (3015 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/5d8ff5e73d26d0a3.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /app
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app 200 in 76ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.5d8ff5e73d26d0a3.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/app/page.5d8ff5e73d26d0a3.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.5d8ff5e73d26d0a3.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 199ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/balances
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/data/balances 200 in 283ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 145ms
+=== MIDDLEWARE DEBUG ===
 Pathname: /api/data/transactions
 Method: GET
 API route, skipping middleware
- ✓ Compiled /api/data/transactions in 358ms (1838 modules)
 AuthService: Verifying token
 AuthService: Token verification successful for: noyan4job@gmail.com
 Fetching transactions for userId: user_1765285604327_pdegojjr8 {
@@ -2423,81 +1307,110 @@ Fetching transactions for userId: user_1765285604327_pdegojjr8 {
   startDate: null,
   endDate: null
 }
-Transactions fetched successfully: 51
- GET /api/data/transactions 200 in 729ms
+Transactions fetched successfully: 0
+ GET /api/data/transactions 200 in 296ms
 === MIDDLEWARE DEBUG ===
 Pathname: /api/auth/me
 Method: GET
 API route, skipping middleware
 AuthService: Verifying token
 AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 169ms
+ GET /api/auth/me 200 in 141ms
 === MIDDLEWARE DEBUG ===
 Pathname: /api/data/recurring-transactions
 Method: GET
 API route, skipping middleware
- ○ Compiling /api/data/recurring-transactions ...
- ✓ Compiled /api/data/recurring-transactions in 1040ms (1840 modules)
 AuthService: Verifying token
 AuthService: Token verification successful for: noyan4job@gmail.com
 Fetching recurring transactions for userId: user_1765285604327_pdegojjr8
-Recurring transactions fetched successfully: 3
- GET /api/data/recurring-transactions 200 in 1446ms
+Recurring transactions fetched successfully: 0
+ GET /api/data/recurring-transactions 200 in 300ms
 === MIDDLEWARE DEBUG ===
 Pathname: /api/auth/me
 Method: GET
 API route, skipping middleware
 AuthService: Verifying token
 AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 195ms
+ GET /api/auth/me 200 in 136ms
 === MIDDLEWARE DEBUG ===
 Pathname: /api/data/notes
 Method: GET
 API route, skipping middleware
- ✓ Compiled /api/data/notes in 438ms (1842 modules)
 AuthService: Verifying token
 AuthService: Token verification successful for: noyan4job@gmail.com
 Fetching notes for userId: user_1765285604327_pdegojjr8 { limit: 50, offset: 0 }
 Notes fetched successfully: 0
- GET /api/data/notes 200 in 805ms
+ GET /api/data/notes 200 in 270ms
 === MIDDLEWARE DEBUG ===
 Pathname: /api/admin-access
 Method: POST
 API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
- ○ Compiling /api/admin-access ...
- ✓ Compiled /api/admin-access in 1035ms (1844 modules)
 === ADMIN ACCESS API START ===
 ❌ No token provided for admin access check
- POST /api/admin-access 401 in 1522ms
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 1637ms
+ POST /api/admin-access 401 in 20ms
 === MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: POST
-API route, skipping middleware
+Pathname: /_next/static/webpack/b436146ff952aa23.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+ ✓ Compiled in 1710ms (3021 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.b436146ff952aa23.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/app/page.b436146ff952aa23.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /app
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app 200 in 69ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.b436146ff952aa23.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
 Pathname: /api/auth/me
 Method: GET
 API route, skipping middleware
 AuthService: Verifying token
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 216ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/balances
+Method: GET
+API route, skipping middleware
 AuthService: Verifying token
 AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 177ms
+ GET /api/data/balances 200 in 320ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
 AuthService: Token verification successful for: noyan4job@gmail.com
-Creating transaction: {
-  userId: 'user_1765285604327_pdegojjr8',
-  amount: 100,
-  description: 'fsd (Otomatik)',
-  category: 'Maaş',
-  type: 'income'
+ GET /api/auth/me 200 in 162ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/transactions
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching transactions for userId: user_1765285604327_pdegojjr8 {
+  limit: 50,
+  offset: 0,
+  type: null,
+  category: null,
+  startDate: null,
+  endDate: null
 }
-Transaction created successfully: trans_user_1765285604327_pdegojjr8_1765383797508_gtbhlf021
- POST /api/data/transactions 200 in 404ms
+Transactions fetched successfully: 0
+ GET /api/data/transactions 200 in 325ms
 === MIDDLEWARE DEBUG ===
 Pathname: /api/auth/me
 Method: GET
@@ -2506,323 +1419,21 @@ AuthService: Verifying token
 AuthService: Token verification successful for: noyan4job@gmail.com
  GET /api/auth/me 200 in 167ms
 === MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: POST
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-Creating transaction: {
-  userId: 'user_1765285604327_pdegojjr8',
-  amount: 100,
-  description: 'fsd (Otomatik)',
-  category: 'Maaş',
-  type: 'income'
-}
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-Transaction created successfully: trans_user_1765285604327_pdegojjr8_1765383798211_20y8is4ej
- POST /api/data/transactions 200 in 302ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: POST
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 156ms
-AuthService: Token verification successful for: noyan4job@gmail.com
-Creating transaction: {
-  userId: 'user_1765285604327_pdegojjr8',
-  amount: 100,
-  description: 'fsd (Otomatik)',
-  category: 'Maaş',
-  type: 'income'
-}
-Transaction created successfully: trans_user_1765285604327_pdegojjr8_1765383798576_ofka1qus0
- POST /api/data/transactions 200 in 319ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: POST
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 176ms
-AuthService: Token verification successful for: noyan4job@gmail.com
-Creating transaction: {
-  userId: 'user_1765285604327_pdegojjr8',
-  amount: 2234,
-  description: '312 (Otomatik)',
-  category: 'Faturalar',
-  type: 'expense'
-}
-Transaction created successfully: trans_user_1765285604327_pdegojjr8_1765383799015_07tp5xmm1
- POST /api/data/transactions 200 in 335ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: POST
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-Creating transaction: {
-  userId: 'user_1765285604327_pdegojjr8',
-  amount: 123,
-  description: '312 (Otomatik)',
-  category: 'Sigorta',
-  type: 'expense'
-}
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 175ms
-Transaction created successfully: trans_user_1765285604327_pdegojjr8_1765383799501_z16z6tebh
- POST /api/data/transactions 200 in 302ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: PUT
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 174ms
- PUT /api/data/balances 200 in 447ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 147ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: PUT
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: PUT
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Verifying token
- PUT /api/data/balances 200 in 417ms
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 165ms
-AuthService: Token verification successful for: noyan4job@gmail.com
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: PUT
-API route, skipping middleware
- PUT /api/data/balances 200 in 521ms
-AuthService: Verifying token
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 183ms
-AuthService: Token verification successful for: noyan4job@gmail.com
- PUT /api/data/balances 200 in 452ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: PUT
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- PUT /api/data/balances 200 in 411ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /
-Method: GET
-Not an admin route or login page, proceeding
- GET / 200 in 291ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/css/app/layout.css
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/webpack.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app-pages-internals.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/main-app.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app/layout.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app/page.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 371ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /app
-Method: GET
-Not an admin route or login page, proceeding
- GET /app 200 in 64ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app/app/page.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 179ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 178ms
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/data/balances 200 in 517ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 166ms
- GET /api/data/balances 200 in 268ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-Fetching transactions for userId: user_1765285604327_pdegojjr8 {
-  limit: 50,
-  offset: 0,
-  type: null,
-  category: null,
-  startDate: null,
-  endDate: null
-}
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 153ms
-Transactions fetched successfully: 51
- GET /api/data/transactions 200 in 303ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-Fetching transactions for userId: user_1765285604327_pdegojjr8 {
-  limit: 50,
-  offset: 0,
-  type: null,
-  category: null,
-  startDate: null,
-  endDate: null
-}
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 151ms
-Transactions fetched successfully: 51
- GET /api/data/transactions 200 in 281ms
-=== MIDDLEWARE DEBUG ===
 Pathname: /api/data/recurring-transactions
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
 Method: GET
 API route, skipping middleware
 AuthService: Verifying token
 AuthService: Token verification successful for: noyan4job@gmail.com
 Fetching recurring transactions for userId: user_1765285604327_pdegojjr8
+Recurring transactions fetched successfully: 0
+ GET /api/data/recurring-transactions 200 in 318ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
 AuthService: Token verification successful for: noyan4job@gmail.com
  GET /api/auth/me 200 in 154ms
-Recurring transactions fetched successfully: 3
- GET /api/data/recurring-transactions 200 in 301ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/recurring-transactions
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-Fetching recurring transactions for userId: user_1765285604327_pdegojjr8
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 148ms
-Recurring transactions fetched successfully: 3
- GET /api/data/recurring-transactions 200 in 280ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/notes
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-Fetching notes for userId: user_1765285604327_pdegojjr8 { limit: 50, offset: 0 }
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 141ms
-Notes fetched successfully: 0
- GET /api/data/notes 200 in 302ms
 === MIDDLEWARE DEBUG ===
 Pathname: /api/data/notes
 Method: GET
@@ -2831,7 +1442,7 @@ AuthService: Verifying token
 AuthService: Token verification successful for: noyan4job@gmail.com
 Fetching notes for userId: user_1765285604327_pdegojjr8 { limit: 50, offset: 0 }
 Notes fetched successfully: 0
- GET /api/data/notes 200 in 297ms
+ GET /api/data/notes 200 in 307ms
 === MIDDLEWARE DEBUG ===
 Pathname: /api/admin-access
 Method: POST
@@ -2839,283 +1450,115 @@ API route, skipping middleware
 === ADMIN ACCESS API START ===
 ❌ No token provided for admin access check
  POST /api/admin-access 401 in 17ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 140ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: POST
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-Creating transaction: {
-  userId: 'user_1765285604327_pdegojjr8',
-  amount: 100,
-  description: 'fsd (Otomatik)',
-  category: 'Maaş',
-  type: 'income'
-}
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 195ms
-Transaction created successfully: trans_user_1765285604327_pdegojjr8_1765383821140_flsn357zd
- POST /api/data/transactions 200 in 295ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 151ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: POST
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-Creating transaction: {
-  userId: 'user_1765285604327_pdegojjr8',
-  amount: 100,
-  description: 'fsd (Otomatik)',
-  category: 'Maaş',
-  type: 'income'
-}
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: POST
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Verifying token
-Transaction created successfully: trans_user_1765285604327_pdegojjr8_1765383821941_921lrwwsq
- POST /api/data/transactions 200 in 293ms
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 145ms
-AuthService: Token verification successful for: noyan4job@gmail.com
-Creating transaction: {
-  userId: 'user_1765285604327_pdegojjr8',
-  amount: 100,
-  description: 'fsd (Otomatik)',
-  category: 'Maaş',
-  type: 'income'
-}
-Transaction created successfully: trans_user_1765285604327_pdegojjr8_1765383822200_6hv8oxeze
- POST /api/data/transactions 200 in 328ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: POST
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 177ms
-AuthService: Token verification successful for: noyan4job@gmail.com
-Creating transaction: {
-  userId: 'user_1765285604327_pdegojjr8',
-  amount: 2234,
-  description: '312 (Otomatik)',
-  category: 'Faturalar',
-  type: 'expense'
-}
-Transaction created successfully: trans_user_1765285604327_pdegojjr8_1765383822653_ll9hd4h2h
- POST /api/data/transactions 200 in 280ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: POST
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 137ms
-AuthService: Token verification successful for: noyan4job@gmail.com
-Creating transaction: {
-  userId: 'user_1765285604327_pdegojjr8',
-  amount: 123,
-  description: '312 (Otomatik)',
-  category: 'Sigorta',
-  type: 'expense'
-}
-Transaction created successfully: trans_user_1765285604327_pdegojjr8_1765383823183_fm5ea2kxj
- POST /api/data/transactions 200 in 291ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: PUT
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 170ms
-AuthService: Token verification successful for: noyan4job@gmail.com
- PUT /api/data/balances 200 in 408ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 145ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: PUT
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: PUT
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 156ms
- PUT /api/data/balances 200 in 390ms
-AuthService: Token verification successful for: noyan4job@gmail.com
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: PUT
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 165ms
- PUT /api/data/balances 200 in 633ms
-AuthService: Token verification successful for: noyan4job@gmail.com
- PUT /api/data/balances 200 in 434ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: PUT
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- PUT /api/data/balances 200 in 403ms
- ⨯ ./src/app/app/page.tsx
-Error:   [31mx[0m Expected ',', got 'difference'
-     ,-[[36;1;4m/home/z/my-project/src/app/app/page.tsx[0m:590:1]
- [2m587[0m |     recentTransactions: recentTransactions.map(t => ({ id: t.id, type: t.type, amount: t.amount, category: t.category, date: t.date })),
- [2m588[0m |     currentMonthExpense,
- [2m589[0m |     expectedExpense: 603613
- [2m590[0m |     difference: 603613 - totalExpense
-     : [35;1m    ^^^^^^^^^^[0m
- [2m591[0m |   })
- [2m592[0m | 
- [2m593[0m |   const monthlyData = transactions
-     `----
-
-Caused by:
-    Syntax Error
-
-Import trace for requested module:
-./src/app/app/page.tsx
+ ✓ Compiled in 677ms (3110 modules)
 === MIDDLEWARE DEBUG ===
 Pathname: /app
 Method: GET
 Not an admin route or login page, proceeding
- GET /app 500 in 35ms
+ GET /app 200 in 76ms
 === MIDDLEWARE DEBUG ===
-Pathname: /app
-Method: GET
-Not an admin route or login page, proceeding
- GET /app 500 in 23ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/fallback/main.js
+Pathname: /_next/static/webpack/10369471ad37f57b.webpack.hot-update.json
 Method: GET
 Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/fallback/webpack.js
+Pathname: /_next/static/webpack/app/layout.10369471ad37f57b.hot-update.js
 Method: GET
 Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/fallback/pages/_app.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/fallback/pages/_error.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/fallback/react-refresh.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/development/_devMiddlewareManifest.json
+Pathname: /_next/static/webpack/webpack.10369471ad37f57b.hot-update.js
 Method: GET
 Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
 Pathname: /app
 Method: GET
 Not an admin route or login page, proceeding
- GET /app 500 in 29ms
+ GET /app 200 in 28ms
 === MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/09a1cab4658c34be.webpack.hot-update.json
+Pathname: /_next/static/css/app/layout.css
 Method: GET
 Not an admin route or login page, proceeding
- ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ✓ Compiled in 222ms (1351 modules)
 === MIDDLEWARE DEBUG ===
 Pathname: /app
 Method: GET
 Not an admin route or login page, proceeding
- ✓ Compiled in 1975ms (3170 modules)
- ⨯ ReferenceError: Cannot access 'currentMonthExpense' before initialization
-    at ButcapApp (src/app/app/page.tsx:588:5)
-  586 |     totalExpense,
-  587 |     recentTransactions: recentTransactions.map(t => ({ id: t.id, type: t.type, amount: t.amount, category: t.category, date: t.date })),
-> 588 |     currentMonthExpense,
-      |     ^
-  589 |     expectedExpense: 603613,
-  590 |     difference: 603613 - totalExpense
-  591 |   }) {
-  digest: '3633895815'
-}
- GET /app 500 in 1739ms
+ GET /app 200 in 30ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/cdd0f84022171738.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.cdd0f84022171738.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.cdd0f84022171738.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+ ✓ Compiled in 214ms (1351 modules)
 === MIDDLEWARE DEBUG ===
 Pathname: /app
 Method: GET
 Not an admin route or login page, proceeding
- ⨯ ReferenceError: Cannot access 'currentMonthExpense' before initialization
-    at ButcapApp (src/app/app/page.tsx:588:5)
-  586 |     totalExpense,
-  587 |     recentTransactions: recentTransactions.map(t => ({ id: t.id, type: t.type, amount: t.amount, category: t.category, date: t.date })),
-> 588 |     currentMonthExpense,
-      |     ^
-  589 |     expectedExpense: 603613,
-  590 |     difference: 603613 - totalExpense
-  591 |   }) {
-  digest: '3633895815'
-}
- GET /app 500 in 142ms
 === MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/09a1cab4658c34be.webpack.hot-update.json
+Pathname: /_next/static/webpack/2c039fa0c27b280b.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app 200 in 26ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.2c039fa0c27b280b.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.2c039fa0c27b280b.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+ ✓ Compiled in 219ms (1351 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /app
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/fa7bc5a332594777.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app 200 in 29ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.fa7bc5a332594777.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.fa7bc5a332594777.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/css/app/layout.css
+Method: GET
+Not an admin route or login page, proceeding
+ ✓ Compiled in 205ms (1351 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /app
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/b978f5b6d8930aac.webpack.hot-update.json
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app 200 in 31ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/app/layout.b978f5b6d8930aac.hot-update.js
+Method: GET
+Not an admin route or login page, proceeding
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/webpack.b978f5b6d8930aac.hot-update.js
 Method: GET
 Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
@@ -3123,143 +1566,36 @@ Pathname: /_next/static/css/app/layout.css
 Method: GET
 Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/webpack.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/main-app.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app-pages-internals.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
 Pathname: /app
 Method: GET
 Not an admin route or login page, proceeding
- ⨯ ReferenceError: Cannot access 'currentMonthExpense' before initialization
-    at ButcapApp (src/app/app/page.tsx:588:5)
-  586 |     totalExpense,
-  587 |     recentTransactions: recentTransactions.map(t => ({ id: t.id, type: t.type, amount: t.amount, category: t.category, date: t.date })),
-> 588 |     currentMonthExpense,
-      |     ^
-  589 |     expectedExpense: 603613,
-  590 |     difference: 603613 - totalExpense
-  591 |   }) {
-  digest: '3633895815'
-}
- GET /app 500 in 109ms
+ GET /app 200 in 415ms
 === MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app/layout.js
+Pathname: /app/notes
+Method: GET
+Not an admin route or login page, proceeding
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 1325ms (2817 modules)
+ GET /app/notes 404 in 1601ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/webpack/51764953a3bd7a14.webpack.hot-update.json
 Method: GET
 Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app/app/page.js
-Method: GET
-Not an admin route or login page, proceeding
- ✓ Compiled in 861ms (3184 modules)
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/94eda790af7f1062.webpack.hot-update.json
+Pathname: /_next/static/webpack/webpack.51764953a3bd7a14.hot-update.js
 Method: GET
 Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
-Pathname: /app
+Pathname: /
 Method: GET
 Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/app/layout.94eda790af7f1062.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.94eda790af7f1062.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/app/app/page.94eda790af7f1062.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
- ⨯ ReferenceError: Cannot access 'currentMonthExpense' before initialization
-    at ButcapApp (src/app/app/page.tsx:588:5)
-  586 |     totalExpense,
-  587 |     recentTransactions: recentTransactions.map(t => ({ id: t.id, type: t.type, amount: t.amount, category: t.category, date: t.date })),
-> 588 |     currentMonthExpense,
-      |     ^
-  589 |     expectedExpense: 603613,
-  590 |     difference: 603613 - totalExpense
-  591 |   }) {
-  digest: '3633895815'
-}
- GET /app 500 in 361ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/main-app.js
-Method: GET
-Not an admin route or login page, proceeding
+ GET / 200 in 113ms
 === MIDDLEWARE DEBUG ===
 Pathname: /_next/static/chunks/webpack.js
 Method: GET
 Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
 Pathname: /_next/static/css/app/layout.css
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app-pages-internals.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app/layout.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app/app/page.js
-Method: GET
-Not an admin route or login page, proceeding
- ✓ Compiled in 938ms (3184 modules)
-=== MIDDLEWARE DEBUG ===
-Pathname: /app
-Method: GET
-Not an admin route or login page, proceeding
- ⨯ ReferenceError: Cannot access 'currentMonthData' before initialization
-    at ButcapApp (src/app/app/page.tsx:588:5)
-  586 |     totalExpense,
-  587 |     recentTransactions: recentTransactions.map(t => ({ id: t.id, type: t.type, amount: t.amount, category: t.category, date: t.date })),
-> 588 |     currentMonthData,
-      |     ^
-  589 |     expectedExpense: 603613,
-  590 |     difference: 603613 - totalExpense
-  591 |   }) {
-  digest: '675911911'
-}
- GET /app 500 in 350ms
- ✓ Compiled in 812ms (3184 modules)
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/145f8d1242dba5ab.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /app
-Method: GET
-Not an admin route or login page, proceeding
- GET /app 200 in 313ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/app/layout.145f8d1242dba5ab.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/app/app/page.145f8d1242dba5ab.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/css/app/layout.css
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/webpack.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app-pages-internals.js
 Method: GET
 Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
@@ -3271,51 +1607,77 @@ Pathname: /_next/static/chunks/app/layout.js
 Method: GET
 Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app/app/page.js
+Pathname: /_next/static/chunks/app-pages-internals.js
 Method: GET
 Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
-Pathname: /app
+Pathname: /_next/static/chunks/app/page.js
 Method: GET
 Not an admin route or login page, proceeding
- GET /app 200 in 79ms
 === MIDDLEWARE DEBUG ===
 Pathname: /api/auth/me
 Method: GET
 API route, skipping middleware
  ○ Compiling /api/auth/me ...
- ✓ Compiled /api/auth/me in 2.5s (1834 modules)
+ ✓ Compiled /api/auth/me in 511ms (1635 modules)
 AuthService: Verifying token
 AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 3179ms
+ GET /api/auth/me 200 in 1442ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /app
+Method: GET
+Not an admin route or login page, proceeding
+ GET /app 200 in 91ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /_next/static/chunks/app/app/page.js
+Method: GET
+Not an admin route or login page, proceeding
 === MIDDLEWARE DEBUG ===
 Pathname: /api/auth/me
 Method: GET
 API route, skipping middleware
 AuthService: Verifying token
 AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 155ms
+ GET /api/auth/me 200 in 255ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
 === MIDDLEWARE DEBUG ===
 Pathname: /api/data/balances
 Method: GET
 API route, skipping middleware
- ○ Compiling /api/data/balances ...
- ✓ Compiled /api/data/balances in 874ms (1836 modules)
+AuthService: Verifying token
+ ✓ Compiled /api/data/balances in 226ms (1637 modules)
 AuthService: Verifying token
 AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/data/balances 200 in 1718ms
+ GET /api/auth/me 200 in 338ms
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/data/balances 200 in 708ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/balances
+Method: GET
+API route, skipping middleware
 === MIDDLEWARE DEBUG ===
 Pathname: /api/auth/me
 Method: GET
 API route, skipping middleware
 AuthService: Verifying token
+AuthService: Verifying token
 AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 158ms
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 218ms
+ GET /api/data/balances 200 in 363ms
 === MIDDLEWARE DEBUG ===
 Pathname: /api/data/transactions
 Method: GET
 API route, skipping middleware
- ✓ Compiled /api/data/transactions in 386ms (1838 modules)
+ ✓ Compiled /api/data/transactions in 192ms (1639 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
 AuthService: Verifying token
 AuthService: Token verification successful for: noyan4job@gmail.com
 Fetching transactions for userId: user_1765285604327_pdegojjr8 {
@@ -3326,940 +1688,98 @@ Fetching transactions for userId: user_1765285604327_pdegojjr8 {
   startDate: null,
   endDate: null
 }
-Transactions fetched successfully: 51
- GET /api/data/transactions 200 in 754ms
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 236ms
+Transactions fetched successfully: 0
+ GET /api/data/transactions 200 in 631ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/transactions
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
 === MIDDLEWARE DEBUG ===
 Pathname: /api/auth/me
 Method: GET
 API route, skipping middleware
 AuthService: Verifying token
 AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 147ms
+Fetching transactions for userId: user_1765285604327_pdegojjr8 {
+  limit: 50,
+  offset: 0,
+  type: null,
+  category: null,
+  startDate: null,
+  endDate: null
+}
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 188ms
+Transactions fetched successfully: 0
+ GET /api/data/transactions 200 in 358ms
 === MIDDLEWARE DEBUG ===
 Pathname: /api/data/recurring-transactions
 Method: GET
 API route, skipping middleware
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
  ○ Compiling /api/data/recurring-transactions ...
- ✓ Compiled /api/data/recurring-transactions in 932ms (1840 modules)
+ ✓ Compiled /api/data/recurring-transactions in 658ms (1641 modules)
+AuthService: Verifying token
 AuthService: Verifying token
 AuthService: Token verification successful for: noyan4job@gmail.com
 Fetching recurring transactions for userId: user_1765285604327_pdegojjr8
-Recurring transactions fetched successfully: 3
- GET /api/data/recurring-transactions 200 in 1308ms
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 638ms
+Recurring transactions fetched successfully: 0
+ GET /api/data/recurring-transactions 200 in 1247ms
 === MIDDLEWARE DEBUG ===
 Pathname: /api/auth/me
 Method: GET
 API route, skipping middleware
 AuthService: Verifying token
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/recurring-transactions
+Method: GET
+API route, skipping middleware
+AuthService: Verifying token
 AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 153ms
+ GET /api/auth/me 200 in 199ms
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching recurring transactions for userId: user_1765285604327_pdegojjr8
+Recurring transactions fetched successfully: 0
+ GET /api/data/recurring-transactions 200 in 362ms
 === MIDDLEWARE DEBUG ===
 Pathname: /api/data/notes
 Method: GET
 API route, skipping middleware
- ✓ Compiled /api/data/notes in 411ms (1842 modules)
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/auth/me
+Method: GET
+API route, skipping middleware
+ ✓ Compiled /api/data/notes in 262ms (1643 modules)
+AuthService: Verifying token
+AuthService: Verifying token
+AuthService: Token verification successful for: noyan4job@gmail.com
+Fetching notes for userId: user_1765285604327_pdegojjr8 { limit: 50, offset: 0 }
+AuthService: Token verification successful for: noyan4job@gmail.com
+ GET /api/auth/me 200 in 688ms
+Notes fetched successfully: 0
+ GET /api/data/notes 200 in 951ms
+=== MIDDLEWARE DEBUG ===
+Pathname: /api/data/notes
+Method: GET
+API route, skipping middleware
 AuthService: Verifying token
 AuthService: Token verification successful for: noyan4job@gmail.com
 Fetching notes for userId: user_1765285604327_pdegojjr8 { limit: 50, offset: 0 }
 Notes fetched successfully: 0
- GET /api/data/notes 200 in 771ms
+ GET /api/data/notes 200 in 315ms
 === MIDDLEWARE DEBUG ===
 Pathname: /api/admin-access
 Method: POST
 API route, skipping middleware
- ○ Compiling /api/admin-access ...
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
- ✓ Compiled /api/admin-access in 948ms (1844 modules)
+ ✓ Compiled /api/admin-access in 218ms (1645 modules)
 === ADMIN ACCESS API START ===
 ❌ No token provided for admin access check
- POST /api/admin-access 401 in 1426ms
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 880ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: POST
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 166ms
-AuthService: Token verification successful for: noyan4job@gmail.com
-Creating transaction: {
-  userId: 'user_1765285604327_pdegojjr8',
-  amount: 100,
-  description: 'fsd (Otomatik)',
-  category: 'Maaş',
-  type: 'income'
-}
-Transaction created successfully: trans_user_1765285604327_pdegojjr8_1765383992564_o13w9acnq
- POST /api/data/transactions 200 in 339ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: POST
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 177ms
-AuthService: Token verification successful for: noyan4job@gmail.com
-Creating transaction: {
-  userId: 'user_1765285604327_pdegojjr8',
-  amount: 100,
-  description: 'fsd (Otomatik)',
-  category: 'Maaş',
-  type: 'income'
-}
-Transaction created successfully: trans_user_1765285604327_pdegojjr8_1765383993188_69uvl6wub
- POST /api/data/transactions 200 in 269ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: POST
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 150ms
-AuthService: Token verification successful for: noyan4job@gmail.com
-Creating transaction: {
-  userId: 'user_1765285604327_pdegojjr8',
-  amount: 100,
-  description: 'fsd (Otomatik)',
-  category: 'Maaş',
-  type: 'income'
-}
-Transaction created successfully: trans_user_1765285604327_pdegojjr8_1765383993691_xk9l8lzja
- POST /api/data/transactions 200 in 305ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: POST
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 159ms
-AuthService: Token verification successful for: noyan4job@gmail.com
-Creating transaction: {
-  userId: 'user_1765285604327_pdegojjr8',
-  amount: 2234,
-  description: '312 (Otomatik)',
-  category: 'Faturalar',
-  type: 'expense'
-}
-Transaction created successfully: trans_user_1765285604327_pdegojjr8_1765383994098_0xx5c440q
- POST /api/data/transactions 200 in 296ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: POST
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 161ms
-AuthService: Token verification successful for: noyan4job@gmail.com
-Creating transaction: {
-  userId: 'user_1765285604327_pdegojjr8',
-  amount: 123,
-  description: '312 (Otomatik)',
-  category: 'Sigorta',
-  type: 'expense'
-}
-Transaction created successfully: trans_user_1765285604327_pdegojjr8_1765383994619_gre6x7z5s
- POST /api/data/transactions 200 in 297ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: PUT
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 176ms
-AuthService: Token verification successful for: noyan4job@gmail.com
- PUT /api/data/balances 200 in 437ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 173ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: PUT
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: PUT
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- PUT /api/data/balances 200 in 425ms
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 161ms
- PUT /api/data/balances 200 in 428ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: PUT
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 144ms
- PUT /api/data/balances 200 in 419ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: PUT
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- PUT /api/data/balances 200 in 423ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /app/settings
-Method: GET
-Not an admin route or login page, proceeding
- ○ Compiling /app/settings ...
-=== MIDDLEWARE DEBUG ===
-Pathname: /app/settings
-Method: GET
-Not an admin route or login page, proceeding
- ✓ Compiled /app/settings in 4.9s (3355 modules)
- GET /app/settings?tab=security&action=reset 200 in 1192ms
- GET /app/settings?tab=security&action=reset 200 in 5235ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/fa94ab3ecdfb0388.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /app/settings
-Method: GET
-Not an admin route or login page, proceeding
- GET /app/settings?tab=security&action=reset 200 in 43ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.fa94ab3ecdfb0388.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app/app/settings/page.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /app/settings
-Method: GET
-Not an admin route or login page, proceeding
- GET /app/settings?tab=security&action=reset 200 in 38ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/admin-access
-Method: POST
-API route, skipping middleware
-=== ADMIN ACCESS API START ===
-❌ No token provided for admin access check
- POST /api/admin-access 401 in 93ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/admin-access
-Method: POST
-API route, skipping middleware
-=== ADMIN ACCESS API START ===
-❌ No token provided for admin access check
- POST /api/admin-access 401 in 17ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/reset
-Method: DELETE
-API route, skipping middleware
- ○ Compiling /_not-found ...
- ✓ Compiled /_not-found in 3s (3356 modules)
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/038086824d67a81f.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
- DELETE /api/data/reset 404 in 3371ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.038086824d67a81f.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/reset
-Method: DELETE
-API route, skipping middleware
- DELETE /api/data/reset 404 in 124ms
- ✓ Compiled in 1197ms (1516 modules)
- ✓ Compiled in 3.2s (3299 modules)
- ✓ Compiled in 391ms (1516 modules)
- ✓ Compiled in 389ms (1516 modules)
- ✓ Compiled in 406ms (1516 modules)
- ✓ Compiled in 326ms (1516 modules)
-=== MIDDLEWARE DEBUG ===
-Pathname: /
-Method: GET
-Not an admin route or login page, proceeding
- GET / 200 in 644ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/webpack.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/css/app/layout.css
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/main-app.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app/layout.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app-pages-internals.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app/page.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
- ○ Compiling /api/auth/me ...
- ✓ Compiled /api/auth/me in 1146ms (1843 modules)
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 2286ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /app
-Method: GET
-Not an admin route or login page, proceeding
- GET /app 200 in 112ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app/app/page.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 213ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 192ms
- ○ Compiling /api/data/balances ...
- ✓ Compiled /api/data/balances in 1041ms (1845 modules)
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-=== MIDDLEWARE DEBUG ===
-Pathname: /app
-Method: GET
-Not an admin route or login page, proceeding
- GET /api/data/balances 200 in 1564ms
- GET /app 200 in 119ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/css/app/layout.css
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/data/balances 200 in 336ms
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 385ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: GET
-API route, skipping middleware
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 196ms
- ⨯ ./src/app/api/data/transactions/route.ts
-Module parse failed: Identifier 'DELETE' has already been declared (315:22)
-| }
-| // DELETE /api/data/transactions - Reset all user transactions
-> export async function DELETE(request) {
-|     try {
-|         const auth = await authenticate(request);
-
-Import trace for requested module:
-./src/app/api/data/transactions/route.ts
- ○ Compiling /_not-found ...
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/4050be8e8bf867ff.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.4050be8e8bf867ff.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
- ⨯ ./src/app/api/data/transactions/route.ts
-Module parse failed: Identifier 'DELETE' has already been declared (315:22)
-| }
-| // DELETE /api/data/transactions - Reset all user transactions
-> export async function DELETE(request) {
-|     try {
-|         const auth = await authenticate(request);
-
-Import trace for requested module:
-./src/app/api/data/transactions/route.ts
- GET /api/data/transactions 500 in 4010ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
- GET /api/data/transactions 500 in 110ms
- GET /api/auth/me 500 in 109ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
- GET /api/auth/me 500 in 22ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
- GET /api/auth/me 500 in 24ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
- GET /api/auth/me 500 in 19ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/admin-access
-Method: POST
-API route, skipping middleware
- ⨯ ./src/app/api/data/transactions/route.ts
-Module parse failed: Identifier 'DELETE' has already been declared (315:22)
-| }
-| // DELETE /api/data/transactions - Reset all user transactions
-> export async function DELETE(request) {
-|     try {
-|         const auth = await authenticate(request);
-
-Import trace for requested module:
-./src/app/api/data/transactions/route.ts
- POST /api/admin-access 500 in 563ms
- ✓ Compiled /api/admin-access in 2.2s (3199 modules)
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/7ea05ad0ebebcf7c.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /app
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/app/layout.7ea05ad0ebebcf7c.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.7ea05ad0ebebcf7c.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
- GET /app 200 in 270ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/css/app/layout.css
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /app/settings
-Method: GET
-Not an admin route or login page, proceeding
- GET /app/settings?tab=security&action=reset 200 in 52ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app/app/settings/page.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/admin-access
-Method: POST
-API route, skipping middleware
- ○ Compiling /api/admin-access ...
- ✓ Compiled /api/admin-access in 1198ms (1843 modules)
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/admin-access
-Method: POST
-API route, skipping middleware
-=== ADMIN ACCESS API START ===
-❌ No token provided for admin access check
- POST /api/admin-access 401 in 1465ms
-=== ADMIN ACCESS API START ===
-❌ No token provided for admin access check
- POST /api/admin-access 401 in 249ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/reset
-Method: DELETE
-API route, skipping middleware
- ○ Compiling /api/data/reset ...
- ✓ Compiled /api/data/reset in 1388ms (3347 modules)
- DELETE /api/data/reset 405 in 1460ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/66441248f9156332.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.66441248f9156332.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
- ✓ Compiled in 852ms (3218 modules)
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/4c3d26b42b54e326.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /app/settings
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/app/layout.4c3d26b42b54e326.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.4c3d26b42b54e326.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
- GET /app/settings?tab=security&action=reset 200 in 151ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/css/app/layout.css
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/reset
-Method: DELETE
-API route, skipping middleware
- DELETE /api/data/reset 405 in 44ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /
-Method: GET
-Not an admin route or login page, proceeding
- GET / 200 in 443ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/webpack.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/css/app/layout.css
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/main-app.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app/layout.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app-pages-internals.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app/page.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
- ○ Compiling /api/auth/me ...
- ✓ Compiled /api/auth/me in 1977ms (1845 modules)
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 2328ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /app
-Method: GET
-Not an admin route or login page, proceeding
- GET /app 200 in 108ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app/app/page.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 207ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
- ○ Compiling /api/data/balances ...
- ✓ Compiled /api/data/balances in 1150ms (1847 modules)
-AuthService: Verifying token
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/data/balances 200 in 2061ms
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 2008ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 238ms
- GET /api/data/balances 200 in 376ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
- ⨯ ./src/app/api/data/transactions/route.ts
-Error:   [31mx[0m Expected '}', got '<eof>'
-     ,-[[36;1;4m/home/z/my-project/src/app/api/data/transactions/route.ts[0m:324:1]
- [2m321[0m | }
- [2m322[0m | 
- [2m323[0m | // DELETE /api/data/transactions - Reset all user transactions
- [2m324[0m | export async function DELETE(request: NextRequest) {
-     : [35;1m                                                    ^[0m
-     `----
-
-Caused by:
-    Syntax Error
-
-Import trace for requested module:
-./src/app/api/data/transactions/route.ts
- ○ Compiling /api/data/transactions ...
- ⨯ ./src/app/api/data/transactions/route.ts
-Error:   [31mx[0m Expected '}', got '<eof>'
-     ,-[[36;1;4m/home/z/my-project/src/app/api/data/transactions/route.ts[0m:324:1]
- [2m321[0m | }
- [2m322[0m | 
- [2m323[0m | // DELETE /api/data/transactions - Reset all user transactions
- [2m324[0m | export async function DELETE(request: NextRequest) {
-     : [35;1m                                                    ^[0m
-     `----
-
-Caused by:
-    Syntax Error
-
-Import trace for requested module:
-./src/app/api/data/transactions/route.ts
- GET /api/auth/me 500 in 830ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
- ⨯ ./src/app/api/data/transactions/route.ts
-Error:   [31mx[0m Expected '}', got '<eof>'
-     ,-[[36;1;4m/home/z/my-project/src/app/api/data/transactions/route.ts[0m:324:1]
- [2m321[0m | }
- [2m322[0m | 
- [2m323[0m | // DELETE /api/data/transactions - Reset all user transactions
- [2m324[0m | export async function DELETE(request: NextRequest) {
-     : [35;1m                                                    ^[0m
-     `----
-
-Caused by:
-    Syntax Error
-
-Import trace for requested module:
-./src/app/api/data/transactions/route.ts
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/1faf9a4aee3e223f.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
- ⨯ ./src/app/api/data/transactions/route.ts
-Error:   [31mx[0m Expected '}', got '<eof>'
-     ,-[[36;1;4m/home/z/my-project/src/app/api/data/transactions/route.ts[0m:324:1]
- [2m321[0m | }
- [2m322[0m | 
- [2m323[0m | // DELETE /api/data/transactions - Reset all user transactions
- [2m324[0m | export async function DELETE(request: NextRequest) {
-     : [35;1m                                                    ^[0m
-     `----
-
-Caused by:
-    Syntax Error
-
-Import trace for requested module:
-./src/app/api/data/transactions/route.ts
- GET /api/data/transactions 500 in 3473ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.1faf9a4aee3e223f.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
- GET /api/auth/me 500 in 1616ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
- GET /api/auth/me 500 in 21ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/8ee590a3a70cd2dd.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
- ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /app
-Method: GET
-Not an admin route or login page, proceeding
- GET /api/auth/me 500 in 27ms
- GET /app 500 in 23ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
- GET /api/auth/me 500 in 31ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/admin-access
-Method: POST
-API route, skipping middleware
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/fallback/webpack.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/fallback/main.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/fallback/react-refresh.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/fallback/pages/_app.js
-Method: GET
-Not an admin route or login page, proceeding
- ⨯ ./src/app/api/data/transactions/route.ts
-Error:   [31mx[0m Expected '}', got '<eof>'
-     ,-[[36;1;4m/home/z/my-project/src/app/api/data/transactions/route.ts[0m:324:1]
- [2m321[0m | }
- [2m322[0m | 
- [2m323[0m | // DELETE /api/data/transactions - Reset all user transactions
- [2m324[0m | export async function DELETE(request: NextRequest) {
-     : [35;1m                                                    ^[0m
-     `----
-
-Caused by:
-    Syntax Error
-
-Import trace for requested module:
-./src/app/api/data/transactions/route.ts
- POST /api/admin-access 500 in 580ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/fallback/pages/_error.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/development/_devMiddlewareManifest.json
-Method: GET
-Not an admin route or login page, proceeding
- ✓ Compiled /api/admin-access in 3.3s (3299 modules)
-=== MIDDLEWARE DEBUG ===
-Pathname: /app
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/development/_devPagesManifest.json
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/09a1cab4658c34be.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
- ⚠ Fast Refresh had to perform a full reload due to a runtime error.
- GET /app 200 in 749ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /app
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /app
-Method: GET
-Not an admin route or login page, proceeding
- GET /app 200 in 157ms
- GET /app 200 in 159ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/css/app/layout.css
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/webpack.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/main-app.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app-pages-internals.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app/layout.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/chunks/app/app/page.js
-Method: GET
-Not an admin route or login page, proceeding
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
- ✓ Compiled /api/auth/me in 423ms (1843 modules)
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 1115ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 210ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/balances
-Method: GET
-API route, skipping middleware
- ✓ Compiled /api/data/balances in 402ms (1845 modules)
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/data/balances 200 in 875ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 184ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/transactions
-Method: GET
-API route, skipping middleware
- ○ Compiling /_not-found ...
- ✓ Compiled /_not-found in 636ms (3352 modules)
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/1f987a42ddb45773.webpack.hot-update.json
-Method: GET
-Not an admin route or login page, proceeding
- GET /api/data/transactions 404 in 1005ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
-AuthService: Verifying token
-=== MIDDLEWARE DEBUG ===
-Pathname: /_next/static/webpack/webpack.1f987a42ddb45773.hot-update.js
-Method: GET
-Not an admin route or login page, proceeding
-AuthService: Token verification successful for: noyan4job@gmail.com
- GET /api/auth/me 200 in 218ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/data/recurring-transactions
-Method: GET
-API route, skipping middleware
- ○ Compiling /api/data/recurring-transactions ...
- ⨯ ./src/app/api/data/recurring-transactions/route.ts
-Module parse failed: Identifier 'DELETE' has already been declared (296:22)
-| }
-| // DELETE /api/data/recurring-transactions - Reset all user recurring transactions
-> export async function DELETE(request) {
-|     try {
-|         const auth = await authenticate(request);
-
-Import trace for requested module:
-./src/app/api/data/recurring-transactions/route.ts
- GET /api/data/recurring-transactions 500 in 2098ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/auth/me
-Method: GET
-API route, skipping middleware
- GET /api/auth/me 500 in 21ms
-=== MIDDLEWARE DEBUG ===
-Pathname: /api/admin-access
-Method: POST
-API route, skipping middleware
- ⨯ ./src/app/api/data/recurring-transactions/route.ts
-Module parse failed: Identifier 'DELETE' has already been declared (296:22)
-| }
-| // DELETE /api/data/recurring-transactions - Reset all user recurring transactions
-> export async function DELETE(request) {
-|     try {
-|         const auth = await authenticate(request);
-
-Import trace for requested module:
-./src/app/api/data/recurring-transactions/route.ts
- POST /api/admin-access 500 in 1776ms
+ POST /api/admin-access 401 in 260ms

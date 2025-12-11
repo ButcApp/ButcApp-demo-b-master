@@ -322,6 +322,59 @@ export class AuthService {
     }
   }
 
+  static async updatePassword(userId: string, newPassword: string, currentPassword: string): Promise<{ error?: string }> {
+    try {
+      // Find user
+      const { data: user, error: findError } = await supabase
+        .from('users')
+        .select('*')
+        .eq('id', userId)
+        .limit(1)
+
+      if (findError) {
+        console.error('AuthService: Error finding user for password update:', findError)
+        return { error: 'Veritabanı hatası' }
+      }
+
+      if (!user || user.length === 0) {
+        console.log('AuthService: User not found for password update:', userId)
+        return { error: 'Kullanıcı bulunamadı' }
+      }
+
+      const userData = user[0]
+
+      // Verify current password
+      const isValidPassword = await bcrypt.compare(currentPassword, userData.passwordhash)
+      if (!isValidPassword) {
+        console.log('AuthService: Invalid current password for:', userData.email)
+        return { error: 'Mevcut şifre hatalı' }
+      }
+
+      // Hash new password
+      const newPasswordHash = await bcrypt.hash(newPassword, 12)
+
+      // Update password
+      const { error: updateError } = await supabase
+        .from('users')
+        .update({ 
+          passwordhash: newPasswordHash,
+          updatedat: new Date().toISOString()
+        })
+        .eq('id', userId)
+
+      if (updateError) {
+        console.error('AuthService: Error updating password:', updateError)
+        return { error: 'Şifre güncellenemedi' }
+      }
+
+      console.log('AuthService: Password updated successfully for:', userData.email)
+      return {}
+    } catch (error) {
+      console.error('AuthService: Password update error:', error)
+      return { error: (error as Error).message }
+    }
+  }
+
   static async updateProfile(userId: string, data: { fullName?: string; avatarUrl?: string }): Promise<{ error?: string }> {
     try {
       const updateData: any = {

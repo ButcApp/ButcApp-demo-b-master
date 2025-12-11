@@ -1291,7 +1291,7 @@ export default function InvestmentsPage() {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <Link href="/" className="hover:opacity-80 transition-opacity duration-200">
+              <Link href="/app" className="hover:opacity-80 transition-opacity duration-200">
                 <img 
                   src="/favicon.png" 
                   alt="ButcApp" 
@@ -1302,6 +1302,17 @@ export default function InvestmentsPage() {
                 <h1 className="text-2xl font-bold">Yatırımlar</h1>
                 <p className="text-sm text-muted-foreground">Döviz, Kripto ve Maden Piyasaları</p>
               </div>
+              <nav className="hidden md:flex items-center space-x-4 ml-8">
+                <Link href="/app" className="text-muted-foreground hover:text-foreground">
+                  Ana Sayfa
+                </Link>
+                <Link href="/app/investments" className="text-foreground font-medium">
+                  Yatırımlar
+                </Link>
+                <Link href="/app/settings" className="text-muted-foreground hover:text-foreground">
+                  Ayarlar
+                </Link>
+              </nav>
             </div>
             <div className="flex items-center space-x-4">
               <ThemeToggle />
