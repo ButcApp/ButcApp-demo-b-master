@@ -85,10 +85,11 @@ export function UserAuthButton({ onSignInClick, onSignUpClick }: UserAuthButtonP
       const data = await response.json()
       console.log('🔍 Admin access response data:', data)
       
-      if (data.success) {
+      if (data.success && data.isAdmin) {
         setIsAdmin(true)
         console.log('✅ User is admin:', user.email)
       } else {
+        setIsAdmin(false)
         console.log('❌ User is not admin or error:', data.error)
       }
     } catch (error) {

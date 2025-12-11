@@ -5,6 +5,9 @@ export async function POST(request: NextRequest) {
   try {
     console.log('=== ADMIN ACCESS API START ===')
     
+    const body = await request.json()
+    const userEmail = body.email
+    
     const token = request.cookies.get('auth_token')?.value || 
                   request.headers.get('authorization')?.replace('Bearer ', '') ||
                   request.nextUrl.searchParams.get('token')
@@ -15,6 +18,7 @@ export async function POST(request: NextRequest) {
     console.log('  - Query:', !!request.nextUrl.searchParams.get('token'))
     console.log('  - Final token length:', token?.length || 0)
     console.log('  - Final token preview:', token?.substring(0, 20) + '...')
+    console.log('  - Requested email:', userEmail)
 
     if (!token) {
       console.log('❌ No token provided for admin access check')
@@ -37,6 +41,35 @@ export async function POST(request: NextRequest) {
       }, { status: 401 })
     }
 
+    // For development mode, check for demo admin emails first
+    if (process.env.NODE_ENV === 'development') {
+      const demoAdmins = ['admin@butcapp.com', 'demo@butcapp.com', 'test@admin.com']
+      if (demoAdmins.includes(userEmail || '')) {
+        console.log('🧪 Development mode: Demo admin access granted for:', userEmail)
+        return NextResponse.json({
+          success: true,
+          isAdmin: true,
+          user: {
+            id: user.id,
+            email: userEmail,
+            fullName: user.fullName
+          },
+          data: {
+            adminUser: {
+              id: user.id,
+              email: userEmail,
+              fullName: user.fullName,
+              role: 'admin'
+            },
+            token: token
+          }
+        })
+      } else {
+        // For non-demo users in development, still check admin_users table
+        console.log('🧪 Development mode: Non-demo user, checking admin_users table')
+      }
+    }
+    
     // Check if user is admin by checking admin_users table
     const { createClient } = await import('@supabase/supabase-js')
     const supabaseUrl = "https://dfiwgngtifuqrrxkvknn.supabase.co";
@@ -60,33 +93,7 @@ export async function POST(request: NextRequest) {
 
     const isAdmin = adminUser && adminUser.length > 0
     
-    // For development mode, also check for demo admin emails
-    if (process.env.NODE_ENV === 'development') {
-      const demoAdmins = ['admin@butcapp.com', 'demo@butcapp.com', 'test@admin.com']
-      if (demoAdmins.includes(user.email || '')) {
-        console.log('🧪 Development mode: Demo admin access granted for:', user.email)
-        return NextResponse.json({
-          success: true,
-          isAdmin: true,
-          user: {
-            id: user.id,
-            email: user.email,
-            fullName: user.fullName
-          },
-          data: {
-            adminUser: {
-              id: user.id,
-              email: user.email,
-              fullName: user.fullName,
-              role: 'admin'
-            },
-            token: token
-          }
-        })
-      }
-    }
-    
-    console.log('✅ Admin access check completed for:', user.email, 'Admin:', isAdmin)
+    console.log('✅ Admin access check completed for:', userEmail, 'Admin:', isAdmin)
     console.log('=== ADMIN ACCESS API END ===')
 
     return NextResponse.json({
