@@ -149,7 +149,24 @@ async function handleResetData(request: NextRequest) {
       resetResults.push({ type: 'balances', success: false, error: error.message })
     }
 
-    // 2. Notları sil
+    // 2. İşlemleri sil
+    try {
+      const { data: transactionsResult, error: transactionsError } = await supabase
+        .from('user_data')
+        .delete()
+        .eq('userid', userId)
+        .eq('type', 'transaction')
+        .select()
+
+      if (transactionsError) {
+        throw new Error(`Transactions reset failed: ${transactionsError.message}`)
+      }
+      resetResults.push({ type: 'transactions', success: true, count: transactionsResult?.length || 0 })
+    } catch (error) {
+      resetResults.push({ type: 'transactions', success: false, error: error.message })
+    }
+
+    // 3. Notları sil
     try {
       const { data: notesResult, error: notesError } = await supabase
         .from('user_data')
@@ -166,7 +183,7 @@ async function handleResetData(request: NextRequest) {
       resetResults.push({ type: 'notes', success: false, error: error.message })
     }
 
-    // 3. Tekrarlayan işlemleri sil
+    // 4. Tekrarlayan işlemleri sil
     try {
       const { data: recurringResult, error: recurringError } = await supabase
         .from('user_data')
@@ -183,7 +200,7 @@ async function handleResetData(request: NextRequest) {
       resetResults.push({ type: 'recurring', success: false, error: error.message })
     }
 
-    // 4. Yatırımları sil
+    // 5. Yatırımları sil
     try {
       const { data: investmentsResult, error: investmentsError } = await supabase
         .from('user_data')
@@ -261,8 +278,9 @@ export async function GET(request: NextRequest) {
     const userId = auth.user.id
 
     // Kullanıcının mevcut veri durumunu kontrol et
-    const [balancesData, notesData, recurringData, investmentsData] = await Promise.all([
+    const [balancesData, transactionsData, notesData, recurringData, investmentsData] = await Promise.all([
       supabase.from('user_profiles').select('*').eq('userid', userId).limit(1),
+      supabase.from('user_data').select('*').eq('userid', userId).eq('type', 'transaction').limit(1),
       supabase.from('user_data').select('*').eq('userid', userId).eq('type', 'note').limit(1),
       supabase.from('user_data').select('*').eq('userid', userId).eq('type', 'recurring').limit(1),
       supabase.from('user_data').select('*').eq('userid', userId).eq('type', 'investment').limit(1)
@@ -272,6 +290,10 @@ export async function GET(request: NextRequest) {
       balances: {
         exists: balancesData.data && balancesData.data.length > 0,
         data: balancesData.data?.[0] || null
+      },
+      transactions: {
+        exists: transactionsData.data && transactionsData.data.length > 0,
+        count: transactionsData.data?.length || 0
       },
       notes: {
         exists: notesData.data && notesData.data.length > 0,
