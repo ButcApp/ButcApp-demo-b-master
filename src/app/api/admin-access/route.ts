@@ -9,6 +9,13 @@ export async function POST(request: NextRequest) {
                   request.headers.get('authorization')?.replace('Bearer ', '') ||
                   request.nextUrl.searchParams.get('token')
 
+    console.log('🔍 Admin API - Token sources:')
+    console.log('  - Cookie:', !!request.cookies.get('auth_token')?.value)
+    console.log('  - Header:', !!request.headers.get('authorization'))
+    console.log('  - Query:', !!request.nextUrl.searchParams.get('token'))
+    console.log('  - Final token length:', token?.length || 0)
+    console.log('  - Final token preview:', token?.substring(0, 20) + '...')
+
     if (!token) {
       console.log('❌ No token provided for admin access check')
       return NextResponse.json({

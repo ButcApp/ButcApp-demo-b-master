@@ -237,9 +237,17 @@ export class AuthService {
   static async verifyToken(token: string): Promise<AuthUser | null> {
     try {
       console.log('AuthService: Verifying token')
+      console.log('AuthService: Token length:', token?.length || 0)
+      console.log('AuthService: Token preview:', token?.substring(0, 20) + '...')
       
       const { payload } = await jwtVerify(token, JWT_SECRET)
       const decoded = payload as { userId: string; email: string; role?: string; id?: string }
+      
+      console.log('AuthService: Token decoded successfully:', {
+        userId: decoded.userId || decoded.id,
+        email: decoded.email,
+        role: decoded.role
+      })
       
       // Find user in database
       const { data: user, error } = await supabase
@@ -267,6 +275,11 @@ export class AuthService {
       return null
     } catch (error) {
       console.error('AuthService: Token verification error:', error)
+      console.error('AuthService: Error details:', {
+        message: (error as Error).message,
+        name: (error as Error).name,
+        stack: (error as Error).stack
+      })
       return null
     }
   }

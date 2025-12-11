@@ -104,15 +104,29 @@ export function UserAuthButton({ onSignInClick, onSignUpClick }: UserAuthButtonP
     
     setIsAdminCheckLoading(true)
     try {
+      // Get auth token from localStorage
+      const token = localStorage.getItem('auth_token')
+      console.log('🔍 Admin panel access - Token exists:', !!token)
+      console.log('🔍 Admin panel access - User email:', user.email)
+      
+      if (!token) {
+        console.error('❌ No auth token found for admin panel access')
+        setIsAdminCheckLoading(false)
+        return
+      }
+      
       const response = await fetch('/api/admin-access', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({ email: user.email })
       })
       
+      console.log('🔍 Admin panel access response status:', response.status)
       const data = await response.json()
+      console.log('🔍 Admin panel access response data:', data)
       
       if (data.success) {
         // Store admin user info in localStorage and sessionStorage
