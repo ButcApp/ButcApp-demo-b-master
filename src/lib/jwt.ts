@@ -1,6 +1,6 @@
 import { SignJWT, jwtVerify } from 'jose'
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-super-secret-jwt-key-change-in-production'
+const JWT_SECRET = process.env.JWT_SECRET || 'butcapp-secret-key-change-in-production-2024'
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '24h'
 
 // JWT secret'ı Uint8Array formatına çevir
@@ -82,10 +82,12 @@ export const verifyAdminToken = async (token: string): Promise<boolean> => {
       return true
     }
     
-    // For development, allow any valid token
-    console.log('🧪 Development mode: All valid tokens accepted as admin');
-    console.log('🔐 verifyAdminToken returning: true for development')
-    return true
+    // For development, accept any valid token
+    if (process.env.NODE_ENV === 'development') {
+      console.log('🧪 Development mode: All valid tokens accepted as admin')
+      console.log('🔐 verifyAdminToken returning: true for development')
+      return true
+    }
     
   } catch (error) {
     console.error('❌ Token verification error:', error)
