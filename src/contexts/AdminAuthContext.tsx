@@ -35,7 +35,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const isSecure = isProduction && (typeof window !== 'undefined' ? window.location.protocol === 'https:' : false)
     const sameSite = isSecure ? 'None' : 'lax'
     // Max age'ı 7 güne çıkardık
-    const cookieValue = `auth-token=${tokenValue}; path=/; max-age=${7 * 24 * 60 * 60}; samesite=${sameSite}${isSecure ? '; secure' : ''}`
+    const cookieValue = `auth_token=${tokenValue}; path=/; max-age=${7 * 24 * 60 * 60}; samesite=${sameSite}${isSecure ? '; secure' : ''}`
     
     if (typeof window !== 'undefined') {
       document.cookie = cookieValue
@@ -61,7 +61,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const cookieToken = typeof window !== 'undefined' ? 
       document.cookie
         .split('; ')
-        .find(row => row.startsWith('auth-token='))
+        .find(row => row.startsWith('auth_token='))
         ?.split('=')[1] : null
         
     const storedToken = typeof window !== 'undefined' ? 
@@ -108,7 +108,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           localStorage.removeItem('adminUser')
           localStorage.removeItem('adminToken')
           sessionStorage.removeItem('adminToken')
-          document.cookie = 'auth-token=; path=/; expires=Thu, 01 Jan1970 00:00:00 GMT'
+          document.cookie = 'auth_token=; path=/; expires=Thu, 01 Jan1970 00:00:00 GMT'
         }
       }
     } else {
