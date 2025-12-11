@@ -74,6 +74,7 @@ import { MobileCarousel } from '@/components/ui/mobile-carousel'
 import { MobileModal } from '@/components/ui/mobile-modal'
 import { MobileSheet } from '@/components/ui/mobile-sheet'
 import { MobileNavigation } from '@/components/ui/mobile-navigation'
+import { NotesButton } from '@/components/NotesButton'
 
 interface Transaction {
   id: string
@@ -713,6 +714,7 @@ export default function ButcapApp() {
               </Button>
             </div>
             <nav className="flex items-center space-x-2">
+              <NotesButton />
               <ThemeToggle />
               <LanguageToggle />
               <UserAuthButton />

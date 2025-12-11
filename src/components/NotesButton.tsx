@@ -1,0 +1,313 @@
+'use client'
+
+import { useState } from 'react'
+import { Button } from '@/components/ui/button'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
+import { ScrollArea } from '@/components/ui/scroll-area'
+import { Badge } from '@/components/ui/badge'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { 
+  StickyNote, 
+  Plus, 
+  Trash2, 
+  Edit, 
+  Save, 
+  X, 
+  Calendar,
+  Search,
+  Filter
+} from 'lucide-react'
+import { useNotes } from '@/hooks/useNotes'
+import { useLanguage } from '@/contexts/LanguageContext'
+import { formatDistanceToNow } from 'date-fns'
+import { tr } from 'date-fns/locale'
+
+interface NotesButtonProps {
+  className?: string
+}
+
+export function NotesButton({ className }: NotesButtonProps) {
+  const { t } = useLanguage()
+  const [isOpen, setIsOpen] = useState(false)
+  const [newNoteTitle, setNewNoteTitle] = useState('')
+  const [newNoteContent, setNewNoteContent] = useState('')
+  const [editingNote, setEditingNote] = useState<string | null>(null)
+  const [editTitle, setEditTitle] = useState('')
+  const [editContent, setEditContent] = useState('')
+  const [searchTerm, setSearchTerm] = useState('')
+  const [showAddForm, setShowAddForm] = useState(false)
+  
+  const { notes, loading, error, addNote, deleteNote, updateNote } = useNotes()
+
+  // Not ekle
+  const handleAddNote = async () => {
+    if (!newNoteTitle.trim() || !newNoteContent.trim()) return
+
+    const success = await addNote({
+      title: newNoteTitle.trim(),
+      content: newNoteContent.trim()
+    })
+
+    if (success) {
+      setNewNoteTitle('')
+      setNewNoteContent('')
+      setShowAddForm(false)
+    }
+  }
+
+  // Not sil
+  const handleDeleteNote = async (noteId: string) => {
+    if (confirm('Bu notu silmek istediğinizden emin misiniz?')) {
+      await deleteNote(noteId)
+    }
+  }
+
+  // Not düzenleme başlat
+  const startEdit = (note: any) => {
+    setEditingNote(note.id)
+    setEditTitle(note.title)
+    setEditContent(note.content)
+  }
+
+  // Not düzenleme iptal
+  const cancelEdit = () => {
+    setEditingNote(null)
+    setEditTitle('')
+    setEditContent('')
+  }
+
+  // Not güncelle
+  const handleUpdateNote = async (noteId: string) => {
+    if (!editTitle.trim() || !editContent.trim()) return
+
+    const success = await updateNote(noteId, {
+      title: editTitle.trim(),
+      content: editContent.trim()
+    })
+
+    if (success) {
+      cancelEdit()
+    }
+  }
+
+  // Notları filtrele
+  const filteredNotes = notes.filter(note => 
+    note.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    note.content.toLowerCase().includes(searchTerm.toLowerCase())
+  )
+
+  const noteCount = notes.length
+
+  return (
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogTrigger asChild>
+        <Button
+          variant="outline"
+          size="sm"
+          className={`relative ${className}`}
+        >
+          <StickyNote className="h-4 w-4" />
+          {noteCount > 0 && (
+            <Badge 
+              variant="secondary" 
+              className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 text-xs"
+            >
+              {noteCount}
+            </Badge>
+          )}
+          <span className="hidden sm:inline ml-2">Notlar</span>
+        </Button>
+      </DialogTrigger>
+      
+      <DialogContent className="sm:max-w-[600px] max-h-[80vh]">
+        <DialogHeader>
+          <DialogTitle className="flex items-center gap-2">
+            <StickyNote className="h-5 w-5" />
+            Notlarım
+            {noteCount > 0 && (
+              <Badge variant="secondary">{noteCount}</Badge>
+            )}
+          </DialogTitle>
+        </DialogHeader>
+
+        <div className="flex flex-col h-[60vh]">
+          {/* Arama ve Ekle Butonu */}
+          <div className="flex gap-2 mb-4">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="Notlarda ara..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10"
+              />
+            </div>
+            <Button
+              onClick={() => setShowAddForm(!showAddForm)}
+              size="sm"
+              variant={showAddForm ? "secondary" : "default"}
+            >
+              <Plus className="h-4 w-4" />
+              <span className="hidden sm:inline ml-2">Yeni Not</span>
+            </Button>
+          </div>
+
+          {/* Yeni Not Ekle Form */}
+          {showAddForm && (
+            <Card className="mb-4">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-sm">Yeni Not Ekle</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div>
+                  <Label htmlFor="new-note-title" className="text-sm">Başlık</Label>
+                  <Input
+                    id="new-note-title"
+                    placeholder="Not başlığı..."
+                    value={newNoteTitle}
+                    onChange={(e) => setNewNoteTitle(e.target.value)}
+                    className="mt-1"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="new-note-content" className="text-sm">İçerik</Label>
+                  <Textarea
+                    id="new-note-content"
+                    placeholder="Not içeriği..."
+                    value={newNoteContent}
+                    onChange={(e) => setNewNoteContent(e.target.value)}
+                    className="mt-1 min-h-[80px]"
+                  />
+                </div>
+                <div className="flex gap-2">
+                  <Button 
+                    onClick={handleAddNote}
+                    disabled={!newNoteTitle.trim() || !newNoteContent.trim() || loading}
+                    size="sm"
+                  >
+                    <Save className="h-4 w-4 mr-2" />
+                    Kaydet
+                  </Button>
+                  <Button 
+                    onClick={() => {
+                      setShowAddForm(false)
+                      setNewNoteTitle('')
+                      setNewNoteContent('')
+                    }}
+                    variant="outline"
+                    size="sm"
+                  >
+                    <X className="h-4 w-4 mr-2" />
+                    İptal
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Notlar Listesi */}
+          <ScrollArea className="flex-1">
+            {loading && (
+              <div className="text-center py-8 text-muted-foreground">
+                Notlar yükleniyor...
+              </div>
+            )}
+
+            {error && (
+              <div className="text-center py-8 text-destructive">
+                {error}
+              </div>
+            )}
+
+            {!loading && !error && filteredNotes.length === 0 && (
+              <div className="text-center py-8 text-muted-foreground">
+                {searchTerm ? 'Arama kriterine uygun not bulunamadı.' : 'Henüz not eklenmemiş.'}
+              </div>
+            )}
+
+            <div className="space-y-3">
+              {filteredNotes.map((note) => (
+                <Card key={note.id} className="relative">
+                  <CardContent className="p-4">
+                    {editingNote === note.id ? (
+                      // Düzenleme Modu
+                      <div className="space-y-3">
+                        <Input
+                          value={editTitle}
+                          onChange={(e) => setEditTitle(e.target.value)}
+                          placeholder="Başlık..."
+                        />
+                        <Textarea
+                          value={editContent}
+                          onChange={(e) => setEditContent(e.target.value)}
+                          placeholder="İçerik..."
+                          className="min-h-[100px]"
+                        />
+                        <div className="flex gap-2">
+                          <Button
+                            onClick={() => handleUpdateNote(note.id)}
+                            disabled={!editTitle.trim() || !editContent.trim() || loading}
+                            size="sm"
+                          >
+                            <Save className="h-4 w-4 mr-2" />
+                            Kaydet
+                          </Button>
+                          <Button
+                            onClick={cancelEdit}
+                            variant="outline"
+                            size="sm"
+                          >
+                            <X className="h-4 w-4 mr-2" />
+                            İptal
+                          </Button>
+                        </div>
+                      </div>
+                    ) : (
+                      // Görüntüleme Modu
+                      <div>
+                        <div className="flex justify-between items-start mb-2">
+                          <h3 className="font-semibold text-sm">{note.title}</h3>
+                          <div className="flex gap-1">
+                            <Button
+                              onClick={() => startEdit(note)}
+                              variant="ghost"
+                              size="sm"
+                              className="h-8 w-8 p-0"
+                            >
+                              <Edit className="h-3 w-3" />
+                            </Button>
+                            <Button
+                              onClick={() => handleDeleteNote(note.id)}
+                              variant="ghost"
+                              size="sm"
+                              className="h-8 w-8 p-0 text-destructive hover:text-destructive"
+                            >
+                              <Trash2 className="h-3 w-3" />
+                            </Button>
+                          </div>
+                        </div>
+                        <p className="text-sm text-muted-foreground mb-2 line-clamp-3">
+                          {note.content}
+                        </p>
+                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                          <Calendar className="h-3 w-3" />
+                          {formatDistanceToNow(new Date(note.createdat), { 
+                            addSuffix: true, 
+                            locale: tr 
+                          })}
+                        </div>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </ScrollArea>
+        </div>
+      </DialogContent>
+    </Dialog>
+  )
+}
