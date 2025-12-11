@@ -61,10 +61,14 @@ export function UserAuthButton({ onSignInClick, onSignUpClick }: UserAuthButtonP
     
     setIsAdminCheckLoading(true)
     try {
+      // Get auth token from localStorage
+      const token = localStorage.getItem('auth-token')
+      
       const response = await fetch('/api/admin-access', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({ email: user.email })
       })
