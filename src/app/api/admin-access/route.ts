@@ -70,6 +70,16 @@ export async function POST(request: NextRequest) {
         id: user.id,
         email: user.email,
         fullName: user.fullName
+      },
+      // For admin panel access compatibility
+      data: {
+        adminUser: {
+          id: user.id,
+          email: user.email,
+          fullName: user.fullName,
+          role: isAdmin ? 'admin' : 'user'
+        },
+        token: null // Admin panel uses URL token, not this
       }
     })
 
