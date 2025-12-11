@@ -139,6 +139,14 @@ export function UserAuthButton({ onSignInClick, onSignUpClick }: UserAuthButtonP
         
         console.log('Admin access: Token stored in all storages')
         
+        // Create a new token for admin access (using current user token)
+        const currentToken = localStorage.getItem('auth_token')
+        if (currentToken) {
+          // Set cookie for middleware to read
+          document.cookie = `auth_token=${currentToken}; path=/; max-age=86400; SameSite=Lax;`
+          console.log('🍪 Set auth_token cookie for admin access')
+        }
+        
         // Redirect to admin panel with token in URL
         router.push(`/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/dashboard?token=${data.data.token}`)
       } else {
