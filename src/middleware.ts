@@ -48,17 +48,26 @@ export async function middleware(request: NextRequest) {
 
     try {
       // Token'ı doğrula ve kullanıcı bilgilerini al
-      const payload = await verifyAdminToken(token)
+      const isValidAdmin = await verifyAdminToken(token)
       
-      if (!payload) {
-        console.log('Invalid token, redirecting to login');
+      if (!isValidAdmin) {
+        console.log('Invalid admin token, redirecting to login');
         return NextResponse.redirect(new URL('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login', request.url))
       }
 
-      console.log('User authenticated:', { id: payload.id, role: payload.role });
+      // Get payload for user info (if needed)
+      let payload = null;
+      try {
+        // Try to get actual payload for logging
+        const { verifyToken } = await import('@/lib/jwt');
+        payload = await verifyToken(token);
+        console.log('User authenticated:', { id: payload?.id, role: payload?.role });
+      } catch (error) {
+        console.log('Could not decode payload, but admin token is valid');
+      }
 
       // Moderatör erişim kontrolü - sadece blog sayfasına erişebilir
-      if (payload.role === 'moderator') {
+      if (payload && payload.role === 'moderator') {
         const allowedPaths = [
           '/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/dashboard',
           '/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/blog',
@@ -76,9 +85,11 @@ export async function middleware(request: NextRequest) {
 
       // Token'ı response header'a ekle (client-side için)
       const response = NextResponse.next()
-      response.headers.set('x-user-id', payload.id)
-      response.headers.set('x-user-role', payload.role)
-
+      if (payload) {
+        response.headers.set('x-user-id', payload.id)
+        response.headers.set('x-user-role', payload.role)
+      }
+      
       return response
 
     } catch (error) {
