@@ -23,6 +23,8 @@ export async function middleware(request: NextRequest) {
 
   // Admin paneli route kontrolü
   if (pathname.startsWith('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/')) {
+    console.log('🔐 Admin route accessed:', pathname)
+    
     // Token'ı birden fazla kaynaktan dene
     let token = request.cookies.get('auth_token')?.value
     
@@ -36,13 +38,16 @@ export async function middleware(request: NextRequest) {
       token = request.nextUrl.searchParams.get('token')
     }
 
-    console.log('Token found:', !!token);
-    if (token) {
-      console.log('Token preview:', token.substring(0, 20) + '...');
-    }
+    console.log('🔐 Token sources:')
+    console.log('  - Cookie auth_token:', !!request.cookies.get('auth_token')?.value)
+    console.log('  - Header Authorization:', !!request.headers.get('authorization'))
+    console.log('  - Query token:', !!request.nextUrl.searchParams.get('token'))
+    console.log('  - Final token exists:', !!token)
+    console.log('  - Final token length:', token?.length || 0)
+    console.log('  - Final token preview:', token?.substring(0, 20) + '...')
 
     if (!token) {
-      console.log('No token found, redirecting to login');
+      console.log('❌ No token found, redirecting to login')
       return NextResponse.redirect(new URL('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login', request.url))
     }
 

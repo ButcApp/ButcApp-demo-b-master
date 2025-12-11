@@ -58,16 +58,17 @@ export const extractTokenFromHeader = (authHeader: string | null): string | null
 // Middleware için özel token doğrulama fonksiyonu - Ubuntu için iyileştirildi
 export const verifyAdminToken = async (token: string): Promise<boolean> => {
   try {
-    console.log('🔐 JWT Verification - Token:', token.substring(0, 50) + '...')
+    console.log('🔐 verifyAdminToken called with:', token.substring(0, 50) + '...')
     
     // Demo token için development modunda izin ver
     if (process.env.NODE_ENV === 'development' && token === 'demo-token-for-ubuntu-testing') {
-      console.log('🔧 Development mode: Demo token accepted for Ubuntu testing')
+      console.log('🧪 Development mode: Demo token accepted for Ubuntu testing')
       return true
     }
     
+    console.log('🔐 Attempting to verify token with verifyToken function...')
     const payload = await verifyToken(token)
-    console.log('✅ JWT Payload:', payload)
+    console.log('✅ JWT Payload decoded:', payload)
     
     // Check if user has admin role
     if (payload.role === 'admin' || payload.role === 'superadmin') {
@@ -77,12 +78,13 @@ export const verifyAdminToken = async (token: string): Promise<boolean> => {
     
     // For now, allow demo admin access
     if (payload.email === 'admin@butcapp.com' || payload.email === 'demo@butcapp.com') {
-      console.log('✅ Demo admin access granted');
+      console.log('✅ Demo admin access granted for:', payload.email);
       return true
     }
     
     // For development, allow any valid token
-    console.log('🔧 Development mode: All valid tokens accepted as admin');
+    console.log('🧪 Development mode: All valid tokens accepted as admin');
+    console.log('🔐 verifyAdminToken returning: true for development')
     return true
     
   } catch (error) {
@@ -90,10 +92,11 @@ export const verifyAdminToken = async (token: string): Promise<boolean> => {
     
     // Development modunda demo token için hata gösterme
     if (process.env.NODE_ENV === 'development' && token === 'demo-token-for-ubuntu-testing') {
-      console.log('🔧 Development mode: Demo token verification bypassed')
+      console.log('🧪 Development mode: Demo token verification bypassed')
       return true
     }
     
+    console.log('🔐 verifyAdminToken returning: false due to error')
     return false
   }
 }
