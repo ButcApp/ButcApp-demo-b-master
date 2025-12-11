@@ -22,6 +22,12 @@ const nextConfig: NextConfig = {
   },
   poweredByHeader: false,
   compress: true,
+  // Allow preview origin for development
+  allowedDevOrigins: [
+    'preview-chat-11f1154a-dbfe-4c94-8c26-53277fb8c2e5a.space.z.ai',
+    'localhost:3000',
+    '*.space.z.ai'
+  ],
   async headers() {
     const isProduction = process.env.NODE_ENV === 'production';
     const allowedOrigin = isProduction 
