@@ -113,7 +113,7 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'signin' }: AuthModalP
     setIsCheckingEmail(true)
     
     try {
-      const response = await fetch('/api/auth/check-email', {
+      const response = await fetch(`${window.location.origin}/api/auth/check-email`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -121,10 +121,18 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'signin' }: AuthModalP
         body: JSON.stringify({ email: email.toLowerCase().trim() })
       })
       
+      if (!response.ok) {
+        // If API returns 404 or error, just continue without email check
+        console.warn('Email check API not available, skipping:', response.status)
+        setEmailExistsWarning(false)
+        return
+      }
+      
       const data = await response.json()
-      setEmailExistsWarning(data.exists)
+      setEmailExistsWarning(data.exists || false)
     } catch (error) {
       console.error('Email check error:', error)
+      // Don't show error to user, just skip email check
       setEmailExistsWarning(false)
     } finally {
       setIsCheckingEmail(false)
