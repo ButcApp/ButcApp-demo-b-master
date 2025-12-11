@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { 
   Users, 
   Loader2,
@@ -18,7 +19,9 @@ import {
   Activity,
   RefreshCw,
   Trash2,
-  UserX
+  UserX,
+  Shield,
+  UserCog
 } from 'lucide-react'
 
 interface User {
@@ -32,6 +35,7 @@ interface User {
   lastLogin: string
   totalTransactions: number
   totalBalance: number
+  role?: string // Rol bilgisi eklendi
 }
 
 export function UserManager() {
@@ -148,6 +152,40 @@ export function UserManager() {
       }
     } catch (error) {
       setError('Durum güncellenemedi')
+    }
+  }
+
+  const handleUpdateRole = async (userId: string, newRole: string) => {
+    try {
+      // Get admin token from cookie
+      const token = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('auth-token='))
+        ?.split('=')[1]
+      
+      if (!token) {
+        setError('Admin oturumu bulunamadı. Lütfen giriş yapın.')
+        return
+      }
+
+      const response = await fetch(`/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/users/${userId}/update-role`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ role: newRole })
+      })
+      
+      if (response.ok) {
+        fetchUsers() // Refresh the list
+        setSuccess('Kullanıcı rolü güncellendi!')
+      } else {
+        const data = await response.json()
+        setError('Rol güncellenemedi: ' + (data.error || 'Bilinmeyen hata'))
+      }
+    } catch (error) {
+      setError('Rol güncellenemedi')
     }
   }
 
@@ -294,6 +332,7 @@ export function UserManager() {
                   <TableHead>Son Giriş</TableHead>
                   <TableHead>İşlem Sayısı</TableHead>
                   <TableHead>Bakiye</TableHead>
+                  <TableHead>Rol</TableHead>
                   <TableHead>Durum</TableHead>
                   <TableHead className="text-right">İşlemler</TableHead>
                 </TableRow>
@@ -353,6 +392,47 @@ export function UserManager() {
                       <div className="text-sm font-medium text-slate-900 dark:text-white">
                         <TrendingUp className="h-3 w-3 inline mr-1 text-green-500" />
                         ₺{user.totalBalance.toLocaleString('tr-TR', { minimumFractionDigits: 2 })}
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex items-center space-x-2">
+                        <Select
+                          value={user.role || 'user'}
+                          onValueChange={(value) => handleUpdateRole(user.id, value)}
+                        >
+                          <SelectTrigger className="w-32">
+                            <div className="flex items-center">
+                              {user.role === 'admin' ? (
+                                <Shield className="h-4 w-4 mr-2 text-red-500" />
+                              ) : user.role === 'moderator' ? (
+                                <UserCog className="h-4 w-4 mr-2 text-blue-500" />
+                              ) : (
+                                <UserCog className="h-4 w-4 mr-2 text-gray-500" />
+                              )}
+                              <SelectValue />
+                            </div>
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="user">
+                              <div className="flex items-center">
+                                <UserCog className="h-4 w-4 mr-2 text-gray-500" />
+                                User
+                              </div>
+                            </SelectItem>
+                            <SelectItem value="moderator">
+                              <div className="flex items-center">
+                                <UserCog className="h-4 w-4 mr-2 text-blue-500" />
+                                Moderatör
+                              </div>
+                            </SelectItem>
+                            <SelectItem value="admin">
+                              <div className="flex items-center">
+                                <Shield className="h-4 w-4 mr-2 text-red-500" />
+                                Admin
+                              </div>
+                            </SelectItem>
+                          </SelectContent>
+                        </Select>
                       </div>
                     </TableCell>
                     <TableCell>

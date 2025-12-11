@@ -13,7 +13,7 @@ import { useAuth } from '@/contexts/AdminAuthContext'
 
 export default function AdminLoginPage() {
   const [formData, setFormData] = useState({
-    username: '',
+    identifier: '', // Kullanıcı adı veya e-posta
     password: ''
   })
   const [showPassword, setShowPassword] = useState(false)
@@ -33,10 +33,10 @@ export default function AdminLoginPage() {
       return
     }
 
-    console.log('Submitting login form with:', { username: formData.username, captchaValid });
+    console.log('Submitting login form with:', { identifier: formData.identifier, captchaValid });
     
     try {
-      const result = await login(formData.username, formData.password, captchaAnswer)
+      const result = await login(formData.identifier, formData.password, captchaAnswer)
       console.log('Login result:', result);
 
       if (result.success) {
@@ -105,21 +105,21 @@ export default function AdminLoginPage() {
 
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="space-y-2">
-                <label htmlFor="username" className="text-sm font-medium text-foreground">
-                  Kullanıcı Adı
+                <label htmlFor="identifier" className="text-sm font-medium text-foreground">
+                  Kullanıcı Adı veya E-posta
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <Shield className="h-4 w-4 text-muted-foreground" />
                   </div>
                   <Input
-                    id="username"
-                    name="username"
+                    id="identifier"
+                    name="identifier"
                     type="text"
                     required
-                    value={formData.username}
+                    value={formData.identifier}
                     onChange={handleInputChange}
-                    placeholder="Admin kullanıcı adı"
+                    placeholder="Admin kullanıcı adı veya e-posta"
                     className="pl-10 h-11"
                   />
                 </div>

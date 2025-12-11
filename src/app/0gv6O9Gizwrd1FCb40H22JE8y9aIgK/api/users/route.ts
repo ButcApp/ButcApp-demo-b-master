@@ -53,6 +53,23 @@ export async function GET(request: NextRequest) {
       }, { status: 500, headers: corsHeaders })
     }
 
+    // Admin rollerini ayrı sorgu ile al
+    const { data: adminUsers, error: adminError } = await supabase
+      .from('admin_users')
+      .select('userid, role')
+
+    if (adminError) {
+      console.error('Supabase admin users fetch error:', adminError)
+    }
+
+    // Rol bilgilerini kullanıcılarla eşleştir
+    const adminRolesMap = new Map()
+    if (adminUsers) {
+      adminUsers.forEach(adminUser => {
+        adminRolesMap.set(adminUser.userid, adminUser.role)
+      })
+    }
+
     // Kullanıcı verilerini formatla
     const formattedUsers = (users || []).map(user => {
       return {
@@ -65,7 +82,8 @@ export async function GET(request: NextRequest) {
         isActive: true, // Varsayılan olarak aktif
         lastLogin: user.last_login || user.createdat,
         totalTransactions: 0, // Bu bilgiyi ayrı tablodan alabiliriz
-        totalBalance: 0 // Bu bilgiyi ayrı tablodan alabiliriz
+        totalBalance: 0, // Bu bilgiyi ayrı tablodan alabiliriz
+        role: adminRolesMap.get(user.id) || 'user' // Rol bilgisini admin_users tablosundan al
       }
     })
 

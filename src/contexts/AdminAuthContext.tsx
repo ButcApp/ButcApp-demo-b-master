@@ -15,7 +15,7 @@ interface User {
 interface AuthContextType {
   user: User | null
   token: string | null
-  login: (username: string, password: string, captchaAnswer?: string) => Promise<{ success: boolean; error?: string; token?: string }>
+  login: (identifier: string, password: string, captchaAnswer?: string) => Promise<{ success: boolean; error?: string; token?: string }>
   logout: () => void
   isLoading: boolean
   isAuthenticated: boolean
@@ -116,10 +116,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   //   }
   // }, [token])
 
-  const login = useCallback(async (username: string, password: string, captchaAnswer?: string) => {
+  const login = useCallback(async (identifier: string, password: string, captchaAnswer?: string) => {
     try {
       console.log('=== LOGIN DEBUG ===');
-      console.log('Username:', username);
+      console.log('Identifier:', identifier);
       console.log('Password provided:', !!password);
       
       // Gerçek auth endpoint'ini dene
@@ -131,7 +131,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, password, captchaAnswer: captchaAnswer?.trim() || null }),
+        body: JSON.stringify({ identifier, password, captchaAnswer: captchaAnswer?.trim() || null }),
         cache: 'no-store'
       });
 

@@ -15,12 +15,61 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next()
   }
 
-  // Sadece login ve admin route'larını kontrol et
-  if (pathname.startsWith('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login') || 
-      pathname.startsWith('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/') ||
-      pathname.startsWith('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/')) {
-    console.log('Login or Admin route, skipping middleware');
+  // Login sayfasını her zaman erişime açık
+  if (pathname.startsWith('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login')) {
+    console.log('Login route, skipping middleware');
     return NextResponse.next()
+  }
+
+  // Admin paneli route kontrolü
+  if (pathname.startsWith('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/')) {
+    // Token'ı cookie'den al
+    const token = request.cookies.get('auth-token')?.value
+
+    if (!token) {
+      console.log('No token found, redirecting to login');
+      return NextResponse.redirect(new URL('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login', request.url))
+    }
+
+    try {
+      // Token'ı doğrula ve kullanıcı bilgilerini al
+      const payload = await verifyAdminToken(token)
+      
+      if (!payload) {
+        console.log('Invalid token, redirecting to login');
+        return NextResponse.redirect(new URL('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login', request.url))
+      }
+
+      console.log('User authenticated:', { id: payload.id, role: payload.role });
+
+      // Moderatör erişim kontrolü - sadece blog sayfasına erişebilir
+      if (payload.role === 'moderator') {
+        const allowedPaths = [
+          '/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/dashboard',
+          '/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/blog',
+          '/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/posts',
+          '/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/categories'
+        ]
+
+        const isAllowed = allowedPaths.some(allowedPath => pathname.startsWith(allowedPath))
+
+        if (!isAllowed) {
+          console.log('Moderator access denied to:', pathname);
+          return NextResponse.redirect(new URL('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/dashboard', request.url))
+        }
+      }
+
+      // Token'ı response header'a ekle (client-side için)
+      const response = NextResponse.next()
+      response.headers.set('x-user-id', payload.id)
+      response.headers.set('x-user-role', payload.role)
+
+      return response
+
+    } catch (error) {
+      console.error('Middleware error:', error);
+      return NextResponse.redirect(new URL('/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login', request.url))
+    }
   }
 
   console.log('Not an admin route or login page, proceeding');
