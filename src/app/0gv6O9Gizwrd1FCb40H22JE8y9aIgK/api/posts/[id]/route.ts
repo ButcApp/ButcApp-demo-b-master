@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { verifyAdminToken } from '@/lib/jwt'
-//import { PrismaClient } from '@prisma/client'
+import { createClient } from '@supabase/supabase-js'
 
-//const prisma = new PrismaClient()
+const supabaseUrl = "https://dfiwgngtifuqrrxkvknn.supabase.co";
+const supabaseServiceKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRmaXdnbmd0aWZ1cXJyeGt2a25uIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NTI3NzMyMSwiZXhwIjoyMDgwODUzMzIxfQ.uCfJ5DzQ2QCiyXycTrHEaKh1EvAFbuP8HBORmBSPbX8";
+const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
 export async function DELETE(
   request: NextRequest,
@@ -27,11 +29,17 @@ export async function DELETE(
     const postId = id
 
     // Delete blog post
-    await prisma.blogPost.delete({
-      where: {
-        id: postId
-      }
-    })
+    const { error: deleteError } = await supabase
+      .from('blog_posts')
+      .delete()
+      .eq('id', postId)
+
+    if (deleteError) {
+      console.error('Delete post error:', deleteError)
+      return NextResponse.json({
+        error: 'Failed to delete blog post'
+      }, { status: 500 })
+    }
 
     return NextResponse.json({
       success: true,
@@ -70,11 +78,9 @@ export async function PUT(
     const body = await request.json()
 
     // Update blog post
-    const post = await prisma.blogPost.update({
-      where: {
-        id: postId
-      },
-      data: {
+    const { data: post, error: updateError } = await supabase
+      .from('blog_posts')
+      .update({
         title: body.title,
         slug: body.slug,
         excerpt: body.excerpt,
@@ -82,14 +88,23 @@ export async function PUT(
         status: body.status,
         category: body.category,
         tags: JSON.stringify(body.tags || []),
-        metaTitle: body.metaTitle,
-        metaDescription: body.metaDescription,
-        metaKeywords: JSON.stringify(body.metaKeywords || []),
+        meta_title: body.metaTitle,
+        meta_description: body.metaDescription,
+        meta_keywords: JSON.stringify(body.metaKeywords || []),
         featured: body.featured,
-        publishedAt: body.status === 'published' && !body.publishedAt ? new Date() : body.publishedAt,
-        updatedAt: new Date()
-      }
-    })
+        published_at: body.status === 'published' && !body.publishedAt ? new Date() : body.publishedAt,
+        updated_at: new Date()
+      })
+      .eq('id', postId)
+      .select()
+      .single()
+
+    if (updateError) {
+      console.error('Update post error:', updateError)
+      return NextResponse.json({
+        error: 'Failed to update blog post'
+      }, { status: 500 })
+    }
 
     return NextResponse.json({
       success: true,

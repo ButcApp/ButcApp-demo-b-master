@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { verifyAdminToken } from '@/lib/jwt'
+import * as os from 'os'
 
 export async function GET(request: NextRequest) {
   try {
@@ -75,9 +76,9 @@ export async function GET(request: NextRequest) {
       environment: process.env.NODE_ENV || 'development',
       nextVersion: '15.5.7',
       cpu: {
-        count: require('os').cpus().length,
+        count: os.cpus().length,
         usage: Math.round(Math.random() * 30 + 10), // Simüle edilmiş değer
-        loadAverage: require('os').loadavg()[0].toFixed(2) // Gerçek load average
+        loadAverage: os.loadavg()[0].toFixed(2) // Gerçek load average
       },
       database: {
         status: 'connected',
@@ -93,8 +94,8 @@ export async function GET(request: NextRequest) {
       ubuntu: {
         isUbuntu,
         platform: platform,
-        hostname: require('os').hostname(),
-        networkInterfaces: Object.keys(require('os').networkInterfaces())
+        hostname: os.hostname(),
+        networkInterfaces: Object.keys(os.networkInterfaces())
       }
     }
 

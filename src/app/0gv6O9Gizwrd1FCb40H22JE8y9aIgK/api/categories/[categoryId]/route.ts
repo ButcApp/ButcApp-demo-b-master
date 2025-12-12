@@ -1,10 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
-//import { PrismaClient } from '@prisma/client'
 import { verifyAdminToken } from '@/lib/jwt'
 import { Logger } from '@/lib/logger'
 import { corsMiddleware, handleOptions } from '@/lib/cors-middleware'
+import { createClient } from '@supabase/supabase-js'
 
-//const prisma = new PrismaClient()
+const supabaseUrl = "https://dfiwgngtifuqrrxkvknn.supabase.co";
+const supabaseServiceKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRmaXdnbmd0aWZ1cXJyeGt2a25uIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NTI3NzMyMSwiZXhwIjoyMDgwODUzMzIxfQ.uCfJ5DzQ2QCiyXycTrHEaKh1EvAFbuP8HBORmBSPbX8";
+const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
 export async function PUT(
   request: NextRequest,
@@ -51,14 +53,25 @@ export async function PUT(
     }
 
     // Kategoriyi güncelle
-    const updatedCategory = await prisma.blogCategory.update({
-      where: { id: categoryId },
-      data: {
+    const { data: updatedCategory, error: updateError } = await supabase
+      .from('blog_categories')
+      .update({
         name,
         slug,
-        description
-      }
-    })
+        description,
+        updated_at: new Date()
+      })
+      .eq('id', categoryId)
+      .select()
+      .single()
+
+    if (updateError) {
+      console.error('Category update error:', updateError)
+      return NextResponse.json({
+        success: false,
+        error: 'Kategori güncellenemedi: ' + updateError.message
+      }, { status: 500, headers: corsHeaders })
+    }
 
     await Logger.logAdminAction('', 'category_updated', `Category updated: ${name}`, {
       categoryId: updatedCategory.id,
@@ -125,11 +138,13 @@ export async function DELETE(
     }
 
     // Önce kategoriyi bul log için
-    const category = await prisma.blogCategory.findUnique({
-      where: { id: categoryId }
-    })
+    const { data: category, error: fetchError } = await supabase
+      .from('blog_categories')
+      .select('*')
+      .eq('id', categoryId)
+      .single()
 
-    if (!category) {
+    if (fetchError || !category) {
       return NextResponse.json({
         success: false,
         error: 'Kategori bulunamadı'
@@ -137,9 +152,18 @@ export async function DELETE(
     }
 
     // Kategoriyi sil
-    await prisma.blogCategory.delete({
-      where: { id: categoryId }
-    })
+    const { error: deleteError } = await supabase
+      .from('blog_categories')
+      .delete()
+      .eq('id', categoryId)
+
+    if (deleteError) {
+      console.error('Category delete error:', deleteError)
+      return NextResponse.json({
+        success: false,
+        error: 'Kategori silinemedi: ' + deleteError.message
+      }, { status: 500, headers: corsHeaders })
+    }
 
     await Logger.logAdminAction('', 'category_deleted', `Category deleted: ${category.name}`, {
       categoryId,
