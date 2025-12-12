@@ -10,7 +10,7 @@ const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { userId: string } }
+  { params }: { params: Promise<{ userId: string }> }
 ) {
   const optionsResponse = handleOptions(request)
   if (optionsResponse) return optionsResponse
@@ -21,6 +21,7 @@ export async function POST(
   const userAgent = headersList.get('user-agent') || 'unknown'
 
   try {
+    const { userId } = await params
     // Token doğrula
     const authHeader = request.headers.get('authorization')
     if (!authHeader?.startsWith('Bearer ')) {
@@ -43,7 +44,6 @@ export async function POST(
     }
 
     const { role } = await request.json()
-    const { userId } = params
 
     if (!role || !['user', 'moderator', 'admin'].includes(role)) {
       return NextResponse.json({
@@ -126,7 +126,7 @@ export async function POST(
 
   } catch (error: any) {
     console.error('Update user role API Error:', error)
-    await Logger.logError(error as Error, `POST /api/users/${params.userId}/update-role`, undefined, undefined)
+    await Logger.logError(error as Error, `POST /api/users/${userId}/update-role`, undefined, undefined)
     
     return NextResponse.json({
       success: false,

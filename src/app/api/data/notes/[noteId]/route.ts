@@ -26,8 +26,9 @@ async function authenticate(request: NextRequest) {
 }
 
 // GET /api/data/notes/[noteId] - Fetch specific note
-export async function GET(request: NextRequest, { params }: { params: { noteId: string } }) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ noteId: string }> }) {
   try {
+    const { noteId } = await params
     const auth = await authenticate(request)
     if (auth.error) {
       return NextResponse.json({ error: auth.error }, { status: auth.status })
@@ -36,7 +37,7 @@ export async function GET(request: NextRequest, { params }: { params: { noteId: 
     const { data: note, error } = await supabase
       .from('user_data')
       .select('*')
-      .eq('id', params.noteId)
+      .eq('id', noteId)
       .eq('userid', auth.user.id)
       .eq('type', 'note')
       .single()
@@ -120,8 +121,9 @@ export async function POST(request: NextRequest) {
 }
 
 // PUT /api/data/notes/[noteId] - Update note
-export async function PUT(request: NextRequest, { params }: { params: { noteId: string } }) {
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ noteId: string }> }) {
   try {
+    const { noteId } = await params
     const auth = await authenticate(request)
     if (auth.error) {
       return NextResponse.json({ error: auth.error }, { status: auth.status })
@@ -133,7 +135,7 @@ export async function PUT(request: NextRequest, { params }: { params: { noteId: 
     const { data: existingNote, error: fetchError } = await supabase
       .from('user_data')
       .select('*')
-      .eq('id', params.noteId)
+      .eq('id', noteId)
       .eq('userid', auth.user.id)
       .eq('type', 'note')
       .single()
@@ -154,7 +156,7 @@ export async function PUT(request: NextRequest, { params }: { params: { noteId: 
     const { data, error: updateError } = await supabase
       .from('user_data')
       .update(updateData)
-      .eq('id', params.noteId)
+      .eq('id', noteId)
       .select()
       .single()
 
@@ -181,8 +183,9 @@ export async function PUT(request: NextRequest, { params }: { params: { noteId: 
 }
 
 // DELETE /api/data/notes/[noteId] - Delete note
-export async function DELETE(request: NextRequest, { params }: { params: { noteId: string } }) {
+export async function DELETE(request: NextRequest, { params }: { params: Promise<{ noteId: string }> }) {
   try {
+    const { noteId } = await params
     const auth = await authenticate(request)
     if (auth.error) {
       return NextResponse.json({ error: auth.error }, { status: auth.status })
@@ -192,7 +195,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { noteI
     const { data: existingNote, error: fetchError } = await supabase
       .from('user_data')
       .select('*')
-      .eq('id', params.noteId)
+      .eq('id', noteId)
       .eq('userid', auth.user.id)
       .eq('type', 'note')
       .single()
@@ -207,7 +210,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { noteI
     const { error: deleteError } = await supabase
       .from('user_data')
       .delete()
-      .eq('id', params.noteId)
+      .eq('id', noteId)
 
     if (deleteError) {
       console.error('Note delete error:', deleteError)

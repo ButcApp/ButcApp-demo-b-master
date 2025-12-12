@@ -707,13 +707,44 @@ export default function ButcapApp() {
           </button>
           
           <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
-            <div className="w-full flex-1 md:w-auto md:flex-none">
-              <Button variant="ghost" size="sm" className="w-full justify-start text-gray-600 hover:text-gray-900">
+            <div className="hidden md:flex items-center space-x-1">
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="justify-start text-gray-600 hover:text-gray-900 h-10 px-3"
+                onClick={() => router.push('/blog')}
+              >
+                <BookOpen className="h-4 w-4 mr-2" />
+                <span>Finans Rehberi</span>
+              </Button>
+              <Button variant="ghost" size="sm" className="justify-start text-gray-600 hover:text-gray-900 h-10 px-3">
                 <Settings className="h-4 w-4 mr-2" />
-                <span className="hidden sm:inline">Ayarlar</span>
+                <span>Ayarlar</span>
               </Button>
             </div>
-            <nav className="flex items-center space-x-2">
+            <nav className="flex items-center space-x-1">
+              {/* Mobile buttons */}
+              <div className="md:hidden flex items-center space-x-1">
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  className="justify-start text-gray-600 hover:text-gray-900 h-10 px-3"
+                  onClick={() => router.push('/blog')}
+                  title="Finans Rehberi"
+                >
+                  <BookOpen className="h-4 w-4" />
+                </Button>
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  className="justify-start text-gray-600 hover:text-gray-900 h-10 px-3"
+                  title="Ayarlar"
+                >
+                  <Settings className="h-4 w-4" />
+                </Button>
+              </div>
+              
+              {/* Common buttons */}
               <NotesButton />
               <ThemeToggle />
               <LanguageToggle />

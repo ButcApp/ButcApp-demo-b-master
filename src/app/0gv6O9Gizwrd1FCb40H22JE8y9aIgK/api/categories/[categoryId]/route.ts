@@ -8,7 +8,7 @@ import { corsMiddleware, handleOptions } from '@/lib/cors-middleware'
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { categoryId: string } }
+  { params }: { params: Promise<{ categoryId: string }> }
 ) {
   const optionsResponse = handleOptions(request)
   if (optionsResponse) return optionsResponse
@@ -19,6 +19,7 @@ export async function PUT(
   const userAgent = headersList.get('user-agent') || 'unknown'
 
   try {
+    const { categoryId } = await params
     // Token doğrula
     const authHeader = request.headers.get('authorization')
     if (!authHeader?.startsWith('Bearer ')) {
@@ -40,7 +41,7 @@ export async function PUT(
       }, { status: 403, headers: corsHeaders })
     }
 
-    const { categoryId } = params
+    const { categoryId } = await params
     const { name, slug, description } = await request.json()
 
     if (!name || !slug) {
@@ -80,7 +81,7 @@ export async function PUT(
 
   } catch (error: any) {
     console.error('Category Update API Error:', error)
-    await Logger.logError(error as Error, `PUT /api/categories/${params.categoryId}`, undefined, undefined)
+    await Logger.logError(error as Error, `PUT /api/categories/${categoryId}`, undefined, undefined)
     
     return NextResponse.json({
       success: false,
@@ -91,7 +92,7 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { categoryId: string } }
+  { params }: { params: Promise<{ categoryId: string }> }
 ) {
   const optionsResponse = handleOptions(request)
   if (optionsResponse) return optionsResponse
@@ -102,6 +103,7 @@ export async function DELETE(
   const userAgent = headersList.get('user-agent') || 'unknown'
 
   try {
+    const { categoryId } = await params
     // Token doğrula
     const authHeader = request.headers.get('authorization')
     if (!authHeader?.startsWith('Bearer ')) {
@@ -123,7 +125,7 @@ export async function DELETE(
       }, { status: 403, headers: corsHeaders })
     }
 
-    const { categoryId } = params
+    const { categoryId } = await params
 
     // Önce kategoriyi bul log için
     const category = await prisma.blogCategory.findUnique({
@@ -157,7 +159,7 @@ export async function DELETE(
 
   } catch (error: any) {
     console.error('Category Delete API Error:', error)
-    await Logger.logError(error as Error, `DELETE /api/categories/${params.categoryId}`, undefined, undefined)
+    await Logger.logError(error as Error, `DELETE /api/categories/${categoryId}`, undefined, undefined)
     
     return NextResponse.json({
       success: false,
@@ -168,7 +170,7 @@ export async function DELETE(
 
 export async function OPTIONS(
   request: NextRequest,
-  { params }: { params: { categoryId: string } }
+  { params }: { params: Promise<{ categoryId: string }> }
 ) {
   return handleOptions(request)
 }

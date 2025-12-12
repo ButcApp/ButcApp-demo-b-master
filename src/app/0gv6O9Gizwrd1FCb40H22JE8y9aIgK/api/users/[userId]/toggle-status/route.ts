@@ -5,7 +5,7 @@ import { corsMiddleware, handleOptions } from '@/lib/cors-middleware'
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { userId: string } }
+  { params }: { params: Promise<{ userId: string }> }
 ) {
   const optionsResponse = handleOptions(request)
   if (optionsResponse) return optionsResponse
@@ -16,6 +16,7 @@ export async function POST(
   const userAgent = headersList.get('user-agent') || 'unknown'
 
   try {
+    const { userId } = await params
     // Token doğrula
     const authHeader = request.headers.get('authorization')
     if (!authHeader?.startsWith('Bearer ')) {
@@ -36,8 +37,6 @@ export async function POST(
         error: 'Geçersiz veya yetkisiz token'
       }, { status: 403, headers: corsHeaders })
     }
-
-    const { userId } = params
 
     if (!userId) {
       return NextResponse.json({
@@ -62,7 +61,7 @@ export async function POST(
 
   } catch (error: any) {
     console.error('Toggle User Status API Error:', error)
-    await Logger.logError(error as Error, `POST /api/users/${params.userId}/toggle-status`, undefined, undefined)
+    await Logger.logError(error as Error, `POST /api/users/${userId}/toggle-status`, undefined, undefined)
     
     return NextResponse.json({
       success: false,
@@ -73,7 +72,7 @@ export async function POST(
 
 export async function OPTIONS(
   request: NextRequest,
-  { params }: { params: { userId: string } }
+  { params }: { params: Promise<{ userId: string }> }
 ) {
   return handleOptions(request)
 }
