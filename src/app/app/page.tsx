@@ -58,7 +58,11 @@ import {
   ArrowDown,
   MoreHorizontal,
   Laptop,
-  Coffee
+  Coffee,
+  Edit,
+  Trash2,
+  Play,
+  Pause
 } from 'lucide-react'
 import { ThemeToggle } from '@/components/theme-toggle'
 import { LanguageToggle } from '@/components/language-toggle'
@@ -77,6 +81,7 @@ import { MobileModal } from '@/components/ui/mobile-modal'
 import { MobileSheet } from '@/components/ui/mobile-sheet'
 import { MobileNavigation } from '@/components/ui/mobile-navigation'
 import { NotesButton } from '@/components/NotesButton'
+import EnhancedRecurringTransactionsList from '@/components/ui/enhanced-recurring-transactions-list'
 
 interface Transaction {
   id: string
@@ -472,16 +477,154 @@ export default function ButcapApp() {
     }
   }
 
+  const deleteRecurringTransaction = async (id: string) => {
+    if (!user) {
+      alert('İşlem silmek için lütfen giriş yapın.')
+      return
+    }
+
+    console.log('Frontend attempting to delete recurring transaction:', id)
+    console.log('Available transactions:', recurringTransactions.map(rt => ({ id: rt.id, category: rt.category })))
+    console.log('Transaction to delete exists in state:', recurringTransactions.some(rt => rt.id === id))
+
+    try {
+      const deleted = await dataSync.deleteRecurringTransaction(id)
+      if (deleted) {
+        setRecurringTransactions(prev => prev.filter(rt => rt.id !== id))
+        // State'i yenilemek için verileri tekrar yükle
+        setTimeout(async () => {
+          const refreshedTransactions = await dataSync.getRecurringTransactions()
+          setRecurringTransactions(refreshedTransactions)
+        }, 500)
+      } else {
+        alert('Tekrarlayan işlem silinemedi. Lütfen tekrar deneyin.')
+      }
+    } catch (error) {
+      console.error('❌ Tekrarlayan işlem silinirken hata:', error)
+      alert('Tekrarlayan işlem silinemedi. Lütfen tekrar deneyin.')
+    }
+  }
+
+  const updateRecurringTransaction = async (updatedTransaction: RecurringTransaction) => {
+    if (!user) {
+      alert('İşlem güncellemek için lütfen giriş yapın.')
+      return
+    }
+
+    try {
+      const updated = await dataSync.updateRecurringTransaction(updatedTransaction)
+      if (updated) {
+        setRecurringTransactions(prev => 
+          prev.map(rt => rt.id === updatedTransaction.id ? updatedTransaction : rt)
+        )
+        setShowEditRecurringDialog(false)
+        setEditingRecurring(null)
+      } else {
+        alert('Tekrarlayan işlem güncellenemedi. Lütfen tekrar deneyin.')
+      }
+    } catch (error) {
+      console.error('❌ Tekrarlayan işlem güncellenirken hata:', error)
+      alert('Tekrarlayan işlem güncellenemedi. Lütfen tekrar deneyin.')
+    }
+  }
+
+  const getNextOccurrence = (recurring: RecurringTransaction): Date | null => {
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
+    
+    const startDate = new Date(recurring.startDate)
+    startDate.setHours(0, 0, 0, 0)
+    
+    if (startDate > today) return startDate
+    
+    const dates = getRecurringDates(recurring, startDate, new Date(today.getTime() + 365 * 24 * 60 * 60 * 1000))
+    const futureDates = dates.filter(date => date >= today)
+    
+    return futureDates.length > 0 ? futureDates[0] : null
+  }
+
+  const getDaysUntil = (date: Date): number => {
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
+    const targetDate = new Date(date)
+    targetDate.setHours(0, 0, 0, 0)
+    
+    const diffTime = targetDate.getTime() - today.getTime()
+    return Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+  }
+
+  const handleEditRecurring = (recurring: RecurringTransaction) => {
+    setEditingRecurring(recurring)
+    setShowEditRecurringDialog(true)
+  }
+
+  const toggleRecurringStatus = async (id: string, isActive: boolean) => {
+    if (!user) return
+    
+    // Database'de isactive column'ı olmadığı için暂时 devre dışı
+    alert('Özür: Bu özellik database güncellemesi gerektiriyor. Şimdilik tüm işlemler aktiftir.')
+    return
+    
+    const recurring = recurringTransactions.find(rt => rt.id === id)
+    if (!recurring) return
+    
+    const updatedRecurring = { 
+      ...recurring, 
+      isActive: !isActive,
+      // API'nin beklediği tüm field'ları ekle
+      amount: recurring.amount,
+      description: recurring.description,
+      category: recurring.category,
+      frequency: recurring.frequency,
+      startDate: recurring.startDate,
+      endDate: recurring.endDate
+    }
+    
+    try {
+      const updated = await dataSync.updateRecurringTransaction(updatedRecurring)
+      if (updated) {
+        setRecurringTransactions(prev => 
+          prev.map(rt => rt.id === id ? updatedRecurring : rt)
+        )
+      }
+    } catch (error) {
+      console.error('❌ Tekrarlayan işlem durumu güncellenirken hata:', error)
+    }
+  }
+
   const addRecurringTransaction = async () => {
     if (!user) {
       alert('Tekrarlayan işlem eklemek için lütfen giriş yapın.')
       return
     }
 
+    // Form validasyonu
+    if (!newRecurring.amount || newRecurring.amount.trim() === '' || 
+        !newRecurring.category || newRecurring.category.trim() === '' || 
+        !newRecurring.description || newRecurring.description.trim() === '' || 
+        !newRecurring.frequency || 
+        !newRecurring.startDate || newRecurring.startDate.trim() === '') {
+      alert('Lütfen tüm zorunlu alanları doldurun: Tutar, Kategori, Açıklama, Periyot, Başlangıç Tarihi')
+      console.log('Validation failed:', {
+        amount: newRecurring.amount,
+        category: newRecurring.category,
+        description: newRecurring.description,
+        frequency: newRecurring.frequency,
+        startDate: newRecurring.startDate
+      })
+      return
+    }
+
+    const parsedAmount = parseFloat(newRecurring.amount)
+    if (isNaN(parsedAmount) || parsedAmount <= 0) {
+      alert('Lütfen geçerli bir tutar girin.')
+      return
+    }
+
     const newRecurringTransaction: RecurringTransaction = {
       id: `recurring_${user?.id || 'unknown'}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
       type: newRecurring.type,
-      amount: parseFloat(newRecurring.amount),
+      amount: parsedAmount,
       category: newRecurring.category,
       description: newRecurring.description,
       account: newRecurring.account,
@@ -495,7 +638,9 @@ export default function ButcapApp() {
     }
 
     try {
+      console.log('Frontend attempting to add recurring transaction:', newRecurringTransaction)
       const added = await dataSync.addRecurringTransaction(newRecurringTransaction)
+      console.log('Add result:', added)
       if (added) {
         setRecurringTransactions(prev => [...prev, newRecurringTransaction])
         setShowRecurringDialog(false)
@@ -1329,6 +1474,135 @@ export default function ButcapApp() {
           </Card>
         </div>
 
+        {/* Recurring Transactions Section */}
+        <Card className="border-0 shadow-md dark:shadow-sm">
+          <CardHeader className="flex flex-row items-center justify-between pb-4">
+            <div className="flex items-center space-x-2">
+              <Repeat className="h-5 w-5 text-muted-foreground" />
+              <CardTitle className="text-lg font-semibold text-foreground">Tekrarlayan İşlemler</CardTitle>
+            </div>
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="text-green-600 hover:text-green-700"
+              onClick={() => setShowRecurringDialog(true)}
+            >
+              <Plus className="h-4 w-4 mr-1" />
+              Yeni Ekle
+            </Button>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3 max-h-96 overflow-y-auto">
+              {recurringTransactions.length === 0 ? (
+                <div className="text-center py-12">
+                  <div className="w-16 h-16 bg-muted rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <Repeat className="h-8 w-8 text-muted-foreground" />
+                  </div>
+                  <p className="text-muted-foreground font-medium">Henüz tekrarlayan işlem bulunmuyor</p>
+                  <p className="text-muted-foreground/70 text-sm mt-1">Otomatik işlemler eklemek için yukarıdaki butonu kullanın</p>
+                </div>
+              ) : (
+                recurringTransactions.map((recurring) => {
+                  const nextOccurrence = getNextOccurrence(recurring)
+                  const daysUntil = nextOccurrence ? getDaysUntil(nextOccurrence) : null
+                  
+                  return (
+                    <div key={recurring.id} className="flex items-center justify-between p-4 bg-muted/50 rounded-2xl hover:bg-muted transition-colors">
+                      <div className="flex items-center space-x-4">
+                        <div className={`w-12 h-12 rounded-xl flex items-center justify-center shadow-sm ${
+                          recurring.type === 'income' 
+                            ? 'bg-gradient-to-r from-emerald-500/80 to-green-600/70 dark:from-emerald-600/50 dark:to-green-700/40' 
+                            : 'bg-gradient-to-r from-red-500/80 to-pink-600/70 dark:from-red-600/50 dark:to-pink-700/40'
+                        }`}>
+                          {recurring.type === 'income' ? (
+                            <ArrowUp className="h-6 w-6 text-white" />
+                          ) : (
+                            <ArrowDown className="h-6 w-6 text-white" />
+                          )}
+                        </div>
+                        <div>
+                          <div className="flex items-center space-x-2">
+                            <p className="font-semibold text-foreground transition-colors">{recurring.category}</p>
+                            <Badge variant={recurring.isActive ? "default" : "secondary"} className="text-xs">
+                              {recurring.isActive ? "Aktif" : "Pasif"}
+                            </Badge>
+                          </div>
+                          <p className="text-sm text-muted-foreground transition-colors">
+                            {recurring.description}
+                          </p>
+                          <div className="flex items-center space-x-4 mt-1">
+                            <span className="text-xs text-muted-foreground">
+                              {recurring.frequency === 'daily' && 'Günlük'}
+                              {recurring.frequency === 'weekly' && 'Haftalık'}
+                              {recurring.frequency === 'monthly' && 'Aylık'}
+                              {recurring.frequency === 'yearly' && 'Yıllık'}
+                              {recurring.frequency === 'custom' && 'Özel'}
+                            </span>
+                            {nextOccurrence && (
+                              <span className="text-xs text-blue-600 dark:text-blue-400 font-medium">
+                                <Clock className="h-3 w-3 inline mr-1" />
+                                {daysUntil === 0 ? 'Bugün' : 
+                                 daysUntil === 1 ? 'Yarın' : 
+                                 `${daysUntil} gün sonra`}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <div className="text-right mr-2">
+                          <p className={`font-bold text-lg transition-colors ${
+                            recurring.type === 'income' ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'
+                          }`}>
+                            {recurring.type === 'income' ? '+' : '-'}{recurring.amount.toLocaleString('tr-TR')} TL
+                          </p>
+                          <p className="text-xs text-muted-foreground transition-colors">
+                            {recurring.account === 'cash' ? 'Nakit' : 
+                             recurring.account === 'bank' ? 'Banka' : 'Birikim'}
+                          </p>
+                        </div>
+                        <div className="flex items-center space-x-1">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-8 w-8 p-0 hover:bg-muted-foreground/10"
+                            onClick={() => toggleRecurringStatus(recurring.id, recurring.isActive)}
+                            title={recurring.isActive ? "Duraklat" : "Başlat"}
+                          >
+                            {recurring.isActive ? (
+                              <Pause className="h-4 w-4 text-muted-foreground" />
+                            ) : (
+                              <Play className="h-4 w-4 text-muted-foreground" />
+                            )}
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-8 w-8 p-0 hover:bg-muted-foreground/10"
+                            onClick={() => handleEditRecurring(recurring)}
+                            title="Düzenle"
+                          >
+                            <Edit className="h-4 w-4 text-muted-foreground" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-8 w-8 p-0 hover:bg-red-100 dark:hover:bg-red-900/20"
+                            onClick={() => deleteRecurringTransaction(recurring.id)}
+                            title="Sil"
+                          >
+                            <Trash2 className="h-4 w-4 text-red-500" />
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                })
+              )}
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Recent Transactions */}
         <Card className="border-0 shadow-md dark:shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between pb-4">
@@ -1398,6 +1672,150 @@ export default function ButcapApp() {
           </CardContent>
         </Card>
       </main>
+
+      {/* Edit Recurring Transaction Dialog */}
+      <Dialog open={showEditRecurringDialog} onOpenChange={setShowEditRecurringDialog}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Tekrarlayan İşlemi Düzenle</DialogTitle>
+            <DialogDescription>
+              Otomatik tekrar eden işlem bilgilerini güncelleyin
+            </DialogDescription>
+          </DialogHeader>
+          {editingRecurring && (
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label>İşlem Tipi</Label>
+                  <Select
+                    value={editingRecurring.type}
+                    onValueChange={(value: 'income' | 'expense') => 
+                      setEditingRecurring(prev => prev ? { ...prev, type: value } : null)
+                    }
+                  >
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="income">Gelir</SelectItem>
+                      <SelectItem value="expense">Gider</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label>Hesap</Label>
+                  <Select
+                    value={editingRecurring.account}
+                    onValueChange={(value: 'cash' | 'bank' | 'savings') => 
+                      setEditingRecurring(prev => prev ? { ...prev, account: value } : null)
+                    }
+                  >
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="cash">Nakit</SelectItem>
+                      <SelectItem value="bank">Banka</SelectItem>
+                      <SelectItem value="savings">Birikim</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+              <div className="space-y-2">
+                <Label>Tutar</Label>
+                <Input
+                  type="number"
+                  placeholder="0.00"
+                  value={editingRecurring.amount}
+                  onChange={(e) => setEditingRecurring(prev => prev ? { ...prev, amount: parseFloat(e.target.value) || 0 } : null)}
+                  className="h-12"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>Kategori</Label>
+                <Select
+                  value={editingRecurring.category}
+                  onValueChange={(value) => setEditingRecurring(prev => prev ? { ...prev, category: value } : null)}
+                >
+                  <SelectTrigger className="h-12">
+                    <SelectValue placeholder="Kategori seçin" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {editingRecurring.type === 'income' ? (
+                      incomeCategories.map((category) => (
+                        <SelectItem key={category} value={category}>
+                          {category}
+                        </SelectItem>
+                      ))
+                    ) : (
+                      expenseCategories.map((category) => (
+                        <SelectItem key={category} value={category}>
+                          {category}
+                        </SelectItem>
+                      ))
+                    )}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label>Açıklama</Label>
+                <Input
+                  placeholder="İşlem açıklaması"
+                  value={editingRecurring.description}
+                  onChange={(e) => setEditingRecurring(prev => prev ? { ...prev, description: e.target.value } : null)}
+                  className="h-12"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label>Periyot</Label>
+                  <Select
+                    value={editingRecurring.frequency}
+                    onValueChange={(value: 'daily' | 'weekly' | 'monthly' | 'yearly' | 'custom') => 
+                      setEditingRecurring(prev => prev ? { ...prev, frequency: value } : null)
+                    }
+                  >
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="daily">Günlük</SelectItem>
+                      <SelectItem value="weekly">Haftalık</SelectItem>
+                      <SelectItem value="monthly">Aylık</SelectItem>
+                      <SelectItem value="yearly">Yıllık</SelectItem>
+                      <SelectItem value="custom">Özel</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label>Başlangıç Tarihi</Label>
+                  <Input
+                    type="date"
+                    value={editingRecurring.startDate}
+                    onChange={(e) => setEditingRecurring(prev => prev ? { ...prev, startDate: e.target.value } : null)}
+                    className="h-12"
+                  />
+                </div>
+              </div>
+              <div className="flex space-x-2">
+                <Button 
+                  variant="outline" 
+                  onClick={() => setShowEditRecurringDialog(false)}
+                  className="flex-1"
+                >
+                  İptal
+                </Button>
+                <Button 
+                  onClick={() => editingRecurring && updateRecurringTransaction(editingRecurring)} 
+                  className="flex-1 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700"
+                >
+                  Güncelle
+                </Button>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
 
       {/* Navigation Confirmation Dialog */}
       <Dialog open={showNavigationConfirmDialog} onOpenChange={setShowNavigationConfirmDialog}>

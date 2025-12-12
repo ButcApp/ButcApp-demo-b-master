@@ -54,6 +54,7 @@ export async function GET(request: NextRequest) {
     }
 
     console.log('Recurring transactions fetched successfully:', recurringTransactions?.length || 0)
+    console.log('Sample transaction IDs:', recurringTransactions?.slice(0, 3).map(t => ({ id: t.id, category: t.category })))
 
     return NextResponse.json({
       success: true,
@@ -83,7 +84,22 @@ export async function POST(request: NextRequest) {
     // Validate required fields
     const { amount, description, category, frequency, startDate, endDate } = body
     
+    console.log('Received body:', body)
+    console.log('Field validation:', {
+      hasAmount: !!amount,
+      hasDescription: !!description,
+      hasCategory: !!category,
+      hasFrequency: !!frequency,
+      hasStartDate: !!startDate,
+      amount,
+      description,
+      category,
+      frequency,
+      startDate
+    })
+    
     if (!amount || !description || !category || !frequency || !startDate) {
+      console.log('Validation failed - missing fields')
       return NextResponse.json({
         success: false,
         error: 'Missing required fields: amount, description, category, frequency, startDate'
@@ -100,19 +116,17 @@ export async function POST(request: NextRequest) {
     }
 
     // Validate frequency
-    const validFrequencies = ['daily', 'weekly', 'monthly', 'yearly']
+    const validFrequencies = ['daily', 'weekly', 'monthly', 'yearly', 'custom']
     if (!validFrequencies.includes(frequency)) {
       return NextResponse.json({
         success: false,
-        error: 'Frequency must be one of: daily, weekly, monthly, yearly'
+        error: 'Frequency must be one of: daily, weekly, monthly, yearly, custom'
       }, { status: 400 })
     }
 
     console.log('Creating recurring transaction:', { userId, amount, description, category, frequency, startDate, endDate })
 
-    const { data: recurringTransaction, error } = await supabase
-      .from('user_data')
-      .insert({
+    const insertData = {
         id: `recurring_${userId}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
         userid: userId,
         type: 'recurring',
@@ -124,15 +138,28 @@ export async function POST(request: NextRequest) {
         enddate: endDate ? new Date(endDate).toISOString() : null,
         createdat: new Date().toISOString(),
         updatedat: new Date().toISOString()
-      })
+    }
+
+    console.log('Insert data prepared:', insertData)
+
+    const { data: recurringTransaction, error } = await supabase
+      .from('user_data')
+      .insert(insertData)
       .select()
       .single()
 
     if (error) {
       console.error('Recurring transaction creation error:', error)
+      console.error('Creation error details:', {
+        message: error.message,
+        details: error.details,
+        hint: error.hint,
+        code: error.code
+      })
       return NextResponse.json({
         success: false,
-        error: 'Failed to create recurring transaction'
+        error: 'Failed to create recurring transaction',
+        details: error.message
       }, { status: 500 })
     }
 
@@ -162,7 +189,7 @@ export async function PUT(request: NextRequest) {
 
     const userId = auth.user.id
     const body = await request.json()
-    const { id, amount, description, category, frequency, startDate, endDate } = body
+    const { id, amount, description, category, frequency, startDate, endDate, isActive } = body
 
     if (!id) {
       return NextResponse.json({
@@ -275,6 +302,7 @@ export async function DELETE(request: NextRequest) {
     }
 
     console.log('Deleting recurring transaction:', { recurringTransactionId, userId })
+    console.log('Looking for transaction with ID:', recurringTransactionId)
 
     // First check if transaction exists and belongs to user
     const { data: existingTransaction, error: fetchError } = await supabase
@@ -285,10 +313,14 @@ export async function DELETE(request: NextRequest) {
       .eq('type', 'recurring')
       .single()
 
+    console.log('Fetch result:', { existingTransaction, fetchError })
+
     if (fetchError || !existingTransaction) {
+      console.log('Transaction not found or fetch error:', { fetchError, existingTransaction })
       return NextResponse.json({
         success: false,
-        error: 'Recurring transaction not found'
+        error: 'Recurring transaction not found',
+        details: fetchError?.message || 'Transaction does not exist or does not belong to user'
       }, { status: 404 })
     }
 
@@ -300,9 +332,16 @@ export async function DELETE(request: NextRequest) {
 
     if (deleteError) {
       console.error('Recurring transaction delete error:', deleteError)
+      console.error('Delete error details:', {
+        message: deleteError.message,
+        details: deleteError.details,
+        hint: deleteError.hint,
+        code: deleteError.code
+      })
       return NextResponse.json({
         success: false,
-        error: 'Failed to delete recurring transaction'
+        error: 'Failed to delete recurring transaction',
+        details: deleteError.message
       }, { status: 500 })
     }
 

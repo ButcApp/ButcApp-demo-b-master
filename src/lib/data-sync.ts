@@ -291,7 +291,7 @@ export const dataSync = {
           dayOfWeek: item.dayOfWeek,
           startDate: item.startdate || item.startDate,
           endDate: item.enddate || item.endDate,
-          isActive: true // Varsayılan olarak aktif
+          isActive: true // Database'de column olmadığı için varsayılan true
         }))
       } else {
         console.error('Recurring transactions API returned error:', data.error)
@@ -323,6 +323,15 @@ export const dataSync = {
       }
 
       console.log('Adding recurring transaction via API:', recurringData)
+      console.log('Recurring data validation:', {
+        hasAmount: !!recurringData.amount,
+        hasDescription: !!recurringData.description,
+        hasCategory: !!recurringData.category,
+        hasFrequency: !!recurringData.frequency,
+        hasStartDate: !!recurringData.startDate,
+        amount: recurringData.amount,
+        frequency: recurringData.frequency
+      })
 
       const response = await fetch(`${ClientAuthService.getBaseUrl()}/api/data/recurring-transactions`, {
         method: 'POST',
@@ -384,6 +393,49 @@ export const dataSync = {
       return true
     } catch (error) {
       console.error('Error in updateRecurringTransaction:', error)
+      return false
+    }
+  },
+
+  // Tekrarlayan işlem sil
+  async deleteRecurringTransaction(id: string) {
+    try {
+      const userId = await this.getCurrentUserId()
+      if (!userId) {
+        console.error('No user ID found for deleting recurring transaction')
+        return false
+      }
+
+      console.log('Deleting recurring transaction via API:', id)
+      console.log('User ID available:', !!userId)
+      console.log('Full URL:', `${ClientAuthService.getBaseUrl()}/api/data/recurring-transactions?id=${encodeURIComponent(id)}`)
+
+      // API query parameter olarak bekliyor
+      const response = await fetch(`${ClientAuthService.getBaseUrl()}/api/data/recurring-transactions?id=${encodeURIComponent(id)}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${ClientAuthService.getToken()}`
+        }
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}))
+        console.error('Failed to delete recurring transaction:', response.status, response.statusText, errorData)
+        return false
+      }
+
+      const data = await response.json()
+      console.log('Delete recurring transaction response:', data)
+      
+      if (data.success) {
+        console.log('Recurring transaction successfully deleted via API')
+        return true
+      } else {
+        console.error('Recurring transaction deletion failed:', data.error)
+        return false
+      }
+    } catch (error) {
+      console.error('Error in deleteRecurringTransaction:', error)
       return false
     }
   },
