@@ -41,7 +41,6 @@ export async function PUT(
       }, { status: 403, headers: corsHeaders })
     }
 
-    const { categoryId } = await params
     const { name, slug, description } = await request.json()
 
     if (!name || !slug) {
@@ -124,8 +123,6 @@ export async function DELETE(
         error: 'Geçersiz veya yetkisiz token'
       }, { status: 403, headers: corsHeaders })
     }
-
-    const { categoryId } = await params
 
     // Önce kategoriyi bul log için
     const category = await prisma.blogCategory.findUnique({
