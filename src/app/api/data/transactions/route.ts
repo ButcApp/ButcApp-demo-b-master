@@ -58,8 +58,10 @@ export async function GET(request: NextRequest) {
     console.log('Query built successfully')
 
     // Apply filters
-    if (type) {
-      query = query.eq('transaction_type', type)
+    if (type === 'transfer') {
+      query = query.eq('category', 'Transfer')
+    } else if (type) {
+      query = query.eq('category', type === 'income' ? 'Income' : type === 'expense' ? 'Expense' : type)
     }
     
     if (category) {
@@ -131,11 +133,21 @@ export async function POST(request: NextRequest) {
     
     console.log('Extracted fields:', { amount, description, category, type })
     
-    if (!amount || !description || !category) {
+    // For transfer transactions, description is optional
+    if (!amount || !category) {
       console.log('Validation failed - missing fields:', { amount, description, category })
       return NextResponse.json({
         success: false,
-        error: 'Missing required fields: amount, description, category'
+        error: 'Missing required fields: amount, category'
+      }, { status: 400 })
+    }
+
+    // For non-transfer transactions, description is required
+    if (type !== 'transfer' && !description) {
+      console.log('Validation failed - missing description for non-transfer transaction')
+      return NextResponse.json({
+        success: false,
+        error: 'Missing required field: description'
       }, { status: 400 })
     }
 
@@ -163,13 +175,11 @@ export async function POST(request: NextRequest) {
       userid: userId,
       type: 'transaction',
       amount: parsedAmount,
-      description: description.trim(),
-      category: category.trim(), // Store the actual category
+      description: (description && description.trim()) ? description.trim() : (type === 'transfer' ? 'Transfer' : 'İşlem'),
+      category: category.trim(),
       date: new Date(body.date || Date.now()).toISOString(),
       createdat: new Date().toISOString(),
-      updatedat: new Date().toISOString(),
-      // Store transaction type in a JSON field or additional field
-      transaction_type: type // Add transaction type as separate field
+      updatedat: new Date().toISOString()
     }
 
     console.log('Insert data prepared:', insertData)
@@ -265,8 +275,12 @@ export async function PUT(request: NextRequest) {
       updateData.category = category.trim()
     }
 
-    if (type !== undefined && ['income', 'expense'].includes(type)) {
-      updateData.type = type
+    if (type !== undefined) {
+      if (type === 'transfer') {
+        updateData.category = 'Transfer'
+      } else if (['income', 'expense'].includes(type)) {
+        updateData.category = type === 'income' ? 'Income' : 'Expense'
+      }
     }
 
     if (date !== undefined) {

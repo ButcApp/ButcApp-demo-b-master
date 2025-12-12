@@ -556,11 +556,6 @@ export default function ButcapApp() {
       return
     }
 
-    if (!newTransaction.transferDescription || newTransaction.transferDescription.trim() === '') {
-      alert('Lütfen transfer açıklaması girin.')
-      return
-    }
-
     if (newTransaction.transferFrom === newTransaction.transferTo) {
       alert('Kaynak ve hedef hesap aynı olamaz.')
       return
@@ -576,7 +571,7 @@ export default function ButcapApp() {
       type: 'transfer',
       amount: amount,
       category: 'Transfer',
-      description: newTransaction.transferDescription.trim(),
+      description: newTransaction.transferDescription.trim() || 'Transfer',
       account: newTransaction.transferFrom,
       date: new Date().toISOString(),
       transferFrom: newTransaction.transferFrom,
@@ -1076,9 +1071,9 @@ export default function ButcapApp() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label>Açıklama *</Label>
+                  <Label>Açıklama</Label>
                   <Input
-                    placeholder="Transfer açıklaması"
+                    placeholder="Transfer açıklaması (isteğe bağlı)"
                     value={newTransaction.transferDescription}
                     onChange={(e) => setNewTransaction(prev => ({ ...prev, transferDescription: e.target.value }))}
                     className="h-12"
