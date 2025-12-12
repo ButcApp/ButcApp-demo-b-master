@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getCategoriesWithFallback } from '@/lib/supabase-config'
+import { getBlogCategories } from '@/lib/blog-service'
 
 // GET - Fetch blog categories
 export async function GET(request: NextRequest) {
   try {
-    // Get categories with fallback
-    const categories = await getCategoriesWithFallback()
+    // Kategorileri getir
+    const categories = await getBlogCategories()
 
     return NextResponse.json({
       success: true,
@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
     console.error('Categories API error:', error)
     return NextResponse.json({ 
       success: false, 
-      error: 'Internal server error' 
+      error: error instanceof Error ? error.message : 'Internal server error' 
     }, { status: 500 })
   }
 }

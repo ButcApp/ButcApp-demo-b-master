@@ -13,8 +13,8 @@ export function BlogDetailPage({ post, relatedPosts }: any) {
   const [bookmarked, setBookmarked] = useState(false)
   const [showShareMenu, setShowShareMenu] = useState(false)
   const [liked, setLiked] = useState(false)
-  const [likeCount, setLikeCount] = useState(post.like_count || 0)
-  const [commentCount, setCommentCount] = useState(post.comment_count || 0)
+  const [likeCount, setLikeCount] = useState(post.view_count || 0)
+  const [commentCount, setCommentCount] = useState(0)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -128,13 +128,13 @@ export function BlogDetailPage({ post, relatedPosts }: any) {
       </section>
 
       {/* Featured Image */}
-      {post.coverImage && (
+      {post.featured_image && (
         <section className="relative px-6 pb-12">
           <div className="max-w-5xl mx-auto">
             <div className="relative h-64 md:h-96 lg:h-[500px] rounded-3xl overflow-hidden shadow-2xl group">
               <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 via-transparent to-indigo-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <img
-                src={post.coverImage}
+                src={post.featured_image}
                 alt={post.title}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
@@ -177,25 +177,25 @@ export function BlogDetailPage({ post, relatedPosts }: any) {
                 <div className="flex items-center gap-2 bg-blue-50 dark:bg-blue-900/30 px-3 py-2 rounded-full">
                   <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-full flex items-center justify-center">
                     <span className="text-white text-sm font-bold">
-                      {post.author?.name?.charAt(0).toUpperCase() || 'B'}
+                      {post.author_name?.charAt(0).toUpperCase() || 'B'}
                     </span>
                   </div>
-                  <span className="font-medium text-blue-700 dark:text-blue-300">{post.author?.name || 'ButcApp Team'}</span>
+                  <span className="font-medium text-blue-700 dark:text-blue-300">{post.author_name || 'ButcApp Team'}</span>
                 </div>
                 
                 <div className="flex items-center gap-2">
                   <Calendar className="w-4 h-4 text-gray-400" />
-                  <span>{formatDate(post.publishedAt)}</span>
+                  <span>{formatDate(post.published_at || post.created_at)}</span>
                 </div>
                 
                 <div className="flex items-center gap-2">
                   <Clock className="w-4 h-4 text-gray-400" />
-                  <span>{formatReadingTime(post.readingTime)}</span>
+                  <span>{formatReadingTime(post.reading_time)}</span>
                 </div>
                 
                 <div className="flex items-center gap-2">
                   <Eye className="w-4 h-4 text-gray-400" />
-                  <span>{post.views} görüntülenme</span>
+                  <span>{post.view_count} görüntülenme</span>
                 </div>
               </div>
 
@@ -299,11 +299,11 @@ export function BlogDetailPage({ post, relatedPosts }: any) {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {relatedPosts.map((relatedPost: any, index: number) => (
                   <Card key={relatedPost.id} className="group relative overflow-hidden border-0 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md">
-                    {relatedPost.coverImage && (
+                    {relatedPost.featured_image && (
                       <div className="relative h-48 overflow-hidden">
                         <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-indigo-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                         <img
-                          src={relatedPost.coverImage}
+                          src={relatedPost.featured_image}
                           alt={relatedPost.title}
                           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                         />

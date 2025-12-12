@@ -1,11 +1,6 @@
 {
-  "/api/auth/me/route": "app/api/auth/me/route.js",
-  "/api/admin-access/route": "app/api/admin-access/route.js",
-  "/api/data/notes/route": "app/api/data/notes/route.js",
-  "/api/data/balances/route": "app/api/data/balances/route.js",
-  "/api/data/transactions/route": "app/api/data/transactions/route.js",
-  "/api/data/recurring-transactions/route": "app/api/data/recurring-transactions/route.js",
-  "/page": "app/page.js",
-  "/app/page": "app/app/page.js",
-  "/blog/page": "app/blog/page.js"
+  "/api/blog/route": "app/api/blog/route.js",
+  "/api/blog/categories/route": "app/api/blog/categories/route.js",
+  "/blog/page": "app/blog/page.js",
+  "/page": "app/page.js"
 }

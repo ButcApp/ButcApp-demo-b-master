@@ -264,13 +264,13 @@ export function BlogListingPage({ initialPosts, categories }: BlogListingPagePro
                     {/* Gradient Overlay */}
                     <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-indigo-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     
-                    {post.coverImage && (
+                    {post.featured_image && (
                       <div className={`relative overflow-hidden ${
                         viewMode === 'list' ? 'w-48 h-32 flex-shrink-0' : 'h-56'
                       }`}>
                         <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-indigo-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                         <Image
-                          src={post.featured_image}
+                          src={post.featured_image || '/images/default-blog.jpg'}
                           alt={post.title}
                           fill
                           className="object-cover group-hover:scale-110 transition-transform duration-700"
@@ -311,14 +311,14 @@ export function BlogListingPage({ initialPosts, categories }: BlogListingPagePro
                           <div className="flex items-center gap-1.5">
                             <div className="w-6 h-6 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-full flex items-center justify-center">
                               <span className="text-white text-xs font-bold">
-                                {post.author?.name?.charAt(0).toUpperCase() || 'B'}
+                                {post.author_name?.charAt(0).toUpperCase() || 'B'}
                               </span>
                             </div>
-                            <span className="font-medium">{post.author?.name || 'ButcApp Team'}</span>
+                            <span className="font-medium">{post.author_name || 'ButcApp Team'}</span>
                           </div>
                           <div className="flex items-center gap-1">
                             <Clock className="w-3 h-3" />
-                            <span>{formatReadingTime(post.readingTime)}</span>
+                            <span>{formatReadingTime(post.reading_time)}</span>
                           </div>
                         </div>
                         
