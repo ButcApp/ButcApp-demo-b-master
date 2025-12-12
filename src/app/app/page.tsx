@@ -621,10 +621,10 @@ export default function ButcapApp() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-emerald-50 flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center transition-colors">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"></div>
-          <p className="text-gray-600 font-medium">Yükleniyor...</p>
+          <p className="text-muted-foreground font-medium">Yükleniyor...</p>
         </div>
       </div>
     )
@@ -632,8 +632,8 @@ export default function ButcapApp() {
 
   if (isFirstTime) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-emerald-50 flex items-center justify-center p-4">
-        <Card className="w-full max-w-md shadow-2xl border-0 bg-white/80 backdrop-blur-sm">
+      <div className="min-h-screen bg-background flex items-center justify-center p-4 transition-colors">
+        <Card className="w-full max-w-md shadow-lg dark:shadow-md border-0 bg-card/80 backdrop-blur-sm transition-colors">
           <CardHeader className="text-center pb-6">
             <div className="mx-auto w-16 h-16 bg-gradient-to-r from-green-600 to-emerald-600 rounded-2xl flex items-center justify-center mb-4">
               <Wallet className="h-8 w-8 text-white" />
@@ -641,13 +641,13 @@ export default function ButcapApp() {
             <CardTitle className="text-2xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
               ButcApp'e Hoş Geldiniz
             </CardTitle>
-            <CardDescription className="text-gray-600">
+            <CardDescription className="text-muted-foreground">
               Başlamak için hesap bakiyelerinizi girin
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="cash" className="text-sm font-medium text-gray-700">Nakit</Label>
+              <Label htmlFor="cash" className="text-sm font-medium text-foreground">Nakit</Label>
               <Input
                 id="cash"
                 type="number"
@@ -658,7 +658,7 @@ export default function ButcapApp() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="bank" className="text-sm font-medium text-gray-700">Banka</Label>
+              <Label htmlFor="bank" className="text-sm font-medium text-foreground">Banka</Label>
               <Input
                 id="bank"
                 type="number"
@@ -669,7 +669,7 @@ export default function ButcapApp() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="savings" className="text-sm font-medium text-gray-700">Birikim</Label>
+              <Label htmlFor="savings" className="text-sm font-medium text-foreground">Birikim</Label>
               <Input
                 id="savings"
                 type="number"
@@ -681,7 +681,7 @@ export default function ButcapApp() {
             </div>
             <Button 
               onClick={() => handleInitialSetup(balances)}
-              className="w-full h-12 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-medium shadow-lg"
+              className="w-full h-12 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-medium shadow-md dark:shadow-sm hover:shadow-lg dark:hover:shadow-md transition-all duration-200"
             >
               Başla
             </Button>
@@ -692,15 +692,15 @@ export default function ButcapApp() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-emerald-50">
+    <div className="min-h-screen bg-background transition-colors">
       {/* Header */}
-      <header className="sticky top-0 z-50 w-full border-b border-gray-200/50 bg-white/80 backdrop-blur-md supports-[backdrop-filter]:bg-white/60">
+      <header className="sticky top-0 z-50 w-full border-b border-border/50 bg-background/95 backdrop-blur-md supports-[backdrop-filter]:bg-background/90 transition-colors shadow-sm">
         <div className="container mx-auto px-4 flex h-16 items-center">
           <button 
             onClick={handleHeaderClick}
             className="mr-4 flex items-center space-x-3 group"
           >
-            <div className="w-10 h-10 bg-gradient-to-r from-green-600 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow">
+            <div className="w-10 h-10 bg-gradient-to-r from-green-600 to-emerald-600 rounded-xl flex items-center justify-center shadow-md dark:shadow-sm group-hover:shadow-lg dark:group-hover:shadow-md transition-shadow">
               <Wallet className="h-5 w-5 text-white" />
             </div>
             <span className="font-bold text-xl bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">ButcApp</span>
@@ -711,13 +711,13 @@ export default function ButcapApp() {
               <Button 
                 variant="ghost" 
                 size="sm" 
-                className="justify-start text-gray-600 hover:text-gray-900 h-10 px-3"
+                className="justify-start text-muted-foreground hover:text-foreground h-10 px-3 transition-colors duration-200"
                 onClick={() => router.push('/blog')}
               >
                 <BookOpen className="h-4 w-4 mr-2" />
                 <span>Finans Rehberi</span>
               </Button>
-              <Button variant="ghost" size="sm" className="justify-start text-gray-600 hover:text-gray-900 h-10 px-3">
+              <Button variant="ghost" size="sm" className="justify-start text-muted-foreground hover:text-foreground h-10 px-3 transition-colors duration-200">
                 <Settings className="h-4 w-4 mr-2" />
                 <span>Ayarlar</span>
               </Button>
@@ -728,7 +728,7 @@ export default function ButcapApp() {
                 <Button 
                   variant="ghost" 
                   size="sm" 
-                  className="justify-start text-gray-600 hover:text-gray-900 h-10 px-3"
+                  className="justify-start text-muted-foreground hover:text-foreground h-10 px-3 transition-colors duration-200"
                   onClick={() => router.push('/blog')}
                   title="Finans Rehberi"
                 >
@@ -737,7 +737,7 @@ export default function ButcapApp() {
                 <Button 
                   variant="ghost" 
                   size="sm" 
-                  className="justify-start text-gray-600 hover:text-gray-900 h-10 px-3"
+                  className="justify-start text-muted-foreground hover:text-foreground h-10 px-3 transition-colors duration-200"
                   title="Ayarlar"
                 >
                   <Settings className="h-4 w-4" />
@@ -757,21 +757,21 @@ export default function ButcapApp() {
       {/* Main Content */}
       <main className="container mx-auto px-4 py-6 space-y-6">
         {/* Hero Section - Total Balance */}
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 p-8 text-white shadow-2xl">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -mr-32 -mt-32"></div>
-          <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/10 rounded-full -ml-24 -mb-24"></div>
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-500/90 via-green-600/80 to-teal-600/70 dark:from-emerald-600/30 dark:via-green-700/25 dark:to-teal-700/20 p-8 text-white dark:text-gray-100 shadow-lg dark:shadow-md border border-white/10 dark:border-gray-700/30 transition-colors">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 dark:bg-white/2 rounded-full -mr-32 -mt-32"></div>
+          <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 dark:bg-white/2 rounded-full -ml-24 -mb-24"></div>
           
           <div className="relative z-10">
             <div className="flex items-center justify-between mb-6">
               <div>
                 <h1 className="text-3xl font-bold mb-2">Toplam Bakiye</h1>
-                <p className="text-white/80">Finansal durumunuz</p>
+                <p className="text-white/80 dark:text-gray-300/80">Finansal durumunuz</p>
               </div>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={toggleBalanceHidden}
-                className="text-white hover:bg-white/20"
+                className="text-white/90 dark:text-gray-200 hover:bg-white/10 dark:hover:bg-gray-700/30 transition-colors duration-200"
               >
                 {balanceHidden ? <Eye className="h-5 w-5" /> : <EyeOff className="h-5 w-5" />}
               </Button>
@@ -782,9 +782,9 @@ export default function ButcapApp() {
             </div>
             
             <div className="grid grid-cols-3 gap-4">
-              <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-4">
+              <div className="bg-white/10 dark:bg-gray-700/20 backdrop-blur-sm rounded-2xl p-4 border border-white/10 dark:border-gray-600/20">
                 <div className="flex items-center space-x-2 mb-2">
-                  <div className="w-8 h-8 bg-green-400 rounded-lg flex items-center justify-center">
+                  <div className="w-8 h-8 bg-green-400/80 dark:bg-green-500/60 rounded-lg flex items-center justify-center">
                     <DollarSign className="h-4 w-4 text-white" />
                   </div>
                   <span className="text-sm font-medium">Nakit</span>
@@ -794,9 +794,9 @@ export default function ButcapApp() {
                 </p>
               </div>
               
-              <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-4">
+              <div className="bg-white/10 dark:bg-gray-700/20 backdrop-blur-sm rounded-2xl p-4 border border-white/10 dark:border-gray-600/20">
                 <div className="flex items-center space-x-2 mb-2">
-                  <div className="w-8 h-8 bg-blue-400 rounded-lg flex items-center justify-center">
+                  <div className="w-8 h-8 bg-blue-400/80 dark:bg-blue-500/60 rounded-lg flex items-center justify-center">
                     <Building className="h-4 w-4 text-white" />
                   </div>
                   <span className="text-sm font-medium">Banka</span>
@@ -806,9 +806,9 @@ export default function ButcapApp() {
                 </p>
               </div>
               
-              <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-4">
+              <div className="bg-white/10 dark:bg-gray-700/20 backdrop-blur-sm rounded-2xl p-4 border border-white/10 dark:border-gray-600/20">
                 <div className="flex items-center space-x-2 mb-2">
-                  <div className="w-8 h-8 bg-purple-400 rounded-lg flex items-center justify-center">
+                  <div className="w-8 h-8 bg-purple-400/80 dark:bg-purple-500/60 rounded-lg flex items-center justify-center">
                     <PiggyBank className="h-4 w-4 text-white" />
                   </div>
                   <span className="text-sm font-medium">Birikim</span>
@@ -825,12 +825,12 @@ export default function ButcapApp() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <Dialog open={showAddTransaction} onOpenChange={setShowAddTransaction}>
             <DialogTrigger asChild>
-              <Button className="h-20 bg-white hover:bg-gray-50 border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-200 group">
+              <Button className="h-20 bg-card hover:bg-card/80 border border-border shadow-md dark:shadow-sm hover:shadow-lg dark:hover:shadow-md transition-colors group">
                 <div className="flex flex-col items-center space-y-2">
-                  <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <div className="w-12 h-12 bg-gradient-to-r from-emerald-500/80 to-green-600/70 dark:from-emerald-600/50 dark:to-green-700/40 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-md">
                     <Plus className="h-6 w-6 text-white" />
                   </div>
-                  <span className="text-sm font-medium text-gray-700">İşlem Ekle</span>
+                  <span className="text-sm font-medium text-foreground">İşlem Ekle</span>
                 </div>
               </Button>
             </DialogTrigger>
@@ -916,12 +916,12 @@ export default function ButcapApp() {
 
           <Dialog open={showTransferDialog} onOpenChange={setShowTransferDialog}>
             <DialogTrigger asChild>
-              <Button className="h-20 bg-white hover:bg-gray-50 border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-200 group">
+              <Button className="h-20 bg-card hover:bg-card/80 border border-border shadow-md dark:shadow-sm hover:shadow-lg dark:hover:shadow-md transition-colors group">
                 <div className="flex flex-col items-center space-y-2">
-                  <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-teal-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <div className="w-12 h-12 bg-gradient-to-r from-teal-500/80 to-cyan-600/70 dark:from-teal-600/50 dark:to-cyan-700/40 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-md">
                     <ArrowRightLeft className="h-6 w-6 text-white" />
                   </div>
-                  <span className="text-sm font-medium text-gray-700">Transfer</span>
+                  <span className="text-sm font-medium text-foreground">Transfer</span>
                 </div>
               </Button>
             </DialogTrigger>
@@ -999,12 +999,12 @@ export default function ButcapApp() {
 
           <Dialog open={showRecurringDialog} onOpenChange={setShowRecurringDialog}>
             <DialogTrigger asChild>
-              <Button className="h-20 bg-white hover:bg-gray-50 border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-200 group">
+              <Button className="h-20 bg-card hover:bg-card/80 border border-border shadow-md dark:shadow-sm hover:shadow-lg dark:hover:shadow-md transition-colors group">
                 <div className="flex flex-col items-center space-y-2">
-                  <div className="w-12 h-12 bg-gradient-to-r from-emerald-500 to-green-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <div className="w-12 h-12 bg-gradient-to-r from-emerald-500/80 to-green-600/70 dark:from-emerald-600/50 dark:to-green-700/40 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-md">
                     <Repeat className="h-6 w-6 text-white" />
                   </div>
-                  <span className="text-sm font-medium text-gray-700">Tekrarlayan</span>
+                  <span className="text-sm font-medium text-foreground">Tekrarlayan</span>
                 </div>
               </Button>
             </DialogTrigger>
@@ -1121,46 +1121,46 @@ export default function ButcapApp() {
 
           <Button 
             variant="outline" 
-            className="h-20 bg-white hover:bg-gray-50 border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-200 group"
+            className="h-20 bg-card hover:bg-card/80 border border-border shadow-md dark:shadow-sm hover:shadow-lg dark:hover:shadow-md transition-all duration-200 group"
             onClick={() => router.push('/app/investments')}
           >
             <div className="flex flex-col items-center space-y-2">
-              <div className="w-12 h-12 bg-gradient-to-r from-lime-500 to-green-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+              <div className="w-12 h-12 bg-gradient-to-r from-lime-500/80 to-emerald-600/70 dark:from-lime-600/50 dark:to-emerald-700/40 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-md">
                 <BarChart3 className="h-6 w-6 text-white" />
               </div>
-              <span className="text-sm font-medium text-gray-700">Yatırımlar</span>
+              <span className="text-sm font-medium text-foreground">Yatırımlar</span>
             </div>
           </Button>
         </div>
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Card className="border-0 shadow-xl bg-gradient-to-br from-green-50 to-emerald-50">
+          <Card className="border-0 shadow-md dark:shadow-sm bg-gradient-to-br from-emerald-50/60 to-green-50/40 dark:from-emerald-950/15 dark:to-green-950/10 transition-colors">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-green-600 text-sm font-medium mb-1">Toplam Gelir</p>
-                  <p className="text-3xl font-bold text-green-700">
+                  <p className="text-emerald-600 dark:text-emerald-400 text-sm font-medium mb-1 transition-colors">Toplam Gelir</p>
+                  <p className="text-3xl font-bold text-emerald-700 dark:text-emerald-300 transition-colors">
                     {income.toLocaleString('tr-TR')} TL
                   </p>
                 </div>
-                <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center shadow-lg">
+                <div className="w-16 h-16 bg-gradient-to-r from-emerald-500/70 to-green-600/60 dark:from-emerald-600/40 dark:to-green-700/30 rounded-2xl flex items-center justify-center shadow-lg">
                   <TrendingUp className="h-8 w-8 text-white" />
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="border-0 shadow-xl bg-gradient-to-br from-red-50 to-pink-50">
+          <Card className="border-0 shadow-md dark:shadow-sm bg-gradient-to-br from-red-50/60 to-pink-50/40 dark:from-red-950/15 dark:to-pink-950/10 transition-colors">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-red-600 text-sm font-medium mb-1">Toplam Gider</p>
-                  <p className="text-3xl font-bold text-red-700">
+                  <p className="text-red-600 dark:text-red-400 text-sm font-medium mb-1 transition-colors">Toplam Gider</p>
+                  <p className="text-3xl font-bold text-red-700 dark:text-red-300 transition-colors">
                     {expense.toLocaleString('tr-TR')} TL
                   </p>
                 </div>
-                <div className="w-16 h-16 bg-gradient-to-r from-red-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-lg">
+                <div className="w-16 h-16 bg-gradient-to-r from-red-500/70 to-pink-600/60 dark:from-red-600/40 dark:to-pink-700/30 rounded-2xl flex items-center justify-center shadow-lg">
                   <TrendingDown className="h-8 w-8 text-white" />
                 </div>
               </div>
@@ -1170,9 +1170,9 @@ export default function ButcapApp() {
 
         {/* Charts Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <Card className="border-0 shadow-xl">
+          <Card className="border-0 shadow-md dark:shadow-sm">
             <CardHeader className="pb-4">
-              <CardTitle className="text-lg font-semibold text-gray-800">Bakiye Dağılımı</CardTitle>
+              <CardTitle className="text-lg font-semibold text-foreground">Bakiye Dağılımı</CardTitle>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={250}>
@@ -1197,23 +1197,23 @@ export default function ButcapApp() {
                 {chartData.map((item) => (
                   <div key={item.name} className="flex items-center space-x-2">
                     <div className="w-4 h-4 rounded-full" style={{ backgroundColor: item.color }} />
-                    <span className="text-sm font-medium text-gray-700">{item.name}</span>
+                    <span className="text-sm font-medium text-foreground">{item.name}</span>
                   </div>
                 ))}
               </div>
             </CardContent>
           </Card>
 
-          <Card className="border-0 shadow-xl">
+          <Card className="border-0 shadow-md dark:shadow-sm">
             <CardHeader className="pb-4">
-              <CardTitle className="text-lg font-semibold text-gray-800">Aylık Gelir/Gider</CardTitle>
+              <CardTitle className="text-lg font-semibold text-foreground">Aylık Gelir/Gider</CardTitle>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={250}>
                 <AreaChart data={monthlyData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                  <XAxis dataKey="month" tick={{ fontSize: 12 }} />
-                  <YAxis tick={{ fontSize: 12 }} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                  <XAxis dataKey="month" tick={{ fontSize: 12, fill: 'hsl(var(--muted-foreground))' }} />
+                  <YAxis tick={{ fontSize: 12, fill: 'hsl(var(--muted-foreground))' }} />
                   <Tooltip formatter={(value: number) => `${value.toLocaleString('tr-TR')} TL`} />
                   <Area type="monotone" dataKey="income" stackId="1" stroke="#10b981" fill="#10b981" fillOpacity={0.6} name="Gelir" />
                   <Area type="monotone" dataKey="expense" stackId="2" stroke="#ef4444" fill="#ef4444" fillOpacity={0.6} name="Gider" />
@@ -1224,9 +1224,9 @@ export default function ButcapApp() {
         </div>
 
         {/* Recent Transactions */}
-        <Card className="border-0 shadow-xl">
+        <Card className="border-0 shadow-md dark:shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between pb-4">
-            <CardTitle className="text-lg font-semibold text-gray-800">Son İşlemler</CardTitle>
+            <CardTitle className="text-lg font-semibold text-foreground">Son İşlemler</CardTitle>
             <Button variant="ghost" size="sm" className="text-green-600 hover:text-green-700">
               Tümünü Gör
             </Button>
@@ -1235,19 +1235,19 @@ export default function ButcapApp() {
             <div className="space-y-3">
               {recentTransactions.length === 0 ? (
                 <div className="text-center py-12">
-                  <div className="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                    <Wallet className="h-8 w-8 text-gray-400" />
+                  <div className="w-16 h-16 bg-muted rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <Wallet className="h-8 w-8 text-muted-foreground" />
                   </div>
-                  <p className="text-gray-500 font-medium">Henüz işlem bulunmuyor</p>
-                  <p className="text-gray-400 text-sm mt-1">İlk işleminizi eklemek için yukarıdaki butonları kullanın</p>
+                  <p className="text-muted-foreground font-medium">Henüz işlem bulunmuyor</p>
+                  <p className="text-muted-foreground/70 text-sm mt-1">İlk işleminizi eklemek için yukarıdaki butonları kullanın</p>
                 </div>
               ) : (
                 recentTransactions.map((transaction) => (
-                  <div key={transaction.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-2xl hover:bg-gray-100 transition-colors">
+                  <div key={transaction.id} className="flex items-center justify-between p-4 bg-muted/50 rounded-2xl hover:bg-muted transition-colors">
                     <div className="flex items-center space-x-4">
-                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-                        transaction.type === 'income' ? 'bg-gradient-to-r from-green-500 to-emerald-500' : 
-                        transaction.type === 'expense' ? 'bg-gradient-to-r from-red-500 to-pink-500' : 'bg-gradient-to-r from-blue-500 to-cyan-500'
+                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center shadow-sm ${
+                        transaction.type === 'income' ? 'bg-gradient-to-r from-emerald-500/80 to-green-600/70 dark:from-emerald-600/50 dark:to-green-700/40' : 
+                        transaction.type === 'expense' ? 'bg-gradient-to-r from-red-500/80 to-pink-600/70 dark:from-red-600/50 dark:to-pink-700/40' : 'bg-gradient-to-r from-blue-500/80 to-cyan-600/70 dark:from-blue-600/50 dark:to-cyan-700/40'
                       }`}>
                         {transaction.type === 'income' ? (
                           <ArrowUp className="h-6 w-6 text-white" />
@@ -1259,24 +1259,24 @@ export default function ButcapApp() {
                       </div>
                       <div>
                         <div className="flex items-center space-x-2">
-                          <p className="font-semibold text-gray-800">{transaction.category}</p>
-                          <div className="text-gray-400">
+                          <p className="font-semibold text-foreground transition-colors">{transaction.category}</p>
+                          <div className="text-muted-foreground transition-colors">
                             {getCategoryIcon(transaction.category)}
                           </div>
                         </div>
-                        <p className="text-sm text-gray-500">{transaction.description}</p>
+                        <p className="text-sm text-muted-foreground transition-colors">{transaction.description}</p>
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className={`font-bold text-lg ${
-                        transaction.type === 'income' ? 'text-green-600' : 
-                        transaction.type === 'expense' ? 'text-red-600' : 'text-blue-600'
+                      <p className={`font-bold text-lg transition-colors ${
+                        transaction.type === 'income' ? 'text-green-600 dark:text-green-400' : 
+                        transaction.type === 'expense' ? 'text-red-600 dark:text-red-400' : 'text-blue-600 dark:text-blue-400'
                       }`}>
                         {transaction.type === 'income' ? '+' : 
                          transaction.type === 'expense' ? '-' : ''} 
                         {transaction.amount.toLocaleString('tr-TR')} TL
                       </p>
-                      <p className="text-xs text-gray-400">
+                      <p className="text-xs text-muted-foreground transition-colors">
                         {new Date(transaction.date).toLocaleDateString('tr-TR')}
                       </p>
                     </div>

@@ -119,35 +119,53 @@
   * {
     @apply border-border outline-ring/50;
   }
+  
   body {
     @apply bg-background text-foreground;
-    /* Yumuşak tema geçişleri için body seviyesinde transition */
-    transition: background-color 0.7s cubic-bezier(0.4, 0, 0.2, 1),
-                color 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    /* Global tema geçişi için optimize edilmiş transition */
+    transition: background-color 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                color 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  /* Tüm elementler için senkronize tema geçişi */
+  html {
+    transition: color-scheme 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  /* Tema değişen tüm elementler için otomatik geçiş */
+  *, *::before, *::after {
+    transition-property: background-color, border-color, color, fill, stroke, box-shadow, opacity, transform;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 600ms;
+  }
+  
+  /* Gradient elementler için özel geçiş */
+  [class*="bg-gradient"], [class*="from-"], [class*="to-"] {
+    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
 
 /* Renk değişen elementler için optimize edilmiş geçişler */
 @layer utilities {
-  /* Tüm renk değişen elementler için otomatik geçiş */
+  /* Tüm renk değişen elementler için senkronize geçiş */
   .transition-colors {
-    transition-property: background-color, border-color, color, fill, stroke;
+    transition-property: background-color, border-color, color, fill, stroke, box-shadow;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 500ms;
+    transition-duration: 600ms;
   }
   
   /* Daha yavaş geçiş için özel sınıf */
   .transition-colors-slow {
-    transition-property: background-color, border-color, color, fill, stroke;
+    transition-property: background-color, border-color, color, fill, stroke, box-shadow;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 800ms;
   }
   
   /* İnteraktif elementler için daha hızlı geçiş */
   .transition-colors-fast {
-    transition-property: background-color, border-color, color, fill, stroke;
+    transition-property: background-color, border-color, color, fill, stroke, box-shadow;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 300ms;
+    transition-duration: 400ms;
   }
   
   /* Gradient geçişleri için opacity tabanlı sınıflar */
@@ -183,12 +201,26 @@
 
 /* Theme toggle için özel animasyon */
 .theme-toggle {
-  transition: all 500ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 600ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .theme-toggle:hover {
   transform: scale(1.1);
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
+}
+
+/* Tüm elementler için optimize edilmiş tema geçişi */
+* {
+  transition: inherit;
+}
+
+/* Sadece tema değişen elementler için geçiş */
+html[data-theme] *,
+html.dark *,
+html.light * {
+  transition-property: background-color, border-color, color, fill, stroke, box-shadow, opacity, transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 600ms !important;
 }
 
 /* Rich Text Editor için özel stiller */
