@@ -56,7 +56,9 @@ import {
   Sparkles,
   ArrowUp,
   ArrowDown,
-  MoreHorizontal
+  MoreHorizontal,
+  Laptop,
+  Coffee
 } from 'lucide-react'
 import { ThemeToggle } from '@/components/theme-toggle'
 import { LanguageToggle } from '@/components/language-toggle'
@@ -178,6 +180,36 @@ export default function ButcapApp() {
 
   const isMobile = useMobile()
 
+  // Kategori listeleri
+  const incomeCategories = [
+    'Maaş',
+    'Freelance',
+    'Yatırım Geliri',
+    'Kira Geliri',
+    'Bonus',
+    'Hediye',
+    'Diğer Gelir'
+  ]
+
+  const expenseCategories = [
+    'Market & Gıda',
+    'Kira & Ev Giderleri',
+    'Ulaşım & Yakıt',
+    'Faturalar (Elektrik, Su, Doğalgaz)',
+    'İnternet & Telefon',
+    'Sağlık & İlaç',
+    'Eğitim & Kurs',
+    'Giyim & Alışveriş',
+    'Eğlence & Sosyal',
+    'Restoran & Kafe',
+    'Spor & Salon',
+    'Pet Shop & Evcil Hayvan',
+    'Bakım & Onarım',
+    'Sigorta',
+    'Vergi & Resmi Ödemeler',
+    'Diğer Giderler'
+  ]
+
   const checkAndApplyRecurringTransactions = useCallback(() => {
     if (!user) return
 
@@ -271,6 +303,12 @@ export default function ButcapApp() {
         newBalances[transaction.account] += transaction.amount
       } else if (transaction.type === 'expense') {
         newBalances[transaction.account] -= transaction.amount
+      } else if (transaction.type === 'transfer') {
+        // Transfer için kaynak hesaptan düş, hedef hesaba ekle
+        newBalances[transaction.account] -= transaction.amount // Kaynak hesaptan düş
+        if (transaction.transferTo) {
+          newBalances[transaction.transferTo] += transaction.amount // Hedef hesaba ekle
+        }
       }
       setBalances(newBalances)
       
@@ -513,16 +551,32 @@ export default function ButcapApp() {
   }
 
   const handleAddTransfer = () => {
-    if (!newTransaction.transferAmount || !newTransaction.transferDescription) {
-      alert('Lütfen tüm zorunlu alanları doldurun.')
+    if (!newTransaction.transferAmount) {
+      alert('Lütfen tutar girin.')
+      return
+    }
+
+    if (!newTransaction.transferDescription || newTransaction.transferDescription.trim() === '') {
+      alert('Lütfen transfer açıklaması girin.')
+      return
+    }
+
+    if (newTransaction.transferFrom === newTransaction.transferTo) {
+      alert('Kaynak ve hedef hesap aynı olamaz.')
+      return
+    }
+
+    const amount = parseFloat(newTransaction.transferAmount)
+    if (isNaN(amount) || amount <= 0) {
+      alert('Lütfen geçerli bir tutar girin.')
       return
     }
 
     addTransaction({
       type: 'transfer',
-      amount: parseFloat(newTransaction.transferAmount),
+      amount: amount,
       category: 'Transfer',
-      description: newTransaction.transferDescription,
+      description: newTransaction.transferDescription.trim(),
       account: newTransaction.transferFrom,
       date: new Date().toISOString(),
       transferFrom: newTransaction.transferFrom,
@@ -611,11 +665,32 @@ export default function ButcapApp() {
   // Kategori ikonları
   const getCategoryIcon = (category: string) => {
     const lowerCategory = category.toLowerCase()
+    
+    // Gelir Kategorileri
+    if (lowerCategory.includes('maaş') || lowerCategory.includes('salary')) return <DollarSign className="h-4 w-4" />
+    if (lowerCategory.includes('freelance')) return <Laptop className="h-4 w-4" />
+    if (lowerCategory.includes('yatırım')) return <TrendingUp className="h-4 w-4" />
+    if (lowerCategory.includes('kira gelir')) return <Home className="h-4 w-4" />
+    if (lowerCategory.includes('bonus')) return <Target className="h-4 w-4" />
+    if (lowerCategory.includes('hediye')) return <Heart className="h-4 w-4" />
+    
+    // Gider Kategorileri
     if (lowerCategory.includes('market') || lowerCategory.includes('gıda')) return <ShoppingCart className="h-4 w-4" />
-    if (lowerCategory.includes('ev') || lowerCategory.includes('kira')) return <Home className="h-4 w-4" />
-    if (lowerCategory.includes('araba') || lowerCategory.includes('yakıt')) return <Car className="h-4 w-4" />
-    if (lowerCategory.includes('sağlık') || lowerCategory.includes('hastane')) return <Heart className="h-4 w-4" />
-    if (lowerCategory.includes('fatura') || lowerCategory.includes('elektrik') || lowerCategory.includes('su')) return <Zap className="h-4 w-4" />
+    if (lowerCategory.includes('kira') || lowerCategory.includes('ev gider')) return <Home className="h-4 w-4" />
+    if (lowerCategory.includes('ulaşım') || lowerCategory.includes('yakıt') || lowerCategory.includes('araba')) return <Car className="h-4 w-4" />
+    if (lowerCategory.includes('fatura') || lowerCategory.includes('elektrik') || lowerCategory.includes('su') || lowerCategory.includes('doğalgaz')) return <Zap className="h-4 w-4" />
+    if (lowerCategory.includes('internet') || lowerCategory.includes('telefon')) return <Smartphone className="h-4 w-4" />
+    if (lowerCategory.includes('sağlık') || lowerCategory.includes('ilaç') || lowerCategory.includes('hastane')) return <Heart className="h-4 w-4" />
+    if (lowerCategory.includes('eğitim') || lowerCategory.includes('kurs')) return <BookOpen className="h-4 w-4" />
+    if (lowerCategory.includes('giyim') || lowerCategory.includes('alışveriş')) return <ShoppingCart className="h-4 w-4" />
+    if (lowerCategory.includes('eğlence') || lowerCategory.includes('sosyal')) return <Target className="h-4 w-4" />
+    if (lowerCategory.includes('restoran') || lowerCategory.includes('kafe')) return <Coffee className="h-4 w-4" />
+    if (lowerCategory.includes('spor') || lowerCategory.includes('salon')) return <Target className="h-4 w-4" />
+    if (lowerCategory.includes('pet') || lowerCategory.includes('evcil')) return <Heart className="h-4 w-4" />
+    if (lowerCategory.includes('bakım') || lowerCategory.includes('onarım')) return <Settings className="h-4 w-4" />
+    if (lowerCategory.includes('sigorta')) return <Shield className="h-4 w-4" />
+    if (lowerCategory.includes('vergi') || lowerCategory.includes('resmi')) return <FileText className="h-4 w-4" />
+    
     return <CreditCard className="h-4 w-4" />
   }
 
@@ -891,12 +966,31 @@ export default function ButcapApp() {
                 </div>
                 <div className="space-y-2">
                   <Label>Kategori</Label>
-                  <Input
-                    placeholder="Örn: Market, Yakıt, Maaş"
+                  <Select
                     value={newTransaction.category}
-                    onChange={(e) => setNewTransaction(prev => ({ ...prev, category: e.target.value }))}
-                    className="h-12"
-                  />
+                    onValueChange={(value) => setNewTransaction(prev => ({ ...prev, category: value }))}
+                  >
+                    <SelectTrigger className="h-12">
+                      <SelectValue placeholder="Kategori seçin" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {newTransaction.type === 'income' ? (
+                        incomeCategories.map((category) => (
+                          <SelectItem key={category} value={category}>
+                            {category}
+                          </SelectItem>
+                        ))
+                      ) : newTransaction.type === 'expense' ? (
+                        expenseCategories.map((category) => (
+                          <SelectItem key={category} value={category}>
+                            {category}
+                          </SelectItem>
+                        ))
+                      ) : (
+                        <SelectItem value="Transfer">Transfer</SelectItem>
+                      )}
+                    </SelectContent>
+                  </Select>
                 </div>
                 <div className="space-y-2">
                   <Label>Açıklama</Label>
@@ -982,7 +1076,7 @@ export default function ButcapApp() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label>Açıklama</Label>
+                  <Label>Açıklama *</Label>
                   <Input
                     placeholder="Transfer açıklaması"
                     value={newTransaction.transferDescription}
@@ -1065,12 +1159,29 @@ export default function ButcapApp() {
                 </div>
                 <div className="space-y-2">
                   <Label>Kategori</Label>
-                  <Input
-                    placeholder="Örn: Kira, Fatura, Maaş"
+                  <Select
                     value={newRecurring.category}
-                    onChange={(e) => setNewRecurring(prev => ({ ...prev, category: e.target.value }))}
-                    className="h-12"
-                  />
+                    onValueChange={(value) => setNewRecurring(prev => ({ ...prev, category: value }))}
+                  >
+                    <SelectTrigger className="h-12">
+                      <SelectValue placeholder="Kategori seçin" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {newRecurring.type === 'income' ? (
+                        incomeCategories.map((category) => (
+                          <SelectItem key={category} value={category}>
+                            {category}
+                          </SelectItem>
+                        ))
+                      ) : (
+                        expenseCategories.map((category) => (
+                          <SelectItem key={category} value={category}>
+                            {category}
+                          </SelectItem>
+                        ))
+                      )}
+                    </SelectContent>
+                  </Select>
                 </div>
                 <div className="space-y-2">
                   <Label>Açıklama</Label>
@@ -1264,7 +1375,12 @@ export default function ButcapApp() {
                             {getCategoryIcon(transaction.category)}
                           </div>
                         </div>
-                        <p className="text-sm text-muted-foreground transition-colors">{transaction.description}</p>
+                        <p className="text-sm text-muted-foreground transition-colors">
+                          {transaction.type === 'transfer' 
+                            ? `${transaction.transferFrom === 'cash' ? 'Nakit' : transaction.transferFrom === 'bank' ? 'Banka' : 'Birikim'} → ${transaction.transferTo === 'cash' ? 'Nakit' : transaction.transferTo === 'bank' ? 'Banka' : 'Birikim'}: ${transaction.description}`
+                            : transaction.description
+                          }
+                        </p>
                       </div>
                     </div>
                     <div className="text-right">

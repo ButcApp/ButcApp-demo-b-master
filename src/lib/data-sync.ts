@@ -117,10 +117,19 @@ export const dataSync = {
       }
 
       const data = await response.json()
-      console.log('Transactions retrieved from API:', data?.length || 0)
+      console.log('Transactions retrieved from API:', data?.data?.length || 0)
       
       if (data.success && data.data) {
-        return data.data
+        // API'den gelen veriyi frontend'in beklediği formata dönüştür
+        return data.data.map((item: any) => ({
+          id: item.id,
+          type: item.transaction_type || (item.category === 'Maaş' || item.category === 'Ek Gelir' || item.category === 'Yatırım' || item.category === 'Hediye' || item.category === 'Kira Geliri' ? 'income' : 'expense'), // transaction_type alanını kullan
+          amount: item.amount,
+          category: item.category,
+          description: item.description,
+          date: item.date,
+          account: item.account || 'bank'
+        }))
       } else {
         console.error('Transactions API returned error:', data.error)
         return []
@@ -140,12 +149,17 @@ export const dataSync = {
         return false
       }
 
-      // İşlem verilerini sunucunun beklediği formata dönüştürüyoruz
+      // Transfer işlemi özel handling
+      if (transaction.type === 'transfer') {
+        return this.addTransferTransaction(transaction)
+      }
+
+      // Normal işlem (income/expense)
       const transactionData = {
         amount: transaction.amount,
-        description: transaction.description || transaction.category, // Eğer açıklama yoksa kategoriyi kullan
+        description: transaction.description || transaction.category,
         category: transaction.category,
-        type: transaction.type || 'expense', // Varsayılan olarak 'expense' (gider) kullan
+        type: transaction.type || 'expense',
         date: transaction.date || new Date().toISOString()
       }
 
@@ -178,6 +192,62 @@ export const dataSync = {
       }
     } catch (error) {
       console.error('Error in addTransaction:', error)
+      return false
+    }
+  },
+
+  // Transfer işlemi ekle (özel metod)
+  async addTransferTransaction(transaction: any) {
+    try {
+      const userId = await this.getCurrentUserId()
+      if (!userId) {
+        console.error('Kullanıcı ID bulunamadı')
+        return false
+      }
+
+      console.log('Transfer işlemi ekleniyor:', transaction)
+
+      // Transfer işlemini normal işlem olarak kaydet ama category olarak transfer sakla
+      const transactionData = {
+        amount: transaction.amount,
+        description: transaction.description, // Transfer açıklamasını kullan
+        category: 'Transfer', // Category olarak "Transfer" sakla
+        type: 'transfer', // Type olarak transfer kullan
+        date: transaction.date || new Date().toISOString()
+      }
+
+      console.log('Gönderilecek veri:', transactionData)
+
+      const response = await fetch(`${ClientAuthService.getBaseUrl()}/api/data/transactions`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${ClientAuthService.getToken()}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(transactionData)
+      })
+
+      console.log('API Response Status:', response.status, response.statusText)
+      
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}))
+        console.error('Transfer işlemi eklenemedi:', response.status, response.statusText, errorData)
+        console.error('Request body:', JSON.stringify(transactionData, null, 2))
+        return false
+      }
+
+      const data = await response.json()
+      console.log('Transfer işlem yanıtı:', data)
+      
+      if (data.success) {
+        console.log('Transfer işlemi başarıyla eklendi')
+        return true
+      } else {
+        console.error('Transfer işlem eklenirken hata:', data.error)
+        return false
+      }
+    } catch (error) {
+      console.error('Error in addTransferTransaction:', error)
       return false
     }
   },

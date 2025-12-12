@@ -26,11 +26,11 @@ async function authenticate(request: NextRequest) {
   return { user, token }
 }
 
-// GET /api/data/transactions - Fetch user transactions
 export async function GET(request: NextRequest) {
   try {
     const auth = await authenticate(request)
     if (auth.error) {
+      console.error('GET authentication error:', auth.error)
       return NextResponse.json({ error: auth.error }, { status: auth.status })
     }
 
@@ -55,9 +55,11 @@ export async function GET(request: NextRequest) {
       .eq('userid', userId)
       .eq('type', 'transaction')
 
+    console.log('Query built successfully')
+
     // Apply filters
     if (type) {
-      query = query.eq('category', type)
+      query = query.eq('transaction_type', type)
     }
     
     if (category) {
@@ -72,15 +74,19 @@ export async function GET(request: NextRequest) {
       query = query.lte('date', endDate)
     }
 
+    console.log('About to execute query...')
+
     const { data: transactions, error } = await query
       .order('date', { ascending: false })
       .range(offset, limit)
 
     if (error) {
       console.error('Transactions fetch error:', error)
+      console.error('Error details:', JSON.stringify(error, null, 2))
       return NextResponse.json({
         success: false,
-        error: 'Failed to fetch transactions'
+        error: 'Failed to fetch transactions',
+        details: error
       }, { status: 500 })
     }
 
@@ -98,9 +104,11 @@ export async function GET(request: NextRequest) {
 
   } catch (error) {
     console.error('Transactions GET error:', error)
+    console.error('Error stack:', error.stack)
     return NextResponse.json({
       success: false,
-      error: 'Internal server error'
+      error: 'Internal server error',
+      details: error.message
     }, { status: 500 })
   }
 }
@@ -116,10 +124,15 @@ export async function POST(request: NextRequest) {
     const userId = auth.user.id
     const body = await request.json()
 
+    console.log('POST request received:', { userId, body })
+
     // Validate required fields
     const { amount, description, category, type = 'expense' } = body
     
+    console.log('Extracted fields:', { amount, description, category, type })
+    
     if (!amount || !description || !category) {
+      console.log('Validation failed - missing fields:', { amount, description, category })
       return NextResponse.json({
         success: false,
         error: 'Missing required fields: amount, description, category'
@@ -136,36 +149,44 @@ export async function POST(request: NextRequest) {
     }
 
     // Validate type
-    if (!['income', 'expense'].includes(type)) {
+    if (!['income', 'expense', 'transfer'].includes(type)) {
       return NextResponse.json({
         success: false,
-        error: 'Type must be either income or expense'
+        error: 'Type must be either income, expense, or transfer'
       }, { status: 400 })
     }
 
     console.log('Creating transaction:', { userId, amount, description, category, type })
 
+    const insertData = {
+      id: `trans_${userId}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+      userid: userId,
+      type: 'transaction',
+      amount: parsedAmount,
+      description: description.trim(),
+      category: category.trim(), // Store the actual category
+      date: new Date(body.date || Date.now()).toISOString(),
+      createdat: new Date().toISOString(),
+      updatedat: new Date().toISOString(),
+      // Store transaction type in a JSON field or additional field
+      transaction_type: type // Add transaction type as separate field
+    }
+
+    console.log('Insert data prepared:', insertData)
+
     const { data: transaction, error } = await supabase
       .from('user_data')
-      .insert({
-        id: `trans_${userId}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-        userid: userId,
-        type: 'transaction',
-        amount: parsedAmount,
-        description: description.trim(),
-        category: category.trim(),
-        date: new Date(body.date || Date.now()).toISOString(),
-        createdat: new Date().toISOString(),
-        updatedat: new Date().toISOString()
-      })
+      .insert(insertData)
       .select()
       .single()
 
     if (error) {
       console.error('Transaction creation error:', error)
+      console.error('Error details:', JSON.stringify(error, null, 2))
       return NextResponse.json({
         success: false,
-        error: 'Failed to create transaction'
+        error: 'Failed to create transaction',
+        details: error
       }, { status: 500 })
     }
 
@@ -178,9 +199,11 @@ export async function POST(request: NextRequest) {
 
   } catch (error) {
     console.error('Transactions POST error:', error)
+    console.error('Error stack:', error.stack)
     return NextResponse.json({
       success: false,
-      error: 'Internal server error'
+      error: 'Internal server error',
+      details: error.message
     }, { status: 500 })
   }
 }
