@@ -1,9 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@supabase/supabase-js'
-
-const supabaseUrl = "https://dfiwgngtifuqrrxkvknn.supabase.co";
-const supabaseServiceKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRmaXdnbmd0aWZ1cXJyeGt2a25uIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NTI3NzMyMSwiZXhwIjoyMDgwODUzMzIxfQ.uCfJ5DzQ2QCiyXycTrHEaKh1EvAFbuP8HBORmBSPbX8";
-const supabase = createClient(supabaseUrl, supabaseServiceKey);
+import { getBlogPostsWithFallback } from '@/lib/supabase-config'
 
 // GET - Fetch blog posts
 export async function GET(request: NextRequest) {
@@ -15,71 +11,36 @@ export async function GET(request: NextRequest) {
     const featured = searchParams.get('featured')
     const search = searchParams.get('search')
 
-    const offset = (page - 1) * limit
-
-    // Build query
-    let query = supabase
-      .from('blog_posts')
-      .select('*', { count: 'exact' })
-      // .eq('status', 'published') // Test için kaldırıldı
+    // Get posts with fallback
+    let posts = await getBlogPostsWithFallback()
 
     // Apply filters
     if (category && category !== 'all') {
-      query = query.eq('category', category)
+      posts = posts.filter(post => post.category === category)
     }
     if (featured === 'true') {
-      query = query.eq('featured', true)
+      posts = posts.filter(post => post.featured)
     }
     if (search) {
-      query = query.or(`title.ilike.%${search}%,content.ilike.%${search}%,excerpt.ilike.%${search}%`)
+      posts = posts.filter(post => 
+        post.title.toLowerCase().includes(search.toLowerCase()) ||
+        post.content.toLowerCase().includes(search.toLowerCase()) ||
+        post.excerpt?.toLowerCase().includes(search.toLowerCase())
+      )
     }
 
-    // Apply sorting and pagination
-    query = query
-      .order('createdat', { ascending: false })
-      .range(offset, offset + limit - 1)
-
-    const { data: posts, error, count } = await query
-
-    if (error) {
-      console.error('Blog posts fetch error:', error)
-      return NextResponse.json({ 
-        success: false, 
-        error: 'Failed to fetch blog posts' 
-      }, { status: 500 })
-    }
-
-    // Transform posts to match frontend interface
-    const transformedPosts = (posts || []).map(post => ({
-      id: post.id,
-      title: post.title,
-      slug: post.slug,
-      excerpt: post.excerpt,
-      content: post.content,
-      coverImage: post.cover_image,
-      category: post.category,
-      author: {
-        name: post.author_name || 'ButcApp Team',
-        avatar: post.author_avatar || '/images/default-avatar.png',
-        bio: post.author_bio || 'Finansal okuryazarlık uzmanları'
-      },
-      publishedAt: post.createdat,
-      updatedAt: post.updatedat,
-      readingTime: post.reading_time || Math.ceil(post.content?.length / 1000) || 5,
-      featured: post.featured || false,
-      tags: post.tags ? post.tags.split(',').map((tag: string) => tag.trim()) : [],
-      views: post.viewCount || 0,
-      status: post.status
-    }))
+    // Apply pagination
+    const offset = (page - 1) * limit
+    const paginatedPosts = posts.slice(offset, offset + limit)
 
     return NextResponse.json({
       success: true,
-      data: transformedPosts,
+      data: paginatedPosts,
       pagination: {
         page,
         limit,
-        total: count || 0,
-        totalPages: Math.ceil((count || 0) / limit)
+        total: posts.length,
+        totalPages: Math.ceil(posts.length / limit)
       }
     })
 
