@@ -231,7 +231,7 @@ export function NotesButton({ className }: NotesButtonProps) {
             <div className="space-y-3">
               {filteredNotes.map((note) => (
                 <Card key={note.id} className="hover:bg-muted/50 transition-colors">
-                  <CardContent className="p-4">
+                  <CardContent className="p-4" onClick={() => startEdit(note)}>
                     <div className="flex justify-between items-start mb-2">
                       <h3 className="font-semibold text-sm">{note.title}</h3>
                       <div className="flex gap-1">
@@ -265,6 +265,11 @@ export function NotesButton({ className }: NotesButtonProps) {
                         addSuffix: true, 
                         locale: tr 
                       })}
+                    </div>
+                    <div className="mt-2 pt-2 border-t">
+                      <p className="text-sm text-muted-foreground line-clamp-3">
+                        {note.content}
+                      </p>
                     </div>
                   </CardContent>
                 </Card>
