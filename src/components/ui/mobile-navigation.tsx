@@ -48,11 +48,11 @@ export function MobileNavigation({
 
   return (
     <div className="fixed inset-0 bg-black/50 z-50">
-      <div className="bg-white dark:bg-gray-800 h-full max-w-sm mx-auto">
-        <div className="flex items-center justify-between p-4 border-b">
-          <div className="flex items-center gap-3">
-            <Menu className="h-5 w-5 text-gray-500" />
-            <span className="text-lg font-semibold text-gray-900 dark:text-white">
+      <div className="bg-white dark:bg-gray-800 h-full w-full max-w-sm mx-auto shadow-xl">
+        <div className="flex items-center justify-between p-3 sm:p-4 border-b">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <Menu className="h-4 w-4 sm:h-5 sm:w-5 text-gray-500" />
+            <span className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white">
               {title}
             </span>
           </div>
@@ -71,7 +71,7 @@ export function MobileNavigation({
             <button
               key={item.id}
               onClick={() => handleItemClick(item.id)}
-              className={`w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700 text-left transition-colors ${
+              className={`w-full flex items-center gap-3 px-3 sm:px-4 py-3 sm:py-4 hover:bg-gray-50 dark:hover:bg-gray-700 text-left transition-colors ${
                 activeItem === item.id ? 'bg-blue-50 dark:bg-blue-900/20' : ''
               }`}
             >
@@ -90,8 +90,8 @@ export function MobileNavigation({
           ))}
         </div>
 
-        <div className="border-t border-gray-200 dark:border-gray-700 p-4">
-          <div className="text-center text-sm text-gray-500">
+        <div className="border-t border-gray-200 dark:border-gray-700 p-3 sm:p-4">
+          <div className="text-center text-xs sm:text-sm text-gray-500">
             Menüden çıkmak için dışarı alana dokunun veya ESC tuşuna basın
           </div>
         </div>

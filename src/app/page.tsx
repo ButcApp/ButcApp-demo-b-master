@@ -234,7 +234,7 @@ export default function HomePage() {
           }}></div>
         </div>
         
-        <div className="relative max-w-7xl mx-auto px-6 py-24 sm:py-32">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 lg:py-32">
           <div className="text-center space-y-8">
             {/* Modern Logo */}
             <div className="flex justify-center">
@@ -252,7 +252,7 @@ export default function HomePage() {
             
             {/* Modern Başlık */}
             <div className="space-y-4">
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight">
                 <span className="bg-gradient-to-r from-foreground via-foreground to-foreground bg-clip-text text-transparent transition-colors-slow">
                   {t('home.title')}
                 </span>
@@ -260,7 +260,7 @@ export default function HomePage() {
               
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-green-400 to-emerald-500 blur-3xl opacity-20 transition-colors-slow"></div>
-                <p className="relative text-xl sm:text-2xl lg:text-3xl text-muted-foreground font-medium max-w-3xl mx-auto leading-relaxed transition-colors-slow">
+                <p className="relative text-lg sm:text-xl lg:text-2xl text-muted-foreground font-medium max-w-3xl mx-auto leading-relaxed transition-colors-slow">
                   <span className="text-green-600 dark:text-green-400 font-semibold transition-colors-slow">
                     {t('home.subtitle')}
                   </span>
@@ -269,10 +269,10 @@ export default function HomePage() {
             </div>
 
             {/* Modern CTA Butonları */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center pt-6 sm:pt-8">
               <Button 
                 size="lg" 
-                className="group relative overflow-hidden bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white px-8 sm:px-12 py-4 text-lg font-semibold shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-105 border-0 rounded-2xl transition-colors-fast"
+                className="group relative overflow-hidden bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white px-6 sm:px-8 lg:px-12 py-3 sm:py-4 text-base sm:text-lg font-semibold shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-105 border-0 rounded-2xl transition-colors-fast min-h-[44px]"
                 onClick={() => {
                   if (user) {
                     router.push('/app')
@@ -290,11 +290,11 @@ export default function HomePage() {
             </div>
 
             {/* Secondary Actions */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center pt-3 sm:pt-4">
               <Button 
                 size="lg" 
                 variant="outline"
-                className="border-2 border-border text-muted-foreground hover:border-green-500 hover:text-green-600 dark:hover:text-green-400 hover:bg-green-50 dark:hover:bg-green-950/20 px-8 py-3 text-base font-medium transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl rounded-xl transition-colors-fast"
+                className="border-2 border-border text-muted-foreground hover:border-green-500 hover:text-green-600 dark:hover:text-green-400 hover:bg-green-50 dark:hover:bg-green-950/20 px-4 sm:px-6 lg:px-8 py-2 sm:py-3 text-sm sm:text-base font-medium transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl rounded-xl transition-colors-fast min-h-[44px]"
                 onClick={() => router.push('/blog')}
               >
                 <BookOpen className="mr-2 w-5 h-5" />
@@ -306,7 +306,7 @@ export default function HomePage() {
                 size="lg" 
                 variant="ghost" 
                 onClick={() => setShowGuide(true)}
-                className="text-muted-foreground hover:text-green-600 dark:hover:text-green-400 px-6 py-3 text-base font-medium transition-all duration-300 hover:scale-105 hover:bg-muted/50 rounded-xl transition-colors-fast"
+                className="text-muted-foreground hover:text-green-600 dark:hover:text-green-400 px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base font-medium transition-all duration-300 hover:scale-105 hover:bg-muted/50 rounded-xl transition-colors-fast min-h-[44px]"
               >
                 <HelpCircle className="mr-2 w-5 h-5" />
                 {t('home.howToUse')}
@@ -464,12 +464,12 @@ export default function HomePage() {
       )}
 
       {/* Özellikler */}
-      <section className="py-24 px-6 bg-background transition-all duration-700 ease-in-out">
+      <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-background transition-all duration-700 ease-in-out">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-20">
+          <div className="text-center mb-12 sm:mb-16 lg:mb-20">
             <div className="space-y-4">
               {/* Grid Stack Tekniği ile Başlık - Layout Shift Önleme */}
-              <h2 className="text-4xl sm:text-5xl font-bold tracking-tight grid grid-cols-1 grid-rows-1">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight grid grid-cols-1 grid-rows-1">
                 <span className="col-start-1 row-start-1 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent opacity-100 dark:opacity-0 transition-all duration-700 ease-in-out">
                   {t('features.title')}
                 </span>
@@ -477,13 +477,13 @@ export default function HomePage() {
                   {t('features.title')}
                 </span>
               </h2>
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed transition-all duration-700 ease-in-out">
+              <p className="text-base sm:text-lg lg:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed transition-all duration-700 ease-in-out">
                 {t('features.subtitle')}
               </p>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             {features.map((feature) => (
               <div
                 key={feature.id}

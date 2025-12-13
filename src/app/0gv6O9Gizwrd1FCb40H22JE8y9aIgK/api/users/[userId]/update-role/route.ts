@@ -12,8 +12,9 @@ export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ userId: string }> }
 ) {
-  const optionsResponse = handleOptions(request)
-  if (optionsResponse) return optionsResponse
+  if (request.method === 'OPTIONS') {
+    return handleOptions(request)
+  }
   const corsHeaders = corsMiddleware(request)
   const startTime = Date.now()
   const headersList = request.headers

@@ -957,15 +957,15 @@ export default function ButcapApp() {
     <div className="min-h-screen bg-background transition-colors">
       {/* Header */}
       <header className="sticky top-0 z-50 w-full border-b border-border/50 bg-background/95 backdrop-blur-md supports-[backdrop-filter]:bg-background/90 transition-colors shadow-sm">
-        <div className="container mx-auto px-4 flex h-16 items-center">
+        <div className="container mx-auto px-3 sm:px-4 lg:px-6 flex h-14 sm:h-16 items-center">
           <button 
             onClick={handleHeaderClick}
-            className="mr-4 flex items-center space-x-3 group"
+            className="mr-2 sm:mr-4 flex items-center space-x-2 sm:space-x-3 group"
           >
-            <div className="w-10 h-10 bg-gradient-to-r from-green-600 to-emerald-600 rounded-xl flex items-center justify-center shadow-md dark:shadow-sm group-hover:shadow-lg dark:group-hover:shadow-md transition-shadow">
-              <Wallet className="h-5 w-5 text-white" />
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-green-600 to-emerald-600 rounded-lg sm:rounded-xl flex items-center justify-center shadow-md dark:shadow-sm group-hover:shadow-lg dark:group-hover:shadow-md transition-shadow">
+              <Wallet className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
             </div>
-            <span className="font-bold text-xl bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">ButcApp</span>
+            <span className="font-bold text-lg sm:text-xl bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">ButcApp</span>
           </button>
           
           <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
@@ -1005,17 +1005,17 @@ export default function ButcapApp() {
       </header>
 
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-6 space-y-6">
+      <main className="container mx-auto px-3 sm:px-4 lg:px-6 py-4 sm:py-6 space-y-4 sm:space-y-6">
         {/* Hero Section - Total Balance */}
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-500/90 via-green-600/80 to-teal-600/70 dark:from-emerald-600/30 dark:via-green-700/25 dark:to-teal-700/20 p-8 text-white dark:text-gray-100 shadow-lg dark:shadow-md border border-white/10 dark:border-gray-700/30 transition-colors">
+        <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-br from-emerald-500/90 via-green-600/80 to-teal-600/70 dark:from-emerald-600/30 dark:via-green-700/25 dark:to-teal-700/20 p-4 sm:p-6 lg:p-8 text-white dark:text-gray-100 shadow-lg dark:shadow-md border border-white/10 dark:border-gray-700/30 transition-colors">
           <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 dark:bg-white/2 rounded-full -mr-32 -mt-32"></div>
           <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 dark:bg-white/2 rounded-full -ml-24 -mb-24"></div>
           
           <div className="relative z-10">
-            <div className="flex items-center justify-between mb-6">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-6 gap-4">
               <div>
-                <h1 className="text-3xl font-bold mb-2">Toplam Bakiye</h1>
-                <p className="text-white/80 dark:text-gray-300/80">Finansal durumunuz</p>
+                <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-1 sm:mb-2">Toplam Bakiye</h1>
+                <p className="text-white/80 dark:text-gray-300/80 text-sm sm:text-base">Finansal durumunuz</p>
               </div>
               <Button
                 variant="ghost"
@@ -1027,11 +1027,11 @@ export default function ButcapApp() {
               </Button>
             </div>
             
-            <div className="text-4xl font-bold mb-8">
+            <div className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 sm:mb-8">
               {balanceHidden ? '***.*** TL' : `${totalBalance.toLocaleString('tr-TR')} TL`}
             </div>
             
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
               <div className="bg-white/10 dark:bg-gray-700/20 backdrop-blur-sm rounded-2xl p-4 border border-white/10 dark:border-gray-600/20">
                 <div className="flex items-center space-x-2 mb-2">
                   <div className="w-8 h-8 bg-green-400/80 dark:bg-green-500/60 rounded-lg flex items-center justify-center">

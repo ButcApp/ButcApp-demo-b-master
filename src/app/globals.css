@@ -617,6 +617,268 @@ html.light * {
   transform: translateY(0);
 }
 
+/* Mobil uyumlu stiller */
+@layer utilities {
+  /* Mobil first approach */
+  .container {
+    @apply px-4 sm:px-6 lg:px-8;
+  }
+  
+  /* Touch-friendly buttons */
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Safe area for iOS */
+  .safe-area-top {
+    padding-top: env(safe-area-inset-top);
+  }
+  
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  
+  /* Mobil scroll */
+  .mobile-scroll {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+  
+  /* Mobil text sizing */
+  .mobile-text {
+    font-size: clamp(0.875rem, 2.5vw, 1rem);
+  }
+  
+  .mobile-heading {
+    font-size: clamp(1.5rem, 5vw, 2rem);
+  }
+  
+  /* Responsive grid */
+  .responsive-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4;
+  }
+  
+  /* Mobile cards */
+  .mobile-card {
+    @apply rounded-xl p-4 shadow-sm;
+  }
+  
+  /* Mobile navigation */
+  .mobile-nav {
+    @apply fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 z-50;
+  }
+  
+  /* Sticky headers on mobile */
+  .mobile-sticky {
+    @apply sticky top-0 z-40 bg-white/95 dark:bg-gray-800/95 backdrop-blur-md;
+  }
+  
+  /* Hide on mobile */
+  .hide-mobile {
+    @apply hidden sm:block;
+  }
+  
+  /* Show only on mobile */
+  .show-mobile {
+    @apply block sm:hidden;
+  }
+  
+  /* Responsive spacing */
+  .responsive-spacing {
+    @apply p-4 sm:p-6 lg:p-8;
+  }
+  
+  /* Mobile forms */
+  .mobile-form {
+    @apply space-y-4;
+  }
+  
+  .mobile-input {
+    @apply w-full px-4 py-3 text-base rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent;
+  }
+  
+  /* Mobile buttons */
+  .mobile-button {
+    @apply w-full px-4 py-3 text-base font-medium rounded-lg transition-colors duration-200;
+    min-height: 44px;
+  }
+  
+  .mobile-button-primary {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 0.5rem;
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 200ms;
+    min-height: 44px;
+    background-color: rgb(37 99 235);
+    color: white;
+  }
+  
+  .mobile-button-primary:hover {
+    background-color: rgb(29 78 216);
+  }
+  
+  .mobile-button-secondary {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 0.5rem;
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 200ms;
+    min-height: 44px;
+    background-color: rgb(229 231 235);
+    color: rgb(31 41 55);
+  }
+  
+  .mobile-button-secondary:hover {
+    background-color: rgb(209 213 219);
+  }
+  
+  .dark .mobile-button-secondary {
+    background-color: rgb(55 65 81);
+    color: rgb(209 213 219);
+  }
+  
+  .dark .mobile-button-secondary:hover {
+    background-color: rgb(75 85 99);
+  }
+  
+  /* Mobile modals */
+  .mobile-modal {
+    @apply fixed inset-0 z-50 flex items-end justify-center bg-black/50;
+  }
+  
+  .mobile-modal-content {
+    @apply w-full max-h-[90vh] overflow-y-auto bg-white dark:bg-gray-800 rounded-t-3xl;
+  }
+  
+  /* Mobile sheets */
+  .mobile-sheet {
+    @apply fixed inset-0 z-50 bg-black/50;
+  }
+  
+  .mobile-sheet-content {
+    @apply fixed right-0 top-0 h-full w-full max-w-sm bg-white dark:bg-gray-800 shadow-xl overflow-y-auto;
+  }
+}
+
+/* Mobil özel animasyonlar */
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-left {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.3s ease-out;
+}
+
+.animate-slide-in-left {
+  animation: slide-in-left 0.3s ease-out;
+}
+
+/* Mobil özel scrollbar */
+.mobile-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.mobile-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.mobile-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 2px;
+}
+
+.mobile-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.dark .mobile-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.dark .mobile-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Mobil touch feedback */
+@media (hover: none) and (pointer: coarse) {
+  .touch-feedback:active {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  
+  .touch-feedback {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* Responsive typography */
+@media (max-width: 640px) {
+  h1 { @apply text-2xl; }
+  h2 { @apply text-xl; }
+  h3 { @apply text-lg; }
+  h4 { @apply text-base; }
+  p { @apply text-sm leading-relaxed; }
+  
+  .text-responsive {
+    font-size: clamp(0.875rem, 3vw, 1rem);
+  }
+  
+  .heading-responsive {
+    font-size: clamp(1.5rem, 6vw, 2rem);
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  h1 { @apply text-3xl; }
+  h2 { @apply text-2xl; }
+  h3 { @apply text-xl; }
+  h4 { @apply text-lg; }
+  p { @apply text-base leading-relaxed; }
+}
+
+@media (min-width: 1025px) {
+  h1 { @apply text-4xl; }
+  h2 { @apply text-3xl; }
+  h3 { @apply text-2xl; }
+  h4 { @apply text-xl; }
+  p { @apply text-lg leading-relaxed; }
+}
+
 /* Loading skeleton animasyonu */
 @keyframes skeleton-loading {
   0% {

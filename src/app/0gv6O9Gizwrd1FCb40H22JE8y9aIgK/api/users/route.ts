@@ -9,8 +9,9 @@ const supabaseServiceKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXB
 const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
 export async function GET(request: NextRequest) {
-  const optionsResponse = handleOptions(request)
-  if (optionsResponse) return optionsResponse
+  if (request.method === 'OPTIONS') {
+    return handleOptions(request)
+  }
   const corsHeaders = corsMiddleware(request)
   const startTime = Date.now()
   const headersList = request.headers
@@ -107,8 +108,9 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  const optionsResponse = handleOptions(request)
-  if (optionsResponse) return optionsResponse
+  if (request.method === 'OPTIONS') {
+    return handleOptions(request)
+  }
   const corsHeaders = corsMiddleware(request)
   const startTime = Date.now()
   const headersList = request.headers
