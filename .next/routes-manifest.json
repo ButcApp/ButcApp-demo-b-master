@@ -1,1 +1,285 @@
-{"version":3,"caseSensitive":false,"basePath":"","rewrites":{"beforeFiles":[],"afterFiles":[],"fallback":[]},"redirects":[{"source":"/:path+/","destination":"/:path+","permanent":true,"internal":true,"regex":"^(?:\\/((?:[^\\/]+?)(?:\\/(?:[^\\/]+?))*))\\/$"}],"headers":[{"source":"/api/:path*","headers":[{"key":"Access-Control-Allow-Credentials","value":"true"},{"key":"Access-Control-Allow-Origin","value":"*"},{"key":"Access-Control-Allow-Methods","value":"GET,DELETE,PATCH,POST,PUT"},{"key":"Access-Control-Allow-Headers","value":"X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization"}],"regex":"^\\/api(?:\\/((?:[^\\/]+?)(?:\\/(?:[^\\/]+?))*))?(?:\\/)?$"}]}
+{
+  "version": 3,
+  "pages404": true,
+  "caseSensitive": false,
+  "basePath": "",
+  "redirects": [
+    {
+      "source": "/:path+/",
+      "destination": "/:path+",
+      "internal": true,
+      "statusCode": 308,
+      "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/api/:path*",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Credentials",
+          "value": "true"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "https://butcapp.com"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET,DELETE,PATCH,POST,PUT"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization"
+        }
+      ],
+      "regex": "^/api(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))?(?:/)?$"
+    }
+  ],
+  "rewrites": {
+    "beforeFiles": [],
+    "afterFiles": [],
+    "fallback": []
+  },
+  "dynamicRoutes": [
+    {
+      "page": "/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/categories/[categoryId]",
+      "regex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/categories/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPcategoryId": "nxtPcategoryId"
+      },
+      "namedRegex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/categories/(?<nxtPcategoryId>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/posts/[id]",
+      "regex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/posts/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/posts/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/users/[userId]/toggle-status",
+      "regex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/users/([^/]+?)/toggle\\-status(?:/)?$",
+      "routeKeys": {
+        "nxtPuserId": "nxtPuserId"
+      },
+      "namedRegex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/users/(?<nxtPuserId>[^/]+?)/toggle\\-status(?:/)?$"
+    },
+    {
+      "page": "/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/users/[userId]/update-role",
+      "regex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/users/([^/]+?)/update\\-role(?:/)?$",
+      "routeKeys": {
+        "nxtPuserId": "nxtPuserId"
+      },
+      "namedRegex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/users/(?<nxtPuserId>[^/]+?)/update\\-role(?:/)?$"
+    },
+    {
+      "page": "/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/blog/[id]/edit",
+      "regex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/blog/([^/]+?)/edit(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/blog/(?<nxtPid>[^/]+?)/edit(?:/)?$"
+    },
+    {
+      "page": "/api/blog/[slug]",
+      "regex": "^/api/blog/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPslug": "nxtPslug"
+      },
+      "namedRegex": "^/api/blog/(?<nxtPslug>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/data/notes/[noteId]",
+      "regex": "^/api/data/notes/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPnoteId": "nxtPnoteId"
+      },
+      "namedRegex": "^/api/data/notes/(?<nxtPnoteId>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/blog/[slug]",
+      "regex": "^/blog/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPslug": "nxtPslug"
+      },
+      "namedRegex": "^/blog/(?<nxtPslug>[^/]+?)(?:/)?$"
+    }
+  ],
+  "staticRoutes": [
+    {
+      "page": "/",
+      "regex": "^/(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/(?:/)?$"
+    },
+    {
+      "page": "/_not-found",
+      "regex": "^/_not\\-found(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_not\\-found(?:/)?$"
+    },
+    {
+      "page": "/0gv6O9Gizwrd1FCb40H22JE8y9aIgK",
+      "regex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK(?:/)?$"
+    },
+    {
+      "page": "/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/admins",
+      "regex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/admins(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/admins(?:/)?$"
+    },
+    {
+      "page": "/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/auth",
+      "regex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/auth(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/auth(?:/)?$"
+    },
+    {
+      "page": "/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/categories",
+      "regex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/categories(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/categories(?:/)?$"
+    },
+    {
+      "page": "/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/posts",
+      "regex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/posts(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/posts(?:/)?$"
+    },
+    {
+      "page": "/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/realtime-stats",
+      "regex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/realtime\\-stats(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/realtime\\-stats(?:/)?$"
+    },
+    {
+      "page": "/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/set-password",
+      "regex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/set\\-password(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/set\\-password(?:/)?$"
+    },
+    {
+      "page": "/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/system-status",
+      "regex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/system\\-status(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/system\\-status(?:/)?$"
+    },
+    {
+      "page": "/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/users",
+      "regex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/users(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/api/users(?:/)?$"
+    },
+    {
+      "page": "/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/backup",
+      "regex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/backup(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/backup(?:/)?$"
+    },
+    {
+      "page": "/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/blog/new",
+      "regex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/blog/new(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/blog/new(?:/)?$"
+    },
+    {
+      "page": "/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/categories",
+      "regex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/categories(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/categories(?:/)?$"
+    },
+    {
+      "page": "/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/dashboard",
+      "regex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/dashboard(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/dashboard(?:/)?$"
+    },
+    {
+      "page": "/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/dashboard/server-status",
+      "regex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/dashboard/server\\-status(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/dashboard/server\\-status(?:/)?$"
+    },
+    {
+      "page": "/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login",
+      "regex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/login(?:/)?$"
+    },
+    {
+      "page": "/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/posts",
+      "regex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/posts(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/posts(?:/)?$"
+    },
+    {
+      "page": "/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/settings",
+      "regex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/settings(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/settings(?:/)?$"
+    },
+    {
+      "page": "/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/system-logs",
+      "regex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/system\\-logs(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/system\\-logs(?:/)?$"
+    },
+    {
+      "page": "/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/users",
+      "regex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/users(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/0gv6O9Gizwrd1FCb40H22JE8y9aIgK/users(?:/)?$"
+    },
+    {
+      "page": "/app",
+      "regex": "^/app(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/app(?:/)?$"
+    },
+    {
+      "page": "/app/investments",
+      "regex": "^/app/investments(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/app/investments(?:/)?$"
+    },
+    {
+      "page": "/app/settings",
+      "regex": "^/app/settings(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/app/settings(?:/)?$"
+    },
+    {
+      "page": "/blog",
+      "regex": "^/blog(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/blog(?:/)?$"
+    },
+    {
+      "page": "/sitemap.xml",
+      "regex": "^/sitemap\\.xml(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/sitemap\\.xml(?:/)?$"
+    }
+  ],
+  "dataRoutes": [],
+  "rsc": {
+    "header": "rsc",
+    "varyHeader": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+    "prefetchHeader": "next-router-prefetch",
+    "didPostponeHeader": "x-nextjs-postponed",
+    "contentTypeHeader": "text/x-component",
+    "suffix": ".rsc",
+    "prefetchSuffix": ".prefetch.rsc",
+    "prefetchSegmentHeader": "next-router-segment-prefetch",
+    "prefetchSegmentSuffix": ".segment.rsc",
+    "prefetchSegmentDirSuffix": ".segments"
+  },
+  "rewriteHeaders": {
+    "pathHeader": "x-nextjs-rewritten-path",
+    "queryHeader": "x-nextjs-rewritten-query"
+  }
+}
