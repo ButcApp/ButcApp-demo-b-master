@@ -122,8 +122,8 @@ export function NotesButton({ className }: NotesButtonProps) {
         </Button>
       </DialogTrigger>
       
-      <DialogContent className="sm:max-w-[600px] max-h-[80vh]">
-        <DialogHeader>
+      <DialogContent className="sm:max-w-[600px] max-h-[80vh] flex flex-col">
+        <DialogHeader className="flex-shrink-0">
           <DialogTitle className="flex items-center gap-2">
             <StickyNote className="h-5 w-5" />
             Notlarım
@@ -133,9 +133,9 @@ export function NotesButton({ className }: NotesButtonProps) {
           </DialogTitle>
         </DialogHeader>
 
-        <div className="flex flex-col h-[60vh]">
+        <div className="flex flex-col flex-1 overflow-hidden">
           {/* Arama ve Ekle Butonu */}
-          <div className="flex gap-2 mb-4">
+          <div className="flex-shrink-0 flex gap-2 mb-4">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
@@ -157,7 +157,7 @@ export function NotesButton({ className }: NotesButtonProps) {
 
           {/* Yeni Not Ekle Form */}
           {showAddForm && (
-            <Card className="mb-4">
+            <Card className="mb-4 flex-shrink-0">
               <CardHeader className="pb-3">
                 <CardTitle className="text-sm">Yeni Not Ekle</CardTitle>
               </CardHeader>
@@ -230,83 +230,98 @@ export function NotesButton({ className }: NotesButtonProps) {
 
             <div className="space-y-3">
               {filteredNotes.map((note) => (
-                <Card key={note.id} className="relative">
+                <Card key={note.id} className="cursor-pointer hover:bg-muted/50 transition-colors" onClick={() => startEdit(note)}>
                   <CardContent className="p-4">
-                    {editingNote === note.id ? (
-                      // Düzenleme Modu
-                      <div className="space-y-3">
-                        <Input
-                          value={editTitle}
-                          onChange={(e) => setEditTitle(e.target.value)}
-                          placeholder="Başlık..."
-                        />
-                        <Textarea
-                          value={editContent}
-                          onChange={(e) => setEditContent(e.target.value)}
-                          placeholder="İçerik..."
-                          className="min-h-[100px]"
-                        />
-                        <div className="flex gap-2">
-                          <Button
-                            onClick={() => handleUpdateNote(note.id)}
-                            disabled={!editTitle.trim() || !editContent.trim() || loading}
-                            size="sm"
-                          >
-                            <Save className="h-4 w-4 mr-2" />
-                            Kaydet
-                          </Button>
-                          <Button
-                            onClick={cancelEdit}
-                            variant="outline"
-                            size="sm"
-                          >
-                            <X className="h-4 w-4 mr-2" />
-                            İptal
-                          </Button>
-                        </div>
+                    <div className="flex justify-between items-start mb-2">
+                      <h3 className="font-semibold text-sm">{note.title}</h3>
+                      <div className="flex gap-1">
+                        <Button
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            startEdit(note)
+                          }}
+                          variant="ghost"
+                          size="sm"
+                          className="h-8 w-8 p-0"
+                        >
+                          <Edit className="h-3 w-3" />
+                        </Button>
+                        <Button
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            handleDeleteNote(note.id)
+                          }}
+                          variant="ghost"
+                          size="sm"
+                          className="h-8 w-8 p-0 text-destructive hover:text-destructive"
+                        >
+                          <Trash2 className="h-3 w-3" />
+                        </Button>
                       </div>
-                    ) : (
-                      // Görüntüleme Modu
-                      <div>
-                        <div className="flex justify-between items-start mb-2">
-                          <h3 className="font-semibold text-sm">{note.title}</h3>
-                          <div className="flex gap-1">
-                            <Button
-                              onClick={() => startEdit(note)}
-                              variant="ghost"
-                              size="sm"
-                              className="h-8 w-8 p-0"
-                            >
-                              <Edit className="h-3 w-3" />
-                            </Button>
-                            <Button
-                              onClick={() => handleDeleteNote(note.id)}
-                              variant="ghost"
-                              size="sm"
-                              className="h-8 w-8 p-0 text-destructive hover:text-destructive"
-                            >
-                              <Trash2 className="h-3 w-3" />
-                            </Button>
-                          </div>
-                        </div>
-                        <p className="text-sm text-muted-foreground mb-2 line-clamp-3">
-                          {note.content}
-                        </p>
-                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                          <Calendar className="h-3 w-3" />
-                          {formatDistanceToNow(new Date(note.createdat), { 
-                            addSuffix: true, 
-                            locale: tr 
-                          })}
-                        </div>
-                      </div>
-                    )}
+                    </div>
+                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                      <Calendar className="h-3 w-3" />
+                      {formatDistanceToNow(new Date(note.createdat), { 
+                        addSuffix: true, 
+                        locale: tr 
+                      })}
+                    </div>
                   </CardContent>
                 </Card>
               ))}
             </div>
           </ScrollArea>
         </div>
+
+        {/* Düzenleme Modal */}
+        {editingNote && (
+          <Dialog open={!!editingNote} onOpenChange={() => editingNote && cancelEdit()}>
+            <DialogContent className="sm:max-w-[500px]">
+              <DialogHeader>
+                <DialogTitle>Notu Düzenle</DialogTitle>
+              </DialogHeader>
+              <div className="space-y-4">
+                <div>
+                  <Label htmlFor="edit-note-title">Başlık</Label>
+                  <Input
+                    id="edit-note-title"
+                    value={editTitle}
+                    onChange={(e) => setEditTitle(e.target.value)}
+                    placeholder="Başlık..."
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="edit-note-content">İçerik</Label>
+                  <Textarea
+                    id="edit-note-content"
+                    value={editContent}
+                    onChange={(e) => setEditContent(e.target.value)}
+                    placeholder="Not içeriği..."
+                    className="min-h-[150px]"
+                  />
+                </div>
+                <div className="flex gap-2">
+                  <Button
+                    onClick={() => handleUpdateNote(editingNote)}
+                    disabled={!editTitle.trim() || !editContent.trim() || loading}
+                    size="sm"
+                  >
+                    <Save className="h-4 w-4 mr-2" />
+                    Kaydet
+                  </Button>
+                  <Button
+                    onClick={cancelEdit}
+                    variant="outline"
+                    size="sm"
+                  >
+                    <X className="h-4 w-4 mr-2" />
+                    İptal
+                  </Button>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
+        )}
       </DialogContent>
     </Dialog>
   )
