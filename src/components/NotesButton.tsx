@@ -9,6 +9,9 @@ import { Textarea } from '@/components/ui/textarea'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { Calendar } from '@/components/ui/calendar'
 import { 
   StickyNote, 
   Plus, 
@@ -16,14 +19,17 @@ import {
   Edit, 
   Save, 
   X, 
-  Calendar,
+  Calendar as CalendarIcon,
   Search,
-  Filter
+  Filter,
+  Clock,
+  RotateCcw
 } from 'lucide-react'
 import { useNotes } from '@/hooks/useNotes'
 import { useLanguage } from '@/contexts/LanguageContext'
-import { formatDistanceToNow } from 'date-fns'
+import { formatDistanceToNow, format, isAfter, isBefore, isToday, isYesterday, isThisWeek, isThisMonth } from 'date-fns'
 import { tr } from 'date-fns/locale'
+import { cn } from '@/lib/utils'
 
 interface NotesButtonProps {
   className?: string
@@ -39,6 +45,12 @@ export function NotesButton({ className }: NotesButtonProps) {
   const [editContent, setEditContent] = useState('')
   const [searchTerm, setSearchTerm] = useState('')
   const [showAddForm, setShowAddForm] = useState(false)
+  
+  // Tarih filtreleme state'leri
+  const [dateFilter, setDateFilter] = useState<string>('all')
+  const [customStartDate, setCustomStartDate] = useState<Date | undefined>()
+  const [customEndDate, setCustomEndDate] = useState<Date | undefined>()
+  const [showDateFilter, setShowDateFilter] = useState(false)
   
   const { notes, loading, error, addNote, deleteNote, updateNote } = useNotes()
 
@@ -93,10 +105,57 @@ export function NotesButton({ className }: NotesButtonProps) {
     }
   }
 
-  // Notları filtrele
-  const filteredNotes = notes.filter(note => 
-    note.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    note.content.toLowerCase().includes(searchTerm.toLowerCase())
+  // Tarih filtreleme fonksiyonları
+  const filterNotesByDate = (notes: any[]) => {
+    const now = new Date()
+    
+    return notes.filter(note => {
+      const noteDate = new Date(note.createdat)
+      
+      switch (dateFilter) {
+        case 'today':
+          return isToday(noteDate)
+        case 'yesterday':
+          return isYesterday(noteDate)
+        case 'thisWeek':
+          return isThisWeek(noteDate, { weekStartsOn: 1 })
+        case 'thisMonth':
+          return isThisMonth(noteDate)
+        case 'last7days':
+          const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
+          return isAfter(noteDate, sevenDaysAgo)
+        case 'last30days':
+          const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000)
+          return isAfter(noteDate, thirtyDaysAgo)
+        case 'custom':
+          if (customStartDate && customEndDate) {
+            return isAfter(noteDate, customStartDate) && isBefore(noteDate, customEndDate)
+          } else if (customStartDate) {
+            return isAfter(noteDate, customStartDate)
+          } else if (customEndDate) {
+            return isBefore(noteDate, customEndDate)
+          }
+          return true
+        default:
+          return true
+      }
+    })
+  }
+
+  // Filtreleri temizle
+  const clearFilters = () => {
+    setDateFilter('all')
+    setCustomStartDate(undefined)
+    setCustomEndDate(undefined)
+    setSearchTerm('')
+  }
+
+  // Notları filtrele (arama ve tarih filtreleri birlikte)
+  const filteredNotes = filterNotesByDate(
+    notes.filter(note => 
+      note.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      note.content.toLowerCase().includes(searchTerm.toLowerCase())
+    )
   )
 
   const noteCount = notes.length
@@ -134,25 +193,116 @@ export function NotesButton({ className }: NotesButtonProps) {
         </DialogHeader>
 
         <div className="flex flex-col flex-1 overflow-hidden">
-          {/* Arama ve Ekle Butonu */}
-          <div className="flex-shrink-0 flex gap-2 mb-4">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Notlarda ara..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
-              />
+          {/* Arama ve Filtreleme Bölümü */}
+          <div className="flex-shrink-0 space-y-3 mb-4">
+            {/* Ana Arama Satırı */}
+            <div className="flex gap-2">
+              <div className="relative flex-1">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  placeholder="Notlarda ara..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-10"
+                />
+              </div>
+              <Button
+                onClick={() => setShowAddForm(!showAddForm)}
+                size="sm"
+                variant={showAddForm ? "secondary" : "default"}
+              >
+                <Plus className="h-4 w-4" />
+                <span className="hidden sm:inline ml-2">Yeni Not</span>
+              </Button>
             </div>
-            <Button
-              onClick={() => setShowAddForm(!showAddForm)}
-              size="sm"
-              variant={showAddForm ? "secondary" : "default"}
-            >
-              <Plus className="h-4 w-4" />
-              <span className="hidden sm:inline ml-2">Yeni Not</span>
-            </Button>
+
+            {/* Tarih Filtreleme Satırı */}
+            <div className="flex gap-2 items-center">
+              <div className="flex items-center gap-2 flex-1">
+                <Filter className="h-4 w-4 text-muted-foreground" />
+                <Select value={dateFilter} onValueChange={setDateFilter}>
+                  <SelectTrigger className="w-full sm:w-[180px]">
+                    <SelectValue placeholder="Tarih filtrele" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">Tüm Notlar</SelectItem>
+                    <SelectItem value="today">Bugün</SelectItem>
+                    <SelectItem value="yesterday">Dün</SelectItem>
+                    <SelectItem value="thisWeek">Bu Hafta</SelectItem>
+                    <SelectItem value="thisMonth">Bu Ay</SelectItem>
+                    <SelectItem value="last7days">Son 7 Gün</SelectItem>
+                    <SelectItem value="last30days">Son 30 Gün</SelectItem>
+                    <SelectItem value="custom">Özel Tarih</SelectItem>
+                  </SelectContent>
+                </Select>
+
+                {/* Özel Tarih Seçimi */}
+                {dateFilter === 'custom' && (
+                  <div className="flex gap-2 items-center">
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className={cn(
+                            "w-[140px] justify-start text-left font-normal",
+                            !customStartDate && "text-muted-foreground"
+                          )}
+                        >
+                          <Calendar className="mr-2 h-4 w-4" />
+                          {customStartDate ? format(customStartDate, "dd.MM.yyyy") : "Başlangıç"}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0">
+                        <Calendar
+                          mode="single"
+                          selected={customStartDate}
+                          onSelect={setCustomStartDate}
+                          initialFocus
+                        />
+                      </PopoverContent>
+                    </Popover>
+
+                    <span className="text-sm text-muted-foreground">-</span>
+
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className={cn(
+                            "w-[140px] justify-start text-left font-normal",
+                            !customEndDate && "text-muted-foreground"
+                          )}
+                        >
+                          <Calendar className="mr-2 h-4 w-4" />
+                          {customEndDate ? format(customEndDate, "dd.MM.yyyy") : "Bitiş"}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0">
+                        <Calendar
+                          mode="single"
+                          selected={customEndDate}
+                          onSelect={setCustomEndDate}
+                          initialFocus
+                        />
+                      </PopoverContent>
+                    </Popover>
+                  </div>
+                )}
+              </div>
+
+              {/* Filtreleri Temizle Butonu */}
+              {(searchTerm || dateFilter !== 'all' || customStartDate || customEndDate) && (
+                <Button
+                  onClick={clearFilters}
+                  variant="outline"
+                  size="sm"
+                  className="text-xs"
+                >
+                  <RotateCcw className="h-3 w-3 mr-1" />
+                  Temizle
+                </Button>
+              )}
+            </div>
           </div>
 
           {/* Yeni Not Ekle Form */}
@@ -224,7 +374,9 @@ export function NotesButton({ className }: NotesButtonProps) {
 
             {!loading && !error && filteredNotes.length === 0 && (
               <div className="text-center py-8 text-muted-foreground">
-                {searchTerm ? 'Arama kriterine uygun not bulunamadı.' : 'Henüz not eklenmemiş.'}
+                {searchTerm || dateFilter !== 'all' || customStartDate || customEndDate 
+                  ? 'Arama ve filtre kriterlerine uygun not bulunamadı.' 
+                  : 'Henüz not eklenmemiş.'}
               </div>
             )}
 
@@ -260,7 +412,7 @@ export function NotesButton({ className }: NotesButtonProps) {
                       </div>
                     </div>
                     <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                      <Calendar className="h-3 w-3" />
+                      <CalendarIcon className="h-3 w-3" />
                       {formatDistanceToNow(new Date(note.createdat), { 
                         addSuffix: true, 
                         locale: tr 
