@@ -665,12 +665,6 @@ export default function ButcapApp() {
         !newRecurring.frequency || 
         !newRecurring.startDate || newRecurring.startDate.trim() === '') {
       showSimpleToast('Lütfen tüm zorunlu alanları doldurun: Tutar, Kategori, Açıklama, Periyot, Başlangıç Tarihi')
-        amount: newRecurring.amount,
-        category: newRecurring.category,
-        description: newRecurring.description,
-        frequency: newRecurring.frequency,
-        startDate: newRecurring.startDate
-      })
       return
     }
 
