@@ -1035,6 +1035,28 @@ export default function ButcapApp() {
                 <BookOpen className="h-4 w-4 mr-2" />
                 <span>Finans Rehberi</span>
               </Button>
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="justify-start text-muted-foreground hover:text-foreground h-10 px-3 transition-colors duration-200"
+                onClick={() => toast.error('Test error mesajı!', {
+                  duration: 3000,
+                  position: 'top-center'
+                })}
+              >
+                Test Hata
+              </Button>
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="justify-start text-muted-foreground hover:text-foreground h-10 px-3 transition-colors duration-200"
+                onClick={() => toast.success('Test başarı mesajı!', {
+                  duration: 3000,
+                  position: 'top-center'
+                })}
+              >
+                Test Başarı
+              </Button>
             </div>
             <nav className="flex items-center space-x-1">
               {/* Mobile buttons */}
