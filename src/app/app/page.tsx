@@ -150,6 +150,15 @@ export default function ButcapApp() {
   const [showNavigationConfirmDialog, setShowNavigationConfirmDialog] = useState(false)
   const [balanceHidden, setBalanceHidden] = useState(false)
   
+  // All transactions modal state
+  const [showAllTransactionsDialog, setShowAllTransactionsDialog] = useState(false)
+  const [transactionSearch, setTransactionSearch] = useState('')
+  const [transactionFilter, setTransactionFilter] = useState<'all' | 'income' | 'expense' | 'transfer'>('all')
+  const [transactionCategoryFilter, setTransactionCategoryFilter] = useState('all')
+  const [transactionDateFilter, setTransactionDateFilter] = useState<'all' | 'today' | 'week' | 'month' | 'custom'>('all')
+  const [customStartDate, setCustomStartDate] = useState('')
+  const [customEndDate, setCustomEndDate] = useState('')
+  
   // Notlar state
   const [notes, setNotes] = useState<Note[]>([])
   const [noteContent, setNoteContent] = useState('')
@@ -766,6 +775,44 @@ export default function ButcapApp() {
 
   const recentTransactions = filteredTransactions.slice(0, 5)
 
+  // Filter transactions for modal
+  const filteredModalTransactions = transactions.filter(transaction => {
+    const matchesSearch = transaction.description.toLowerCase().includes(transactionSearch.toLowerCase()) ||
+                         transaction.category.toLowerCase().includes(transactionSearch.toLowerCase())
+    const matchesType = transactionFilter === 'all' || transaction.type === transactionFilter
+    const matchesCategory = transactionCategoryFilter === 'all' || transaction.category === transactionCategoryFilter
+    
+    // Date filtering logic
+    const transactionDate = new Date(transaction.date)
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
+    
+    let matchesDate = true
+    if (transactionDateFilter === 'today') {
+      const todayStr = today.toISOString().split('T')[0]
+      matchesDate = transaction.date.startsWith(todayStr)
+    } else if (transactionDateFilter === 'week') {
+      const weekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000)
+      matchesDate = transactionDate >= weekAgo
+    } else if (transactionDateFilter === 'month') {
+      const monthAgo = new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000)
+      matchesDate = transactionDate >= monthAgo
+    } else if (transactionDateFilter === 'custom') {
+      if (customStartDate) {
+        const startDate = new Date(customStartDate)
+        startDate.setHours(0, 0, 0, 0)
+        matchesDate = transactionDate >= startDate
+      }
+      if (customEndDate) {
+        const endDate = new Date(customEndDate)
+        endDate.setHours(23, 59, 59, 999)
+        matchesDate = matchesDate && transactionDate <= endDate
+      }
+    }
+    
+    return matchesSearch && matchesType && matchesCategory && matchesDate
+  })
+
   const income = transactions
     .filter(t => t.type === 'income')
     .reduce((sum, t) => sum + t.amount, 0)
@@ -932,10 +979,6 @@ export default function ButcapApp() {
                 <BookOpen className="h-4 w-4 mr-2" />
                 <span>Finans Rehberi</span>
               </Button>
-              <Button variant="ghost" size="sm" className="justify-start text-muted-foreground hover:text-foreground h-10 px-3 transition-colors duration-200">
-                <Settings className="h-4 w-4 mr-2" />
-                <span>Ayarlar</span>
-              </Button>
             </div>
             <nav className="flex items-center space-x-1">
               {/* Mobile buttons */}
@@ -948,14 +991,6 @@ export default function ButcapApp() {
                   title="Finans Rehberi"
                 >
                   <BookOpen className="h-4 w-4" />
-                </Button>
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  className="justify-start text-muted-foreground hover:text-foreground h-10 px-3 transition-colors duration-200"
-                  title="Ayarlar"
-                >
-                  <Settings className="h-4 w-4" />
                 </Button>
               </div>
               
@@ -1607,7 +1642,12 @@ export default function ButcapApp() {
         <Card className="border-0 shadow-md dark:shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between pb-4">
             <CardTitle className="text-lg font-semibold text-foreground">Son İşlemler</CardTitle>
-            <Button variant="ghost" size="sm" className="text-green-600 hover:text-green-700">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="text-green-600 hover:text-green-700"
+              onClick={() => setShowAllTransactionsDialog(true)}
+            >
               Tümünü Gör
             </Button>
           </CardHeader>
@@ -1814,6 +1854,231 @@ export default function ButcapApp() {
               </div>
             </div>
           )}
+        </DialogContent>
+      </Dialog>
+
+      {/* All Transactions Modal */}
+      <Dialog open={showAllTransactionsDialog} onOpenChange={setShowAllTransactionsDialog}>
+        <DialogContent className="sm:max-w-5xl max-h-[90vh] overflow-hidden flex flex-col">
+          <DialogHeader className="flex-shrink-0">
+            <DialogTitle className="text-xl font-bold">Tüm İşlemler</DialogTitle>
+            <DialogDescription>
+              Tüm finansal işlemlerinizi görüntüleyin, arayın ve filtreleyin
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="flex flex-col flex-1 overflow-hidden space-y-4">
+            {/* Search and Filter Controls */}
+            <div className="flex-shrink-0 space-y-4">
+              <div className="flex flex-col sm:flex-row gap-4">
+                <div className="flex-1 sm:flex-initial sm:w-64">
+                  <Input
+                    placeholder="İşlem veya kategori ara..."
+                    value={transactionSearch}
+                    onChange={(e) => setTransactionSearch(e.target.value)}
+                    className="h-12"
+                  />
+                </div>
+                <div className="flex gap-2 flex-wrap">
+                  <Select
+                    value={transactionDateFilter}
+                    onValueChange={(value: 'all' | 'today' | 'week' | 'month' | 'custom') => 
+                      setTransactionDateFilter(value)
+                    }
+                  >
+                    <SelectTrigger className="w-40 h-12">
+                      <SelectValue placeholder="Tarih Aralığı" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Tüm Tarihler</SelectItem>
+                      <SelectItem value="today">Bugün</SelectItem>
+                      <SelectItem value="week">Son 7 Gün</SelectItem>
+                      <SelectItem value="month">Son 30 Gün</SelectItem>
+                      <SelectItem value="custom">Özel Tarih</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  
+                  <Select
+                    value={transactionFilter}
+                    onValueChange={(value: 'all' | 'income' | 'expense' | 'transfer') => 
+                      setTransactionFilter(value)
+                    }
+                  >
+                    <SelectTrigger className="w-32 h-12">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Tümü</SelectItem>
+                      <SelectItem value="income">Gelir</SelectItem>
+                      <SelectItem value="expense">Gider</SelectItem>
+                      <SelectItem value="transfer">Transfer</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  
+                  <Select
+                    value={transactionCategoryFilter}
+                    onValueChange={setTransactionCategoryFilter}
+                  >
+                    <SelectTrigger className="w-40 h-12">
+                      <SelectValue placeholder="Kategori" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Tüm Kategoriler</SelectItem>
+                      {[...incomeCategories, ...expenseCategories].map((category) => (
+                        <SelectItem key={category} value={category}>
+                          {category}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              {/* Custom Date Inputs */}
+              {transactionDateFilter === 'custom' && (
+                <div className="flex gap-2">
+                  <div className="flex-1">
+                    <Label htmlFor="start-date" className="text-sm font-medium text-muted-foreground mb-1 block">
+                      Başlangıç Tarihi
+                    </Label>
+                    <Input
+                      id="start-date"
+                      type="date"
+                      value={customStartDate}
+                      onChange={(e) => setCustomStartDate(e.target.value)}
+                      className="h-12"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <Label htmlFor="end-date" className="text-sm font-medium text-muted-foreground mb-1 block">
+                      Bitiş Tarihi
+                    </Label>
+                    <Input
+                      id="end-date"
+                      type="date"
+                      value={customEndDate}
+                      onChange={(e) => setCustomEndDate(e.target.value)}
+                      className="h-12"
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Transactions List */}
+            <div className="flex-1 overflow-y-auto space-y-2">
+              {filteredModalTransactions.length === 0 ? (
+                <div className="text-center py-12">
+                  <div className="w-16 h-16 bg-muted rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <Wallet className="h-8 w-8 text-muted-foreground" />
+                  </div>
+                  <p className="text-muted-foreground font-medium">
+                    {transactionSearch || transactionFilter !== 'all' || transactionCategoryFilter !== 'all' 
+                      ? 'Eşleşen işlem bulunamadı' 
+                      : 'Henüz işlem bulunmuyor'
+                    }
+                  </p>
+                  <p className="text-muted-foreground/70 text-sm mt-1">
+                    {transactionSearch || transactionFilter !== 'all' || transactionCategoryFilter !== 'all' 
+                      ? 'Filtreleri değiştirmeyi deneyin' 
+                      : 'İlk işleminizi eklemek için ana sayfadaki butonları kullanın'
+                    }
+                  </p>
+                </div>
+              ) : (
+                filteredModalTransactions.map((transaction) => (
+                  <div key={transaction.id} className="flex items-center justify-between p-4 bg-muted/50 rounded-xl hover:bg-muted transition-colors">
+                    <div className="flex items-center space-x-4">
+                      <div className={`w-10 h-10 rounded-lg flex items-center justify-center shadow-sm ${
+                        transaction.type === 'income' ? 'bg-gradient-to-r from-emerald-500/80 to-green-600/70 dark:from-emerald-600/50 dark:to-green-700/40' : 
+                        transaction.type === 'expense' ? 'bg-gradient-to-r from-red-500/80 to-pink-600/70 dark:from-red-600/50 dark:to-pink-700/40' : 'bg-gradient-to-r from-blue-500/80 to-cyan-600/70 dark:from-blue-600/50 dark:to-cyan-700/40'
+                      }`}>
+                        {transaction.type === 'income' ? (
+                          <ArrowUp className="h-5 w-5 text-white" />
+                        ) : transaction.type === 'expense' ? (
+                          <ArrowDown className="h-5 w-5 text-white" />
+                        ) : (
+                          <ArrowRightLeft className="h-5 w-5 text-white" />
+                        )}
+                      </div>
+                      <div>
+                        <div className="flex items-center space-x-2">
+                          <p className="font-semibold text-foreground transition-colors">{transaction.category}</p>
+                          <div className="text-muted-foreground transition-colors">
+                            {getCategoryIcon(transaction.category)}
+                          </div>
+                          <Badge variant="outline" className="text-xs">
+                            {transaction.type === 'income' ? 'Gelir' : 
+                             transaction.type === 'expense' ? 'Gider' : 'Transfer'}
+                          </Badge>
+                        </div>
+                        <p className="text-sm text-muted-foreground transition-colors">
+                          {transaction.type === 'transfer' 
+                            ? `${transaction.transferFrom === 'cash' ? 'Nakit' : transaction.transferFrom === 'bank' ? 'Banka' : 'Birikim'} → ${transaction.transferTo === 'cash' ? 'Nakit' : transaction.transferTo === 'bank' ? 'Banka' : 'Birikim'}: ${transaction.description}`
+                            : transaction.description
+                          }
+                        </p>
+                        <p className="text-xs text-muted-foreground/70">
+                          {transaction.account === 'cash' ? 'Nakit' : 
+                           transaction.account === 'bank' ? 'Banka' : 'Birikim'} • 
+                          {new Date(transaction.date).toLocaleDateString('tr-TR', { 
+                            year: 'numeric', 
+                            month: 'long', 
+                            day: 'numeric' 
+                          })}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <p className={`font-bold text-lg transition-colors ${
+                        transaction.type === 'income' ? 'text-green-600 dark:text-green-400' : 
+                        transaction.type === 'expense' ? 'text-red-600 dark:text-red-400' : 'text-blue-600 dark:text-blue-400'
+                      }`}>
+                        {transaction.type === 'income' ? '+' : 
+                         transaction.type === 'expense' ? '-' : ''} 
+                        {transaction.amount.toLocaleString('tr-TR')} TL
+                      </p>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+
+            {/* Summary */}
+            {filteredModalTransactions.length > 0 && (
+              <div className="border-t pt-4">
+                <div className="grid grid-cols-3 gap-4 text-center">
+                  <div>
+                    <p className="text-sm text-muted-foreground">Gelir</p>
+                    <p className="text-lg font-bold text-green-600 dark:text-green-400">
+                      {filteredModalTransactions
+                        .filter(t => t.type === 'income')
+                        .reduce((sum, t) => sum + t.amount, 0)
+                        .toLocaleString('tr-TR')} TL
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground">Gider</p>
+                    <p className="text-lg font-bold text-red-600 dark:text-red-400">
+                      {filteredModalTransactions
+                        .filter(t => t.type === 'expense')
+                        .reduce((sum, t) => sum + t.amount, 0)
+                        .toLocaleString('tr-TR')} TL
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground">Transfer</p>
+                    <p className="text-lg font-bold text-blue-600 dark:text-blue-400">
+                      {filteredModalTransactions
+                        .filter(t => t.type === 'transfer')
+                        .reduce((sum, t) => sum + t.amount, 0)
+                        .toLocaleString('tr-TR')} TL
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
         </DialogContent>
       </Dialog>
 
