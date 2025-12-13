@@ -306,8 +306,8 @@ export function NotesButton({ className }: NotesButtonProps) {
                     disabled={!editTitle.trim() || !editContent.trim() || loading}
                     size="sm"
                   >
-                    <Save className="h-4 w-4 mr-2" />
-                    Kaydet
+                    <Edit className="h-4 w-4 mr-2" />
+                    Düzenle
                   </Button>
                   <Button
                     onClick={cancelEdit}
