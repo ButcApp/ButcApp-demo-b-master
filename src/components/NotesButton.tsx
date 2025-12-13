@@ -209,7 +209,7 @@ export function NotesButton({ className }: NotesButtonProps) {
           )}
 
           {/* Notlar Listesi */}
-          <ScrollArea className="flex-1">
+          <ScrollArea className="flex-1 overflow-y-auto max-h-[400px]">
             {loading && (
               <div className="text-center py-8 text-muted-foreground">
                 Notlar yükleniyor...
