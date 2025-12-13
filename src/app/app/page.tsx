@@ -268,35 +268,28 @@ export default function ButcapApp() {
   }, [user, recurringTransactions, transactions])
 
   const addTransaction = useCallback(async (transaction: Omit<Transaction, 'id'>) => {
-    console.log('🔍 addTransaction called with:', transaction)
-    console.log('🔍 Current balances:', balances)
     
     if (!user) {
-      console.log('❌ No user found')
       showSimpleToast('İşlem eklemek için lütfen giriş yapın.', 'error')
       return
     }
 
     // Bakiye kontrolü
     if (transaction.type === 'expense') {
-      console.log('🔍 Checking expense balance:', balances[transaction.account], 'vs', transaction.amount)
       if (balances[transaction.account] < transaction.amount) {
         const accountName = transaction.account === 'cash' ? 'Nakit' : transaction.account === 'bank' ? 'Banka' : 'Birikim'
         const currentBalance = balances[transaction.account].toLocaleString('tr-TR')
         const requestedAmount = transaction.amount.toLocaleString('tr-TR')
-        console.log('❌ Insufficient balance detected')
         showSimpleToast(`Yetersiz bakiye! ${accountName} hesabınızda sadece ${currentBalance} TL bulunuyor. ${requestedAmount} TL'lik işlem yapamazsınız.`, {
           duration: 5000
         })
         return
       }
     } else if (transaction.type === 'transfer' && transaction.transferFrom && transaction.transferTo) {
-      console.log('🔍 Checking transfer balance:', balances[transaction.transferFrom], 'vs', transaction.amount)
       if (balances[transaction.transferFrom] < transaction.amount) {
         const accountName = transaction.transferFrom === 'cash' ? 'Nakit' : transaction.transferFrom === 'bank' ? 'Banka' : 'Birikim'
         const currentBalance = balances[transaction.transferFrom].toLocaleString('tr-TR')
         const requestedAmount = transaction.amount.toLocaleString('tr-TR')
-        console.log('❌ Insufficient transfer balance detected')
         showSimpleToast(`Yetersiz bakiye! ${accountName} hesabınızda sadece ${currentBalance} TL bulunuyor. ${requestedAmount} TL transfer yapamazsınız.`, {
           duration: 5000
         })
@@ -304,7 +297,6 @@ export default function ButcapApp() {
       }
     }
 
-    console.log('✅ Balance validation passed, proceeding with transaction')
 
     const newTransaction: Transaction = {
       ...transaction,
@@ -343,7 +335,6 @@ export default function ButcapApp() {
       }
       
     } catch (error) {
-      console.error('❌ Transaction kaydedilirken hata:', error)
       setTransactions(prev => prev.filter(t => t.id !== newTransaction.id))
       showSimpleToast('İşlem kaydedilemedi. Lütfen tekrar deneyin.')
       return
@@ -365,7 +356,6 @@ export default function ButcapApp() {
           // Transfer başarılı mesajını zaten yukarıda ekledik
         }
       } catch (error) {
-        console.error('❌ Bakiyeler güncellenirken hata:', error)
         setBalances(balances)
         showSimpleToast('Bakiyeler güncellenemedi. Lütfen tekrar deneyin.')
       }
@@ -393,7 +383,6 @@ export default function ButcapApp() {
           // Income/expense için success mesajları zaten yukarıda eklendi
         }
       } catch (error) {
-        console.error('❌ Bakiyeler güncellenirken hata:', error)
         setBalances(balances)
         showSimpleToast('Bakiyeler güncellenemedi. Lütfen tekrar deneyin.')
       }
@@ -433,7 +422,6 @@ export default function ButcapApp() {
           setNotes(notesData)
         }
       } catch (error) {
-        console.error('❌ Veriler yüklenirken hata:', error)
       } finally {
         setLoading(false)
       }
@@ -533,7 +521,6 @@ export default function ButcapApp() {
     try {
       const balanceUpdated = await dataSync.updateBalances(newBalances)
       if (!balanceUpdated) {
-        console.error('Bakiyeler kaydedilemedi, state geri alınıyor')
         setBalances({ cash: 0, bank: 0, savings: 0 })
         setIsFirstTime(true)
         showSimpleToast('Bakiyeler kaydedilemedi. Lütfen tekrar deneyin.')
@@ -543,7 +530,6 @@ export default function ButcapApp() {
         })
       }
     } catch (error) {
-      console.error('Bakiyeler kaydedilirken hata:', error)
       setBalances({ cash: 0, bank: 0, savings: 0 })
       setIsFirstTime(true)
       showSimpleToast('Bakiyeler kaydedilemedi. Lütfen tekrar deneyin.')
@@ -551,7 +537,6 @@ export default function ButcapApp() {
 
     // Test toast - basit bir test
     setTimeout(() => {
-      console.log('Test toast çalıştırılıyor...')
       showSimpleToast('Bu bir test mesajıdır!', {
         duration: 3000
       })
@@ -564,9 +549,6 @@ export default function ButcapApp() {
       return
     }
 
-    console.log('Frontend attempting to delete recurring transaction:', id)
-    console.log('Available transactions:', recurringTransactions.map(rt => ({ id: rt.id, category: rt.category })))
-    console.log('Transaction to delete exists in state:', recurringTransactions.some(rt => rt.id === id))
 
     try {
       const deleted = await dataSync.deleteRecurringTransaction(id)
@@ -581,7 +563,6 @@ export default function ButcapApp() {
         showSimpleToast('Tekrarlayan işlem silinemedi. Lütfen tekrar deneyin.')
       }
     } catch (error) {
-      console.error('❌ Tekrarlayan işlem silinirken hata:', error)
       showSimpleToast('Tekrarlayan işlem silinemedi. Lütfen tekrar deneyin.')
     }
   }
@@ -604,7 +585,6 @@ export default function ButcapApp() {
         showSimpleToast('Tekrarlayan işlem güncellenemedi. Lütfen tekrar deneyin.')
       }
     } catch (error) {
-      console.error('❌ Tekrarlayan işlem güncellenirken hata:', error)
       showSimpleToast('Tekrarlayan işlem güncellenemedi. Lütfen tekrar deneyin.')
     }
   }
@@ -669,7 +649,6 @@ export default function ButcapApp() {
         )
       }
     } catch (error) {
-      console.error('❌ Tekrarlayan işlem durumu güncellenirken hata:', error)
     }
   }
 
@@ -686,7 +665,6 @@ export default function ButcapApp() {
         !newRecurring.frequency || 
         !newRecurring.startDate || newRecurring.startDate.trim() === '') {
       showSimpleToast('Lütfen tüm zorunlu alanları doldurun: Tutar, Kategori, Açıklama, Periyot, Başlangıç Tarihi')
-      console.log('Validation failed:', {
         amount: newRecurring.amount,
         category: newRecurring.category,
         description: newRecurring.description,
@@ -719,9 +697,7 @@ export default function ButcapApp() {
     }
 
     try {
-      console.log('Frontend attempting to add recurring transaction:', newRecurringTransaction)
       const added = await dataSync.addRecurringTransaction(newRecurringTransaction)
-      console.log('Add result:', added)
       if (added) {
         setRecurringTransactions(prev => [...prev, newRecurringTransaction])
         setShowRecurringDialog(false)
@@ -742,7 +718,6 @@ export default function ButcapApp() {
         showSimpleToast('Tekrarlayan işlem kaydedilemedi. Lütfen tekrar deneyin.')
       }
     } catch (error) {
-      console.error('❌ Tekrarlayan işlem kaydedilirken hata:', error)
       showSimpleToast('Tekrarlayan işlem kaydedilemedi. Lütfen tekrar deneyin.')
     }
   }
@@ -828,7 +803,6 @@ export default function ButcapApp() {
     try {
       await signOut()
     } catch (error) {
-      console.error('Error signing out:', error)
     }
     
     window.location.href = '/'
@@ -1050,26 +1024,6 @@ export default function ButcapApp() {
               >
                 <BookOpen className="h-4 w-4 mr-2" />
                 <span>Finans Rehberi</span>
-              </Button>
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                className="justify-start text-muted-foreground hover:text-foreground h-10 px-3 transition-colors duration-200"
-                onClick={() => showSimpleToast('Test error mesajı!', {
-                  duration: 3000
-                })}
-              >
-                Test Hata
-              </Button>
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                className="justify-start text-muted-foreground hover:text-foreground h-10 px-3 transition-colors duration-200"
-                onClick={() => showSimpleToast('Test başarı mesajı!', {
-                  duration: 3000
-                })}
-              >
-                Test Başarı
               </Button>
             </div>
             <nav className="flex items-center space-x-1">
