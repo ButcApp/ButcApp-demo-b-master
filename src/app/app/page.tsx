@@ -267,33 +267,43 @@ export default function ButcapApp() {
   }, [user, recurringTransactions, transactions])
 
   const addTransaction = useCallback(async (transaction: Omit<Transaction, 'id'>) => {
+    console.log('🔍 addTransaction called with:', transaction)
+    console.log('🔍 Current balances:', balances)
+    
     if (!user) {
+      console.log('❌ No user found')
       toast.error('İşlem eklemek için lütfen giriş yapın.')
       return
     }
 
     // Bakiye kontrolü
     if (transaction.type === 'expense') {
+      console.log('🔍 Checking expense balance:', balances[transaction.account], 'vs', transaction.amount)
       if (balances[transaction.account] < transaction.amount) {
         const accountName = transaction.account === 'cash' ? 'Nakit' : transaction.account === 'bank' ? 'Banka' : 'Birikim'
         const currentBalance = balances[transaction.account].toLocaleString('tr-TR')
         const requestedAmount = transaction.amount.toLocaleString('tr-TR')
+        console.log('❌ Insufficient balance detected')
         toast.error(`Yetersiz bakiye! ${accountName} hesabınızda sadece ${currentBalance} TL bulunuyor. ${requestedAmount} TL'lik işlem yapamazsınız.`, {
           duration: 5000
         })
         return
       }
     } else if (transaction.type === 'transfer' && transaction.transferFrom && transaction.transferTo) {
+      console.log('🔍 Checking transfer balance:', balances[transaction.transferFrom], 'vs', transaction.amount)
       if (balances[transaction.transferFrom] < transaction.amount) {
         const accountName = transaction.transferFrom === 'cash' ? 'Nakit' : transaction.transferFrom === 'bank' ? 'Banka' : 'Birikim'
         const currentBalance = balances[transaction.transferFrom].toLocaleString('tr-TR')
         const requestedAmount = transaction.amount.toLocaleString('tr-TR')
+        console.log('❌ Insufficient transfer balance detected')
         toast.error(`Yetersiz bakiye! ${accountName} hesabınızda sadece ${currentBalance} TL bulunuyor. ${requestedAmount} TL transfer yapamazsınız.`, {
           duration: 5000
         })
         return
       }
     }
+
+    console.log('✅ Balance validation passed, proceeding with transaction')
 
     const newTransaction: Transaction = {
       ...transaction,
