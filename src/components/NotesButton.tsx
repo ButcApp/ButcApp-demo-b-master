@@ -230,7 +230,7 @@ export function NotesButton({ className }: NotesButtonProps) {
 
             <div className="space-y-3">
               {filteredNotes.map((note) => (
-                <Card key={note.id} className="cursor-pointer hover:bg-muted/50 transition-colors" onClick={() => startEdit(note)}>
+                <Card key={note.id} className="hover:bg-muted/50 transition-colors">
                   <CardContent className="p-4">
                     <div className="flex justify-between items-start mb-2">
                       <h3 className="font-semibold text-sm">{note.title}</h3>
