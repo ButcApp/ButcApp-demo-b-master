@@ -9,7 +9,7 @@ const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
 // Authentication middleware
 async function authenticate(request: NextRequest) {
-  const token = request.cookies.get('auth-token')?.value || 
+  const token = request.cookies.get('auth_token')?.value || 
                 request.headers.get('authorization')?.replace('Bearer ', '') ||
                 request.nextUrl.searchParams.get('token')
 
@@ -124,6 +124,7 @@ export async function POST(request: NextRequest) {
 export async function PUT(request: NextRequest, { params }: { params: Promise<{ noteId: string }> }) {
   try {
     const { noteId } = await params
+    
     const auth = await authenticate(request)
     if (auth.error) {
       return NextResponse.json({ error: auth.error }, { status: auth.status })

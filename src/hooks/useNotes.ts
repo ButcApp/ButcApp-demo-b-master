@@ -85,7 +85,7 @@ export function useNotes() {
     }
   }, [user])
 
-  // Not güncelle (data-sync'de bu fonksiyon yok, API ile yapılacak)
+  // Not güncelle
   const updateNote = useCallback(async (noteId: string, noteData: { title?: string; content?: string }) => {
     if (!user) return false
 
@@ -93,36 +93,39 @@ export function useNotes() {
       setLoading(true)
       setError(null)
       
-      const token = localStorage.getItem('auth-token')
-      const response = await fetch('/api/data/notes', {
+      const token = localStorage.getItem('auth_token')
+      
+      const response = await fetch(`/api/data/notes/${noteId}`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          id: noteId,
-          ...noteData
-        })
+        body: JSON.stringify(noteData)
       })
 
-      if (response.ok) {
-        // State'de güncelle
-        setNotes(prev => prev.map(note => 
-          note.id === noteId 
-            ? { 
-                ...note, 
-                ...noteData, 
-                updatedat: new Date().toISOString() 
-              }
-            : note
-        ))
-        return true
+      if (!response.ok) {
+        const errorText = await response.text()
+        setError(`Not güncellenemedi: ${response.status}`)
+        return false
       }
-      return false
+
+      const responseData = await response.json()
+
+      // State'de güncelle
+      setNotes(prev => prev.map(note => 
+        note.id === noteId 
+          ? { 
+              ...note, 
+              ...noteData, 
+              updatedat: new Date().toISOString() 
+            }
+          : note
+      ))
+      return true
     } catch (err) {
       console.error('Not güncellenirken hata:', err)
-      setError('Not güncellenemedi')
+      setError('Not güncellenemedi: ' + err.message)
       return false
     } finally {
       setLoading(false)
