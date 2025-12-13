@@ -271,6 +271,19 @@ export default function ButcapApp() {
       return
     }
 
+    // Bakiye kontrolü
+    if (transaction.type === 'expense') {
+      if (balances[transaction.account] < transaction.amount) {
+        alert(`Yetersiz bakiye! ${transaction.account === 'cash' ? 'Nakit' : transaction.account === 'bank' ? 'Banka' : 'Birikim'} hesabınızda sadece ${balances[transaction.account].toLocaleString('tr-TR')} TL bulunuyor. ${transaction.amount.toLocaleString('tr-TR')} TL'lik işlem yapamazsınız.`)
+        return
+      }
+    } else if (transaction.type === 'transfer' && transaction.transferFrom && transaction.transferTo) {
+      if (balances[transaction.transferFrom] < transaction.amount) {
+        alert(`Yetersiz bakiye! ${transaction.transferFrom === 'cash' ? 'Nakit' : transaction.transferFrom === 'bank' ? 'Banka' : 'Birikim'} hesabınızda sadece ${balances[transaction.transferFrom].toLocaleString('tr-TR')} TL bulunuyor. ${transaction.amount.toLocaleString('tr-TR')} TL transfer yapamazsınız.`)
+        return
+      }
+    }
+
     const newTransaction: Transaction = {
       ...transaction,
       id: `trans_${user?.id || 'unknown'}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
