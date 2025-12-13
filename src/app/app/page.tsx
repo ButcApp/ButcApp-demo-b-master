@@ -279,8 +279,7 @@ export default function ButcapApp() {
         const currentBalance = balances[transaction.account].toLocaleString('tr-TR')
         const requestedAmount = transaction.amount.toLocaleString('tr-TR')
         toast.error(`Yetersiz bakiye! ${accountName} hesabınızda sadece ${currentBalance} TL bulunuyor. ${requestedAmount} TL'lik işlem yapamazsınız.`, {
-          duration: 5000,
-          position: 'top-center'
+          duration: 5000
         })
         return
       }
@@ -290,8 +289,7 @@ export default function ButcapApp() {
         const currentBalance = balances[transaction.transferFrom].toLocaleString('tr-TR')
         const requestedAmount = transaction.amount.toLocaleString('tr-TR')
         toast.error(`Yetersiz bakiye! ${accountName} hesabınızda sadece ${currentBalance} TL bulunuyor. ${requestedAmount} TL transfer yapamazsınız.`, {
-          duration: 5000,
-          position: 'top-center'
+          duration: 5000
         })
         return
       }
@@ -530,8 +528,7 @@ export default function ButcapApp() {
         toast.error('Bakiyeler kaydedilemedi. Lütfen tekrar deneyin.')
       } else {
         toast.success('Bakiyeler başarıyla kaydedildi. Hoş geldiniz!', {
-          duration: 4000,
-          position: 'top-center'
+          duration: 4000
         })
       }
     } catch (error) {
@@ -540,6 +537,14 @@ export default function ButcapApp() {
       setIsFirstTime(true)
       toast.error('Bakiyeler kaydedilemedi. Lütfen tekrar deneyin.')
     }
+
+    // Test toast - basit bir test
+    setTimeout(() => {
+      console.log('Test toast çalıştırılıyor...')
+      toast.success('Bu bir test mesajıdır!', {
+        duration: 3000
+      })
+    }, 1000)
   }
 
   const deleteRecurringTransaction = async (id: string) => {
@@ -1040,8 +1045,7 @@ export default function ButcapApp() {
                 size="sm" 
                 className="justify-start text-muted-foreground hover:text-foreground h-10 px-3 transition-colors duration-200"
                 onClick={() => toast.error('Test error mesajı!', {
-                  duration: 3000,
-                  position: 'top-center'
+                  duration: 3000
                 })}
               >
                 Test Hata
@@ -1051,8 +1055,7 @@ export default function ButcapApp() {
                 size="sm" 
                 className="justify-start text-muted-foreground hover:text-foreground h-10 px-3 transition-colors duration-200"
                 onClick={() => toast.success('Test başarı mesajı!', {
-                  duration: 3000,
-                  position: 'top-center'
+                  duration: 3000
                 })}
               >
                 Test Başarı
